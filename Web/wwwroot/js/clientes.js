@@ -266,8 +266,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 nombre: "Juan",
                 edad: 23
             });
-            var model = new table_1.Model(cols);
-            model.load(rows);
+            var model = new table_1.Model();
+            model.load(cols, rows);
             return model;
         });
         ko.applyBindings();
@@ -339,12 +339,13 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var Model = /** @class */ (function () {
-        function Model(cols) {
+        function Model() {
             var _this = this;
-            this.load = function (rows) {
+            this.load = function (cols, rows) {
+                _this.cols(cols);
                 _this.rows(rows);
             };
-            this.cols = ko.observableArray(cols);
+            this.cols = ko.observableArray([]);
             this.rows = ko.observableArray([]);
         }
         return Model;

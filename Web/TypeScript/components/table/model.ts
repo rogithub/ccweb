@@ -6,12 +6,13 @@ export class Model {
     public cols: KnockoutObservableArray<TableColumn>;
     public rows: KnockoutObservableArray<ObjectLiteral>;
 
-    constructor(cols: TableColumn[]) {
-        this.cols = ko.observableArray<TableColumn>(cols);
+    constructor() {
+        this.cols = ko.observableArray<TableColumn>([]);
         this.rows = ko.observableArray<ObjectLiteral>([]);
     }
 
-    public load = (rows: ObjectLiteral[]): void => {
-        this.rows(rows);
+    public load = (cols: TableColumn[], rows: ObjectLiteral[]): void => {
+	this.cols(cols);
+	this.rows(rows);
     }
 }
