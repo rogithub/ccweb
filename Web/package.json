@@ -17,6 +17,7 @@
     "@types/bootstrap": "^4.3.1",
     "@types/jquery": "^3.3.33",
     "@types/knockout": "^3.4.67",
+    "raw-loader": "^4.0.0",
     "ts-loader": "^6.2.1",
     "typescript": "^3.8.2",
     "webpack": "^4.41.6",
