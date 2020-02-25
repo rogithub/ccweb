@@ -1,22 +1,13 @@
 
 import * as $ from 'jquery';
 import * as ko from 'knockout';
-import * as hw from '../components/hello-world.html';
+import { ComponentService } from '../utils/componentService';
+import { View, HelloWorld } from '../components/helloWorld';
 
 $(() => {
-    class Model {
-        text: KnockoutObservable<string>;
-        constructor() {
-            this.text = ko.observable("Hola Mundo");
-        }
-    }
-    ko.components.register("hello-world", {
-        template: hw.default,
-        viewModel: { createViewModel: () => new Model() }
-    });
+
+    let component = new ComponentService(ko);
+    component.register("hello-world", View.default, () => new HelloWorld());
 
     ko.applyBindings();
-
-    console.log(hw.default);
-
 });

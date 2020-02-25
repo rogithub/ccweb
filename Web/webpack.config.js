@@ -5,6 +5,14 @@ module.exports = {
         clientes: './TypeScript/pages/clientes.ts'
     },
     mode: 'production',
+    optimization: {
+        minimize: false,
+        splitChunks: {
+            chunks: 'all',
+            minSize: 0,
+            name: 'shared'
+        }
+    },
     module: {
         rules: [
             {
@@ -23,7 +31,7 @@ module.exports = {
         alias: {
             jquery$: path.resolve(__dirname, 'wwwroot/lib/jquery/dist/jquery.min.js'),
             bootstrap$: path.resolve(__dirname, 'wwwroot/lib/bootstrap/dist/js/bootstrap.min.js'),
-            knockout$: path.resolve(__dirname, 'wwwroot/lib/knockout/dist/knockout.js'),
+            knockout$: path.resolve(__dirname, 'wwwroot/lib/knockout/dist/knockout.js')
         }
     },
     output: {
