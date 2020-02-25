@@ -236,12 +236,40 @@ a+" })()) }}"};this.addTemplate=function(a,b){w.write("<script type='text/html' 
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(2), __webpack_require__(0), __webpack_require__(3), __webpack_require__(4)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, $, ko, componentService_1, helloWorld_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(2), __webpack_require__(0), __webpack_require__(3), __webpack_require__(4)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, $, ko, componentService_1, table_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     $(function () {
         var component = new componentService_1.ComponentService(ko);
-        component.register("hello-world", helloWorld_1.View.default, function () { return new helloWorld_1.Model(); });
+        component.register("table-component", table_1.View.default, function () {
+            var cols = new Array();
+            var rows = new Array();
+            cols.push({
+                colTemplate: "nombre-template",
+                headTemplate: "title-template",
+                header: {
+                    title: "Nombre"
+                }
+            });
+            cols.push({
+                colTemplate: "edad-template",
+                headTemplate: "title-template",
+                header: {
+                    title: "Edad"
+                }
+            });
+            rows.push({
+                nombre: "Rodrigo",
+                edad: 33
+            });
+            rows.push({
+                nombre: "Juan",
+                edad: 23
+            });
+            var model = new table_1.Model(cols);
+            model.load(rows);
+            return model;
+        });
         ko.applyBindings();
     });
 }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
@@ -301,7 +329,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<label data-bind=\"text: text\"></label>");
+/* harmony default export */ __webpack_exports__["default"] = ("<table class=\"table\">\n    <thead>\n        <tr>\n            <!-- ko foreach: cols() -->\n            <th>\n                <!-- ko template: { \n                        name: headTemplate,\n                        data: header\n                } -->\n                <!-- /ko -->\n            </th>\n            <!-- /ko -->\n        </tr>\n    </thead>\n    <tbody>\n        <!-- ko foreach: { data: rows, as: 'r' } -->\n        <tr>\n            <!-- ko foreach: $parent.cols() -->\n            <td>\n                <!-- ko template: { \n                        name: colTemplate,\n                        data: r\n                } -->\n                <!-- /ko -->\n            </td>\n            <!-- /ko -->\n        </tr>\n        <!-- /ko -->\n    </tbody>\n</table>");
 
 /***/ }),
 /* 6 */
@@ -311,8 +339,13 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var Model = /** @class */ (function () {
-        function Model() {
-            this.text = ko.observable("Hola Mundo");
+        function Model(cols) {
+            var _this = this;
+            this.load = function (rows) {
+                _this.rows(rows);
+            };
+            this.cols = ko.observableArray(cols);
+            this.rows = ko.observableArray([]);
         }
         return Model;
     }());

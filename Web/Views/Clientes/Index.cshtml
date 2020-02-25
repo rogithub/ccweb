@@ -5,4 +5,20 @@
     <script data-main="/js/clientes" src="~/lib/require/dist/require.js"></script>    
 }
 
-<hello-world></hello-world>
+<script type="text/html" id="label-template">
+    <label data-bind="text: $data"></label>
+</script>
+
+<script type="text/html" id="title-template">
+    <!-- ko template: { name: "label-template", data: $data.title } --><!-- /ko -->
+</script>
+
+<script type="text/html" id="nombre-template">
+    <!-- ko template: { name: "label-template", data: $data.nombre } --><!-- /ko -->
+</script>
+
+<script type="text/html" id="edad-template">
+    <!-- ko template: { name: "label-template", data: $data.edad } --><!-- /ko -->
+</script>
+
+<table-component></table-component>

@@ -1,0 +1,30 @@
+<table class="table">
+    <thead>
+        <tr>
+            <!-- ko foreach: cols() -->
+            <th>
+                <!-- ko template: { 
+                        name: headTemplate,
+                        data: header
+                } -->
+                <!-- /ko -->
+            </th>
+            <!-- /ko -->
+        </tr>
+    </thead>
+    <tbody>
+        <!-- ko foreach: { data: rows, as: 'r' } -->
+        <tr>
+            <!-- ko foreach: $parent.cols() -->
+            <td>
+                <!-- ko template: { 
+                        name: colTemplate,
+                        data: r
+                } -->
+                <!-- /ko -->
+            </td>
+            <!-- /ko -->
+        </tr>
+        <!-- /ko -->
+    </tbody>
+</table>

@@ -2,12 +2,49 @@
 import * as $ from 'jquery';
 import * as ko from 'knockout';
 import { ComponentService } from '../utils/componentService';
-import { View, Model } from '../components/helloWorld';
+import { View as TableView, Model as TableModel } from '../components/table';
+import { ObjectLiteral } from '../interfaces/objectLiteral';
+import { TableColumn } from '../interfaces/tableColumn';
 
 $(() => {
-
     let component = new ComponentService(ko);
-    component.register("hello-world", View.default, () => new Model());
+    component.register("table-component", TableView.default, () => {
+        let cols = new Array<TableColumn>();
+        let rows = new Array<ObjectLiteral>();
+
+        cols.push({
+            colTemplate: "nombre-template",
+            headTemplate: "title-template",
+            header: {
+                title: "Nombre"
+            }
+        });
+
+        cols.push({
+            colTemplate: "edad-template",
+            headTemplate: "title-template",
+            header: {
+                title: "Edad"
+            }
+        });
+
+        rows.push({
+            nombre: "Rodrigo",
+            edad: 33
+        });
+
+        rows.push({
+            nombre: "Juan",
+            edad: 23
+        })
+
+        let model = new TableModel(cols);
+
+        model.load(rows);
+
+
+        return model;
+    });
 
     ko.applyBindings();
 });
