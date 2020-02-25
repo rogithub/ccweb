@@ -1,0 +1,25 @@
+{
+  "name": "web",
+  "version": "1.0.0",
+  "description": "web page files",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:webpack": "webpack"
+  },
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rogithub/ccweb.git"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@types/bootstrap": "^4.3.1",
+    "@types/jquery": "^3.3.33",
+    "@types/knockout": "^3.4.67",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.8.2",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11"
+  }
+}
