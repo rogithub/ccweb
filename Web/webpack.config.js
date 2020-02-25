@@ -34,6 +34,6 @@ module.exports = {
 	// If using webpack and declaring knockout on your html add this to webpack.config.js
 	externals: {
 		'ko': 'ko',
-		jquery: 'jQuery'
+		'$': 'jQuery'
 	}
 };
