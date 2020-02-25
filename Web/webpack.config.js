@@ -5,14 +5,6 @@ module.exports = {
 		clientes: './TypeScript/pages/clientes.ts'
 	},
 	mode: 'production',
-	optimization: {
-		minimize: false,
-		splitChunks: {
-			chunks: 'all',
-			minSize: 0,
-			name: 'shared'
-		}
-	},
 	module: {
 		rules: [
 			{
