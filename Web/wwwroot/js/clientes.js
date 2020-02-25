@@ -241,7 +241,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     Object.defineProperty(exports, "__esModule", { value: true });
     $(function () {
         var component = new componentService_1.ComponentService(ko);
-        component.register("hello-world", helloWorld_1.View.default, function () { return new helloWorld_1.HelloWorld(); });
+        component.register("hello-world", helloWorld_1.View.default, function () { return new helloWorld_1.Model(); });
         ko.applyBindings();
     });
 }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
@@ -286,11 +286,11 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(5), __webpack_require__(6)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, View, helloWorld_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(5), __webpack_require__(6)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, View, model_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.View = View;
-    exports.HelloWorld = helloWorld_1.HelloWorld;
+    exports.Model = model_1.Model;
 }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
@@ -310,13 +310,13 @@ __webpack_require__.r(__webpack_exports__);
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, ko) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var HelloWorld = /** @class */ (function () {
-        function HelloWorld() {
+    var Model = /** @class */ (function () {
+        function Model() {
             this.text = ko.observable("Hola Mundo");
         }
-        return HelloWorld;
+        return Model;
     }());
-    exports.HelloWorld = HelloWorld;
+    exports.Model = Model;
 }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 

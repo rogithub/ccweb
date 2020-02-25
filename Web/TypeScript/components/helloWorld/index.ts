@@ -1,7 +1,7 @@
-import * as View from './helloWorld.html';
-import { HelloWorld } from './helloWorld';
+import * as View from './view.html';
+import { Model } from './model';
 
 export {
     View,
-    HelloWorld
+    Model
 }
