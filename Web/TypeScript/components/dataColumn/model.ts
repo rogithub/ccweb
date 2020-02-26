@@ -10,5 +10,19 @@ export class Model {
         this.order = this.ko.observable<SortOrder>(SortOrder.None);
         this.title = this.ko.observable<string>(title);
     }
+
+    public changeOrder = (): void => {
+        switch (this.order()) {
+            case SortOrder.None:
+                this.order(SortOrder.Asc);
+                break;
+            case SortOrder.Asc:
+                this.order(SortOrder.Desc);
+                break;
+            case SortOrder.Desc:
+                this.order(SortOrder.None);
+                break;
+        }
+    }
 }
 
