@@ -2,7 +2,7 @@
 import { ComponentService } from '../utils/componentService';
 import { View as DataTableView } from '../components/dataTable';
 import { View as DataCellView, Model as DataCellModel } from '../components/dataCell';
-import { DataTableBuilder } from '../dataTable/dataTableBuilder';
+import { DataTableBuilder } from '../models/dataTableBuilder';
 
 $(() => {
     let component = new ComponentService(ko);

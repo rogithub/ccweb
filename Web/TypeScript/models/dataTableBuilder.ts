@@ -1,32 +1,6 @@
 import { ObjectLiteral } from '../interfaces/objectLiteral';
 import { Model as DataTableModel } from '../components/dataTable';
-import { SortOrder } from '../enums/sortOrder';
-
-export class HeaderModel {
-    public order: KnockoutObservable<SortOrder>;
-    public title: KnockoutObservable<string>;
-    private ko: KnockoutStatic;
-
-    constructor(ko: KnockoutStatic, title: string = "") {
-        this.ko = ko;
-        this.order = this.ko.observable<SortOrder>(SortOrder.None);
-        this.title = this.ko.observable<string>(title);
-    }
-
-    public changeOrder = (): void => {
-        switch (this.order()) {
-            case SortOrder.None:
-                this.order(SortOrder.Asc);
-                break;
-            case SortOrder.Asc:
-                this.order(SortOrder.Desc);
-                break;
-            case SortOrder.Desc:
-                this.order(SortOrder.None);
-                break;
-        }
-    }
-}
+import { HeaderCell } from './headerCell';
 
 export class DataTableBuilder {
     private ko: KnockoutStatic;
@@ -48,7 +22,7 @@ export class DataTableBuilder {
             headTemplate,
             header: { title },
             getCellData: r => r[rowKey],
-            getHeadData: h => new HeaderModel(this.ko, h.title)
+            getHeadData: h => new HeaderCell(this.ko, h.title)
         });
     }
 
