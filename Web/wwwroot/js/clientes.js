@@ -227,9 +227,43 @@ exports.Model = Model;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var dataTable_1 = __webpack_require__(0);
-var sortOrder_1 = __webpack_require__(9);
-var HeaderModel = /** @class */ (function () {
-    function HeaderModel(ko, title) {
+var headerCell_1 = __webpack_require__(9);
+var DataTableBuilder = /** @class */ (function () {
+    function DataTableBuilder(ko) {
+        var _this = this;
+        this.get = function () { return _this.model; };
+        this.addCol = function (title, rowKey, celTemplate, headTemplate) {
+            if (celTemplate === void 0) { celTemplate = "data-cell-default-data-template"; }
+            if (headTemplate === void 0) { headTemplate = "data-cell-default-header-template"; }
+            _this.model.cols.push({
+                celTemplate: celTemplate,
+                headTemplate: headTemplate,
+                header: { title: title },
+                getCellData: function (r) { return r[rowKey]; },
+                getHeadData: function (h) { return new headerCell_1.HeaderCell(_this.ko, h.title); }
+            });
+        };
+        this.load = function (rows) {
+            _this.model.rows(rows);
+        };
+        this.ko = ko;
+        this.model = new dataTable_1.Model(this.ko);
+    }
+    return DataTableBuilder;
+}());
+exports.DataTableBuilder = DataTableBuilder;
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var sortOrder_1 = __webpack_require__(10);
+var HeaderCell = /** @class */ (function () {
+    function HeaderCell(ko, title) {
         var _this = this;
         if (title === void 0) { title = ""; }
         this.changeOrder = function () {
@@ -249,37 +283,13 @@ var HeaderModel = /** @class */ (function () {
         this.order = this.ko.observable(sortOrder_1.SortOrder.None);
         this.title = this.ko.observable(title);
     }
-    return HeaderModel;
+    return HeaderCell;
 }());
-exports.HeaderModel = HeaderModel;
-var DataTableBuilder = /** @class */ (function () {
-    function DataTableBuilder(ko) {
-        var _this = this;
-        this.get = function () { return _this.model; };
-        this.addCol = function (title, rowKey, celTemplate, headTemplate) {
-            if (celTemplate === void 0) { celTemplate = "data-cell-default-data-template"; }
-            if (headTemplate === void 0) { headTemplate = "data-cell-default-header-template"; }
-            _this.model.cols.push({
-                celTemplate: celTemplate,
-                headTemplate: headTemplate,
-                header: { title: title },
-                getCellData: function (r) { return r[rowKey]; },
-                getHeadData: function (h) { return new HeaderModel(_this.ko, h.title); }
-            });
-        };
-        this.load = function (rows) {
-            _this.model.rows(rows);
-        };
-        this.ko = ko;
-        this.model = new dataTable_1.Model(this.ko);
-    }
-    return DataTableBuilder;
-}());
-exports.DataTableBuilder = DataTableBuilder;
+exports.HeaderCell = HeaderCell;
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
