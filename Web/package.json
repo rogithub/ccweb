@@ -4,7 +4,7 @@
     "description": "web page files",
     "main": "index.js",
     "scripts": {
-        "test": "tsc --build ./TypeScript/tsconfig.json && nyc jasmine --config=jasmine.json",
+        "test": "rm -rf ./TypeScript/dist && tsc --build ./TypeScript/tsconfig.json && nyc jasmine --config=jasmine.json",
         "build:webpack": "webpack"
     },
     "nyc": {
