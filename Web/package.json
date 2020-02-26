@@ -8,9 +8,19 @@
         "build:webpack": "webpack"
     },
     "nyc": {
-        "exclude": [
-            "**/*Spec.js"
-        ]
+	"exclude": [
+	    "**/*Spec.js"
+	],
+	"branches": 80,
+	"lines": 80,
+	"functions": 80,
+	"statements": 80,
+	"watermarks": {
+	    "lines": [80, 95],
+	    "functions": [80, 95],
+	    "branches": [80, 95],
+	    "statements": [80, 95]
+	}
     },
     "author": "",
     "repository": {
