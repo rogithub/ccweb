@@ -13,8 +13,8 @@ $(() => {
 
     component.register("data-table", DataTableView.default, () => {
         let builder = new DataTableBuilder(ko);
-        builder.addCol("Nombre", "nombre");
-        builder.addCol("Edad", "edad");
+        builder.addTextCol("Nombre", "nombre");
+        builder.addSortableCol("Edad", "edad");
 
         builder.load([{
             nombre: "Rodrigo",

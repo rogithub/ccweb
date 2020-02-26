@@ -13,7 +13,7 @@ export class DataTableBuilder {
 
     public get = (): DataTableModel => this.model;
 
-    public addCol = (title: string, rowKey: string,
+    public addSortableCol = (title: string, rowKey: string,
         celTemplate: string = "data-cell-default-data-template",
         headTemplate: string = "data-cell-sortable-header-template"): void => {
 
@@ -23,6 +23,19 @@ export class DataTableBuilder {
             header: { title },
             getCellData: r => r[rowKey],
             getHeadData: h => new SortableHeaderCell(this.ko, h.title)
+        });
+    }
+
+    public addTextCol = (title: string, rowKey: string,
+        celTemplate: string = "data-cell-default-data-template",
+        headTemplate: string = "data-cell-default-data-template"): void => {
+
+        this.model.cols.push({
+            celTemplate,
+            headTemplate,
+            header: { title },
+            getCellData: r => r[rowKey],
+            getHeadData: h => h.title
         });
     }
 

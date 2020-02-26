@@ -115,8 +115,8 @@ $(function () {
     });
     component.register("data-table", dataTable_1.View.default, function () {
         var builder = new dataTableBuilder_1.DataTableBuilder(ko);
-        builder.addCol("Nombre", "nombre");
-        builder.addCol("Edad", "edad");
+        builder.addTextCol("Nombre", "nombre");
+        builder.addSortableCol("Edad", "edad");
         builder.load([{
                 nombre: "Rodrigo",
                 edad: 33
@@ -232,7 +232,7 @@ var DataTableBuilder = /** @class */ (function () {
     function DataTableBuilder(ko) {
         var _this = this;
         this.get = function () { return _this.model; };
-        this.addCol = function (title, rowKey, celTemplate, headTemplate) {
+        this.addSortableCol = function (title, rowKey, celTemplate, headTemplate) {
             if (celTemplate === void 0) { celTemplate = "data-cell-default-data-template"; }
             if (headTemplate === void 0) { headTemplate = "data-cell-sortable-header-template"; }
             _this.model.cols.push({
@@ -241,6 +241,17 @@ var DataTableBuilder = /** @class */ (function () {
                 header: { title: title },
                 getCellData: function (r) { return r[rowKey]; },
                 getHeadData: function (h) { return new sortableHeaderCell_1.SortableHeaderCell(_this.ko, h.title); }
+            });
+        };
+        this.addTextCol = function (title, rowKey, celTemplate, headTemplate) {
+            if (celTemplate === void 0) { celTemplate = "data-cell-default-data-template"; }
+            if (headTemplate === void 0) { headTemplate = "data-cell-default-data-template"; }
+            _this.model.cols.push({
+                celTemplate: celTemplate,
+                headTemplate: headTemplate,
+                header: { title: title },
+                getCellData: function (r) { return r[rowKey]; },
+                getHeadData: function (h) { return h.title; }
             });
         };
         this.load = function (rows) {
