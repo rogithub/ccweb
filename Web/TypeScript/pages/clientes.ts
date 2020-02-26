@@ -2,12 +2,17 @@
 import { ComponentService } from '../utils/componentService';
 import { View as DataTableView } from '../components/dataTable';
 import { View as DataColumnView, Model as DataColumnModel } from '../components/dataColumn';
+import { View as DataCellView, Model as DataCellModel } from '../components/dataCell';
 import { DataTableBuilder } from '../dataTable/dataTableBuilder';
 
 $(() => {
     let component = new ComponentService(ko);
     component.register("data-column", DataColumnView.default, (params) => {
         return new DataColumnModel(ko, params.title);
+    });
+
+    component.register("data-cell", DataCellView.default, (params) => {
+        return new DataCellModel(ko, params.template, params.data);
     });
 
     component.register("data-table", DataTableView.default, () => {

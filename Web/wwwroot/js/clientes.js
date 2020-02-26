@@ -107,11 +107,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var componentService_1 = __webpack_require__(2);
 var dataTable_1 = __webpack_require__(0);
 var dataColumn_1 = __webpack_require__(5);
-var dataTableBuilder_1 = __webpack_require__(9);
+var dataCell_1 = __webpack_require__(9);
+var dataTableBuilder_1 = __webpack_require__(12);
 $(function () {
     var component = new componentService_1.ComponentService(ko);
     component.register("data-column", dataColumn_1.View.default, function (params) {
         return new dataColumn_1.Model(ko, params.title);
+    });
+    component.register("data-cell", dataCell_1.View.default, function (params) {
+        return new dataCell_1.Model(ko, params.template, params.data);
     });
     component.register("data-table", dataTable_1.View.default, function () {
         var builder = new dataTableBuilder_1.DataTableBuilder(ko);
@@ -160,7 +164,7 @@ exports.ComponentService = ComponentService;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<table class=\"table\">\n    <thead>\n        <tr>\n            <!-- ko foreach: cols() -->\n            <th>\n                <data-column params=\"title: header.title\"></data-column>\n            </th>\n            <!-- /ko -->\n        </tr>\n    </thead>\n    <tbody>\n        <!-- ko foreach: { data: rows, as: 'r' } -->\n        <tr>\n            <!-- ko foreach: $parent.cols() -->\n            <td>\n                <!-- ko template: { \n                        name: celTemplate,\n                        data: modelFactory(r)\n                } -->\n                <!-- /ko -->\n            </td>\n            <!-- /ko -->\n        </tr>\n        <!-- /ko -->\n    </tbody>\n</table>");
+/* harmony default export */ __webpack_exports__["default"] = ("<table class=\"table\">\n    <thead>\n        <tr>\n            <!-- ko foreach: cols() -->\n            <th>\n                <data-column params=\"title: header.title\"></data-column>\n            </th>\n            <!-- /ko -->\n        </tr>\n    </thead>\n    <tbody>\n        <!-- ko foreach: { data: rows, as: 'r' } -->\n        <tr>\n            <!-- ko foreach: $parent.cols() -->\n            <td>\n                <data-cell params=\"template: celTemplate, data: modelFactory(r)\"></data-cell>\n            </td>\n            <!-- /ko -->\n        </tr>\n        <!-- /ko -->\n    </tbody>\n</table>");
 
 /***/ }),
 /* 4 */
@@ -243,13 +247,52 @@ var SortOrder;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+var View = __webpack_require__(10);
+exports.View = View;
+var model_1 = __webpack_require__(11);
+exports.Model = model_1.Model;
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<script type=\"text/html\" id=\"data-cell-default-data-template\">\n    <label data-bind=\"text: $data\"></label>\n</script>\n\n<!-- ko template: { name: template, data: data } -->\n<!-- /ko -->");
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Model = /** @class */ (function () {
+    function Model(ko, template, data) {
+        this.ko = ko;
+        this.template = this.ko.observable(template);
+        this.data = this.ko.observable(data);
+    }
+    return Model;
+}());
+exports.Model = Model;
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
 var dataTable_1 = __webpack_require__(0);
 var DataTableBuilder = /** @class */ (function () {
     function DataTableBuilder(ko) {
         var _this = this;
         this.get = function () { return _this.model; };
         this.addCol = function (title, rowKey, celTemplate) {
-            if (celTemplate === void 0) { celTemplate = "data-table-default-data-template"; }
+            if (celTemplate === void 0) { celTemplate = "data-cell-default-data-template"; }
             _this.model.cols.push({
                 celTemplate: celTemplate,
                 header: { title: title },

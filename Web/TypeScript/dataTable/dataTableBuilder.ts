@@ -13,7 +13,7 @@ export class DataTableBuilder {
 
     public get = (): DataTableModel => this.model;
 
-    public addCol = (title: string, rowKey: string, celTemplate: string = "data-table-default-data-template"): void => {
+    public addCol = (title: string, rowKey: string, celTemplate: string = "data-cell-default-data-template"): void => {
         this.model.cols.push({
             celTemplate: celTemplate,
             header: { title },
