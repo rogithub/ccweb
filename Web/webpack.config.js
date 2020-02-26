@@ -27,17 +27,16 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.js'],
-        alias: {
-            jquery$: path.resolve(__dirname, 'wwwroot/lib/jquery/dist/jquery.min.js'),
-            bootstrap$: path.resolve(__dirname, 'wwwroot/lib/bootstrap/dist/js/bootstrap.min.js'),
-            knockout$: path.resolve(__dirname, 'wwwroot/lib/knockout/dist/knockout.js')
-        }
+        extensions: ['.tsx', '.ts', '.js']
     },
     output: {
         // same file name with js extension
         filename: '[name].js',
         // to this path we will save our JS generated files
         path: path.resolve(__dirname, 'wwwroot/js')
+    },
+    // If using webpack and declaring knockout on your html add this to webpack.config.js
+    externals: {
+        'ko': 'ko'
     }
 };

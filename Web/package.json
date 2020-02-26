@@ -4,7 +4,7 @@
     "description": "web page files",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "webpack && jasmine --config=jasmine.json",
         "build:webpack": "webpack"
     },
     "author": "",
@@ -15,8 +15,10 @@
     "license": "ISC",
     "devDependencies": {
         "@types/bootstrap": "^4.3.1",
+        "@types/jasmine": "^3.5.7",
         "@types/jquery": "^3.3.33",
         "@types/knockout": "^3.4.67",
+        "jasmine": "^3.5.0",
         "raw-loader": "^4.0.0",
         "ts-loader": "^6.2.1",
         "typescript": "^3.8.2",

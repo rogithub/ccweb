@@ -1,4 +1,3 @@
-import * as ko from 'knockout';
 import { ObjectLiteral } from '../../interfaces/objectLiteral';
 import { TableColumn } from '../../interfaces/tableColumn';
 
@@ -12,7 +11,7 @@ export class Model {
     }
 
     public load = (cols: TableColumn[], rows: ObjectLiteral[]): void => {
-	this.cols(cols);
-	this.rows(rows);
+        this.cols(cols);
+        this.rows(rows);
     }
 }

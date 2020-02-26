@@ -1,6 +1,4 @@
 
-import * as $ from 'jquery';
-import * as ko from 'knockout';
 import { ComponentService } from '../utils/componentService';
 import { View as TableView, Model as TableModel } from '../components/table';
 import { ObjectLiteral } from '../interfaces/objectLiteral';
