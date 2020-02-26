@@ -7,6 +7,11 @@
         "test": "tsc --build ./TypeScript/tsconfig.json && nyc jasmine --config=jasmine.json",
         "build:webpack": "webpack"
     },
+    "nyc": {
+        "exclude": [
+            "**/*Spec.js"
+        ]
+    },
     "author": "",
     "repository": {
         "type": "git",
