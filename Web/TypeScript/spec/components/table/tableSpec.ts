@@ -1,4 +1,4 @@
-import { Model } from '../../../components/table/model';
+import { Model } from '../../../components/dataTable/model';
 import { ObjectLiteral } from '../../../interfaces/objectLiteral';
 import { TableColumn } from '../../../interfaces/tableColumn';
 

@@ -105,7 +105,7 @@ exports.Model = model_1.Model;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var componentService_1 = __webpack_require__(2);
-var table_1 = __webpack_require__(0);
+var dataTable_1 = __webpack_require__(0);
 var dataColumn_1 = __webpack_require__(5);
 var dataTableBuilder_1 = __webpack_require__(9);
 $(function () {
@@ -113,7 +113,7 @@ $(function () {
     component.register("data-column", dataColumn_1.View.default, function (params) {
         return new dataColumn_1.Model(ko, params.title);
     });
-    component.register("data-table", table_1.View.default, function () {
+    component.register("data-table", dataTable_1.View.default, function () {
         var builder = new dataTableBuilder_1.DataTableBuilder(ko);
         builder.addCol("Nombre", "nombre");
         builder.addCol("Edad", "edad");
@@ -243,7 +243,7 @@ var SortOrder;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var table_1 = __webpack_require__(0);
+var dataTable_1 = __webpack_require__(0);
 var DataTableBuilder = /** @class */ (function () {
     function DataTableBuilder(ko) {
         var _this = this;
@@ -260,7 +260,7 @@ var DataTableBuilder = /** @class */ (function () {
             _this.model.rows(rows);
         };
         this.ko = ko;
-        this.model = new table_1.Model(this.ko);
+        this.model = new dataTable_1.Model(this.ko);
     }
     return DataTableBuilder;
 }());

@@ -1,6 +1,6 @@
 
 import { ComponentService } from '../utils/componentService';
-import { View as TableView, Model as TableModel } from '../components/table';
+import { View as DataTableView } from '../components/dataTable';
 import { View as DataColumnView, Model as DataColumnModel } from '../components/dataColumn';
 import { DataTableBuilder } from '../dataTable/dataTableBuilder';
 
@@ -10,7 +10,7 @@ $(() => {
         return new DataColumnModel(ko, params.title);
     });
 
-    component.register("data-table", TableView.default, () => {
+    component.register("data-table", DataTableView.default, () => {
         let builder = new DataTableBuilder(ko);
         builder.addCol("Nombre", "nombre");
         builder.addCol("Edad", "edad");
