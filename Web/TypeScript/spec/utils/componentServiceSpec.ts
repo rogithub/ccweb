@@ -15,19 +15,20 @@ describe('ComponentService', () => {
 
     describe('register', () => {
 
-        it("should register new component", function () {
+        it("should register new component", function (done) {
             let componentName = "test-component";
-	    let factory = () => { model };
-	    let template = `<!-- ko template: { name: 'TestTemplate' } --><!-- /ko -->`;
-	    
-	    let secondParam = {
-		viewModel: { createViewModel: factory },
-		template: template
-	    };
+            let factory = () => { model };
+            let template = `<!-- ko template: { name: 'TestTemplate' } --><!-- /ko -->`;
 
-	    expect(service.register(componentName, template, factory));
-	    expect(ko.components.register).toHaveBeenCalledTimes(1);
-	    expect(ko.components.register).toHaveBeenCalledWith(componentName, secondParam);
+            let secondParam = {
+                viewModel: { createViewModel: factory },
+                template: template
+            };
+
+            expect(service.register(componentName, template, factory));
+            expect(ko.components.register).toHaveBeenCalledTimes(1);
+            expect(ko.components.register).toHaveBeenCalledWith(componentName, secondParam);
+            done();
         });
     });
 });
