@@ -1,9 +1,9 @@
 <table class="table">
     <thead>
         <tr>
-            <!-- ko foreach: cols() -->
+            <!-- ko foreach: { data: cols, as: 'c' } -->
             <th>
-                <data-column params="title: header.title"></data-column>
+                <data-cell params="template: headTemplate, data: getHeadData(c.header)"></data-cell>
             </th>
             <!-- /ko -->
         </tr>
