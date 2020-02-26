@@ -11,10 +11,11 @@
 	"all": true,
 	"exclude": [
 	    "*.js",
+	    "TypeScript/raw",
 	    "TypeScript/pages",
+	    "TypeScript/spec/",
 	    "**/[Ii]ndex.ts",
 	    "wwwroot/",
-	    "TypeScript/spec/",
 	    "**/*Spec.js"
 	],
 	"branches": 80,
