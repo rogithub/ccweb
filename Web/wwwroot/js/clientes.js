@@ -106,10 +106,14 @@ exports.Model = model_1.Model;
 Object.defineProperty(exports, "__esModule", { value: true });
 var componentService_1 = __webpack_require__(2);
 var table_1 = __webpack_require__(0);
-var dataTableBuilder_1 = __webpack_require__(5);
+var dataColumn_1 = __webpack_require__(5);
+var dataTableBuilder_1 = __webpack_require__(9);
 $(function () {
     var component = new componentService_1.ComponentService(ko);
-    component.register("table-component", table_1.View.default, function () {
+    component.register("data-column", dataColumn_1.View.default, function (params) {
+        return new dataColumn_1.Model(ko, params.title);
+    });
+    component.register("data-table", table_1.View.default, function () {
         var builder = new dataTableBuilder_1.DataTableBuilder(ko);
         builder.addCol("Nombre", "nombre");
         builder.addCol("Edad", "edad");
@@ -156,7 +160,7 @@ exports.ComponentService = ComponentService;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<table class=\"table\">\n    <thead>\n        <tr>\n            <!-- ko foreach: cols() -->\n            <th>\n                <!-- ko template: { \n                        name: headTemplate,\n                        data: header\n                } -->\n                <!-- /ko -->\n            </th>\n            <!-- /ko -->\n        </tr>\n    </thead>\n    <tbody>\n        <!-- ko foreach: { data: rows, as: 'r' } -->\n        <tr>\n            <!-- ko foreach: $parent.cols() -->\n            <td>\n                <!-- ko template: { \n                        name: colTemplate,\n                        data: modelFactory(r)\n                } -->\n                <!-- /ko -->\n            </td>\n            <!-- /ko -->\n        </tr>\n        <!-- /ko -->\n    </tbody>\n</table>");
+/* harmony default export */ __webpack_exports__["default"] = ("<table class=\"table\">\n    <thead>\n        <tr>\n            <!-- ko foreach: cols() -->\n            <th>\n                <data-column params=\"title: header.title\"></data-column>\n            </th>\n            <!-- /ko -->\n        </tr>\n    </thead>\n    <tbody>\n        <!-- ko foreach: { data: rows, as: 'r' } -->\n        <tr>\n            <!-- ko foreach: $parent.cols() -->\n            <td>\n                <!-- ko template: { \n                        name: celTemplate,\n                        data: modelFactory(r)\n                } -->\n                <!-- /ko -->\n            </td>\n            <!-- /ko -->\n        </tr>\n        <!-- /ko -->\n    </tbody>\n</table>");
 
 /***/ }),
 /* 4 */
@@ -183,36 +187,72 @@ exports.Model = Model;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var sortOrder_1 = __webpack_require__(6);
-var table_1 = __webpack_require__(0);
-var Column = /** @class */ (function () {
-    function Column(ko, rowKey, title) {
+var View = __webpack_require__(6);
+exports.View = View;
+var model_1 = __webpack_require__(7);
+exports.Model = model_1.Model;
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<label data-bind=\"text: title\"></label>\n<i class=\"fas fa-sort-down\"></i>");
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var sortOrder_1 = __webpack_require__(8);
+var Model = /** @class */ (function () {
+    function Model(ko, title) {
         if (title === void 0) { title = ""; }
         this.ko = ko;
         this.order = this.ko.observable(sortOrder_1.SortOrder.None);
         this.title = this.ko.observable(title);
     }
-    return Column;
+    return Model;
 }());
-var Cell = /** @class */ (function () {
-    function Cell(ko, data) {
-        if (data === void 0) { data = ""; }
-        this.ko = ko;
-        this.data = this.ko.observable(data);
-    }
-    return Cell;
-}());
+exports.Model = Model;
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var SortOrder;
+(function (SortOrder) {
+    SortOrder[SortOrder["None"] = 0] = "None";
+    SortOrder[SortOrder["Asc"] = 1] = "Asc";
+    SortOrder[SortOrder["Desc"] = 2] = "Desc";
+})(SortOrder = exports.SortOrder || (exports.SortOrder = {}));
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var table_1 = __webpack_require__(0);
 var DataTableBuilder = /** @class */ (function () {
     function DataTableBuilder(ko) {
         var _this = this;
         this.get = function () { return _this.model; };
-        this.addCol = function (title, rowKey, colTemplate, headTemplate) {
-            if (colTemplate === void 0) { colTemplate = "data-table-default-data-template"; }
-            if (headTemplate === void 0) { headTemplate = "data-table-default-head-template"; }
+        this.addCol = function (title, rowKey, celTemplate) {
+            if (celTemplate === void 0) { celTemplate = "data-table-default-data-template"; }
             _this.model.cols.push({
-                colTemplate: colTemplate,
-                headTemplate: headTemplate,
-                header: new Column(_this.ko, rowKey, title),
+                celTemplate: celTemplate,
+                header: { title: title },
                 modelFactory: function (r) { return r[rowKey]; }
             });
         };
@@ -225,21 +265,6 @@ var DataTableBuilder = /** @class */ (function () {
     return DataTableBuilder;
 }());
 exports.DataTableBuilder = DataTableBuilder;
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var SortOrder;
-(function (SortOrder) {
-    SortOrder[SortOrder["None"] = 0] = "None";
-    SortOrder[SortOrder["Asc"] = 1] = "Asc";
-    SortOrder[SortOrder["Desc"] = 2] = "Desc";
-})(SortOrder = exports.SortOrder || (exports.SortOrder = {}));
 
 
 /***/ })

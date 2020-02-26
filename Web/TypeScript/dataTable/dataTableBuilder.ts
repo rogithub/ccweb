@@ -1,28 +1,6 @@
-import { SortOrder } from '../enums/sortOrder';
 import { ObjectLiteral } from '../interfaces/objectLiteral';
 import { Model as TableModel } from '../components/table';
 
-class Column {
-    public order: KnockoutObservable<SortOrder>;
-    public title: KnockoutObservable<string>;
-    private ko: KnockoutStatic;
-
-    constructor(ko: KnockoutStatic, rowKey: string, title: string = "") {
-        this.ko = ko;
-        this.order = this.ko.observable<SortOrder>(SortOrder.None);
-        this.title = this.ko.observable<string>(title);
-    }
-}
-
-class Cell {
-    public data: KnockoutObservable<string>;
-    private ko: KnockoutStatic;
-
-    constructor(ko: KnockoutStatic, data: string = "") {
-        this.ko = ko;
-        this.data = this.ko.observable<string>(data);
-    }
-}
 
 export class DataTableBuilder {
     private ko: KnockoutStatic;
@@ -35,11 +13,10 @@ export class DataTableBuilder {
 
     public get = (): TableModel => this.model;
 
-    public addCol = (title: string, rowKey: string, colTemplate: string = "data-table-default-data-template", headTemplate: string = "data-table-default-head-template"): void => {
+    public addCol = (title: string, rowKey: string, celTemplate: string = "data-table-default-data-template"): void => {
         this.model.cols.push({
-            colTemplate: colTemplate,
-            headTemplate: headTemplate,
-            header: new Column(this.ko, rowKey, title),
+            celTemplate: celTemplate,
+            header: { title },
             modelFactory: r => r[rowKey]
         });
     }
