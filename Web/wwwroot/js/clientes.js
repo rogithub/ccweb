@@ -206,9 +206,6 @@ var DataTableBuilder = /** @class */ (function () {
     function DataTableBuilder(ko) {
         var _this = this;
         this.get = function () { return _this.model; };
-        this.getTemplate = function (template, rowKey) {
-            return "<!-- ko template: { name: \"" + template + "\", data: $data." + rowKey + " } --><!-- /ko -->";
-        };
         this.addCol = function (title, rowKey, colTemplate, headTemplate) {
             if (colTemplate === void 0) { colTemplate = "data-table-default-data-template"; }
             if (headTemplate === void 0) { headTemplate = "data-table-default-head-template"; }

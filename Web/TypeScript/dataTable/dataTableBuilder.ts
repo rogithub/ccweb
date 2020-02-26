@@ -35,10 +35,6 @@ export class DataTableBuilder {
 
     public get = (): TableModel => this.model;
 
-    private getTemplate = (template: string, rowKey: string): string => {
-        return `<!-- ko template: { name: "${template}", data: $data.${rowKey} } --><!-- /ko -->`;
-    }
-
     public addCol = (title: string, rowKey: string, colTemplate: string = "data-table-default-data-template", headTemplate: string = "data-table-default-head-template"): void => {
         this.model.cols.push({
             colTemplate: colTemplate,
