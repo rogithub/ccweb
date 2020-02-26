@@ -13,7 +13,7 @@
         <tr>
             <!-- ko foreach: $parent.cols() -->
             <td>
-                <data-cell params="template: celTemplate, data: modelFactory(r)"></data-cell>
+                <data-cell params="template: celTemplate, data: getCellData(r)"></data-cell>
             </td>
             <!-- /ko -->
         </tr>

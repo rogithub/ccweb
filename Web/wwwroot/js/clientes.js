@@ -164,7 +164,7 @@ exports.ComponentService = ComponentService;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<table class=\"table\">\n    <thead>\n        <tr>\n            <!-- ko foreach: cols() -->\n            <th>\n                <data-column params=\"title: header.title\"></data-column>\n            </th>\n            <!-- /ko -->\n        </tr>\n    </thead>\n    <tbody>\n        <!-- ko foreach: { data: rows, as: 'r' } -->\n        <tr>\n            <!-- ko foreach: $parent.cols() -->\n            <td>\n                <data-cell params=\"template: celTemplate, data: modelFactory(r)\"></data-cell>\n            </td>\n            <!-- /ko -->\n        </tr>\n        <!-- /ko -->\n    </tbody>\n</table>");
+/* harmony default export */ __webpack_exports__["default"] = ("<table class=\"table\">\n    <thead>\n        <tr>\n            <!-- ko foreach: cols() -->\n            <th>\n                <data-column params=\"title: header.title\"></data-column>\n            </th>\n            <!-- /ko -->\n        </tr>\n    </thead>\n    <tbody>\n        <!-- ko foreach: { data: rows, as: 'r' } -->\n        <tr>\n            <!-- ko foreach: $parent.cols() -->\n            <td>\n                <data-cell params=\"template: celTemplate, data: getCellData(r)\"></data-cell>\n            </td>\n            <!-- /ko -->\n        </tr>\n        <!-- /ko -->\n    </tbody>\n</table>");
 
 /***/ }),
 /* 4 */
@@ -296,7 +296,7 @@ var DataTableBuilder = /** @class */ (function () {
             _this.model.cols.push({
                 celTemplate: celTemplate,
                 header: { title: title },
-                modelFactory: function (r) { return r[rowKey]; }
+                getCellData: function (r) { return r[rowKey]; }
             });
         };
         this.load = function (rows) {

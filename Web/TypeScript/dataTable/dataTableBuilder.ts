@@ -17,7 +17,7 @@ export class DataTableBuilder {
         this.model.cols.push({
             celTemplate: celTemplate,
             header: { title },
-            modelFactory: r => r[rowKey]
+            getCellData: r => r[rowKey]
         });
     }
 
