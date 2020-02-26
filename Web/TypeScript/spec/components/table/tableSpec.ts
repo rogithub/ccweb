@@ -1,6 +1,6 @@
-import { Model as TableModel } from '../../components/table';
+import { Model } from '../../../components/table';
 
-describe('TableModel', () => {
+describe('Model', () => {
     describe('load', () => {
 
         it("should load table", function (done) {
