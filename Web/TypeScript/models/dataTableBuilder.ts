@@ -1,6 +1,6 @@
 import { ObjectLiteral } from '../interfaces/objectLiteral';
 import { Model as DataTableModel } from '../components/dataTable';
-import { HeaderCell } from './headerCell';
+import { SortableHeaderCell } from './sortableHeaderCell';
 
 export class DataTableBuilder {
     private ko: KnockoutStatic;
@@ -15,14 +15,14 @@ export class DataTableBuilder {
 
     public addCol = (title: string, rowKey: string,
         celTemplate: string = "data-cell-default-data-template",
-        headTemplate: string = "data-cell-default-header-template"): void => {
+        headTemplate: string = "data-cell-sortable-header-template"): void => {
 
         this.model.cols.push({
             celTemplate,
             headTemplate,
             header: { title },
             getCellData: r => r[rowKey],
-            getHeadData: h => new HeaderCell(this.ko, h.title)
+            getHeadData: h => new SortableHeaderCell(this.ko, h.title)
         });
     }
 

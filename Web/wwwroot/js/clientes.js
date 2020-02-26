@@ -199,7 +199,7 @@ exports.Model = model_1.Model;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<script type=\"text/html\" id=\"data-cell-default-header-template\">\n    <a data-bind=\"click: changeOrder\">\n        <label data-bind=\"text: title\" style=\"cursor: pointer;\"></label>\n        <!-- ko if: order() === 0 -->\n        <i class=\"fas fa-sort\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 1 -->\n        <i class=\"fas fa-sort-up\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 2 -->\n        <i class=\"fas fa-sort-down\"></i>\n        <!-- /ko -->\n    </a>\n</script>\n\n<script type=\"text/html\" id=\"data-cell-default-data-template\">\n    <label data-bind=\"text: $data\"></label>\n</script>\n\n<!-- ko template: { name: template, data: data } -->\n<!-- /ko -->");
+/* harmony default export */ __webpack_exports__["default"] = ("<script type=\"text/html\" id=\"data-cell-sortable-header-template\">\n    <a data-bind=\"click: changeOrder\">\n        <label data-bind=\"text: title\" style=\"cursor: pointer;\"></label>\n        <!-- ko if: order() === 0 -->\n        <i class=\"fas fa-sort\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 1 -->\n        <i class=\"fas fa-sort-up\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 2 -->\n        <i class=\"fas fa-sort-down\"></i>\n        <!-- /ko -->\n    </a>\n</script>\n\n<script type=\"text/html\" id=\"data-cell-default-data-template\">\n    <label data-bind=\"text: $data\"></label>\n</script>\n\n<!-- ko template: { name: template, data: data } -->\n<!-- /ko -->");
 
 /***/ }),
 /* 7 */
@@ -227,20 +227,20 @@ exports.Model = Model;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var dataTable_1 = __webpack_require__(0);
-var headerCell_1 = __webpack_require__(9);
+var sortableHeaderCell_1 = __webpack_require__(9);
 var DataTableBuilder = /** @class */ (function () {
     function DataTableBuilder(ko) {
         var _this = this;
         this.get = function () { return _this.model; };
         this.addCol = function (title, rowKey, celTemplate, headTemplate) {
             if (celTemplate === void 0) { celTemplate = "data-cell-default-data-template"; }
-            if (headTemplate === void 0) { headTemplate = "data-cell-default-header-template"; }
+            if (headTemplate === void 0) { headTemplate = "data-cell-sortable-header-template"; }
             _this.model.cols.push({
                 celTemplate: celTemplate,
                 headTemplate: headTemplate,
                 header: { title: title },
                 getCellData: function (r) { return r[rowKey]; },
-                getHeadData: function (h) { return new headerCell_1.HeaderCell(_this.ko, h.title); }
+                getHeadData: function (h) { return new sortableHeaderCell_1.SortableHeaderCell(_this.ko, h.title); }
             });
         };
         this.load = function (rows) {
@@ -262,8 +262,8 @@ exports.DataTableBuilder = DataTableBuilder;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var sortOrder_1 = __webpack_require__(10);
-var HeaderCell = /** @class */ (function () {
-    function HeaderCell(ko, title) {
+var SortableHeaderCell = /** @class */ (function () {
+    function SortableHeaderCell(ko, title) {
         var _this = this;
         if (title === void 0) { title = ""; }
         this.changeOrder = function () {
@@ -283,9 +283,9 @@ var HeaderCell = /** @class */ (function () {
         this.order = this.ko.observable(sortOrder_1.SortOrder.None);
         this.title = this.ko.observable(title);
     }
-    return HeaderCell;
+    return SortableHeaderCell;
 }());
-exports.HeaderCell = HeaderCell;
+exports.SortableHeaderCell = SortableHeaderCell;
 
 
 /***/ }),
