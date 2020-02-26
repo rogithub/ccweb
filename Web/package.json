@@ -10,6 +10,9 @@
     "nyc": {
 	"all": true,
 	"exclude": [
+	    "*.js",
+	    "TypeScript/pages",
+	    "**/[Ii]ndex.ts",
 	    "wwwroot/",
 	    "TypeScript/spec/",
 	    "**/*Spec.js"
