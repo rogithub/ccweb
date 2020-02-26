@@ -4,7 +4,7 @@
     "description": "web page files",
     "main": "index.js",
     "scripts": {
-        "test": "webpack && jasmine --config=jasmine.json",
+        "test": "tsc --build ./TypeScript/tsconfig.json && jasmine --config=jasmine.json",
         "build:webpack": "webpack"
     },
     "author": "",
