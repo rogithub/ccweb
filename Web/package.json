@@ -4,7 +4,7 @@
     "description": "web page files",
     "main": "index.js",
     "scripts": {
-        "test": "tsc --build ./TypeScript/tsconfig.json && jasmine --config=jasmine.json",
+        "test": "tsc --build ./TypeScript/tsconfig.json && nyc jasmine --config=jasmine.json",
         "build:webpack": "webpack"
     },
     "author": "",
@@ -19,6 +19,7 @@
         "@types/jquery": "^3.3.33",
         "@types/knockout": "^3.4.67",
         "jasmine": "^3.5.0",
+        "nyc": "^15.0.0",
         "raw-loader": "^4.0.0",
         "ts-loader": "^6.2.1",
         "typescript": "^3.8.2",
