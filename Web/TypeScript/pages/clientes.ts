@@ -36,7 +36,7 @@ $(() => {
             edad: 23
         })
 
-        let model = new TableModel();
+        let model = new TableModel(ko);
 
         model.load(cols, rows);
 

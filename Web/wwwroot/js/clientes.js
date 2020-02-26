@@ -120,7 +120,7 @@ $(function () {
             nombre: "Juan",
             edad: 23
         });
-        var model = new table_1.Model();
+        var model = new table_1.Model(ko);
         model.load(cols, rows);
         return model;
     });
@@ -180,14 +180,15 @@ __webpack_require__.r(__webpack_exports__);
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var Model = /** @class */ (function () {
-    function Model() {
+    function Model(ko) {
         var _this = this;
         this.load = function (cols, rows) {
             _this.cols(cols);
             _this.rows(rows);
         };
-        this.cols = ko.observableArray([]);
-        this.rows = ko.observableArray([]);
+        this.ko = ko;
+        this.cols = this.ko.observableArray([]);
+        this.rows = this.ko.observableArray([]);
     }
     return Model;
 }());
