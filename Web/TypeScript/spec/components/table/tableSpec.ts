@@ -15,7 +15,7 @@ describe('Model', () => {
             let m = new Model(ko);
             let cols: TableColumn[] = [];
             let rows: ObjectLiteral[] = [];
-            m.load(cols, rows);
+
 
             expect(m.cols()).toEqual(cols);
             expect(m.rows()).toEqual(rows);

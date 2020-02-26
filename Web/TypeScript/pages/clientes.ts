@@ -1,47 +1,25 @@
 
 import { ComponentService } from '../utils/componentService';
 import { View as TableView, Model as TableModel } from '../components/table';
-import { ObjectLiteral } from '../interfaces/objectLiteral';
-import { TableColumn } from '../interfaces/tableColumn';
+import { DataTableBuilder } from '../dataTable/dataTableBuilder';
 
 $(() => {
     let component = new ComponentService(ko);
     component.register("table-component", TableView.default, () => {
-        let cols = new Array<TableColumn>();
-        let rows = new Array<ObjectLiteral>();
+        let builder = new DataTableBuilder(ko);
+        builder.addCol("Nombre", "nombre");
+        builder.addCol("Edad", "edad");
 
-        cols.push({
-            colTemplate: "nombre-template",
-            headTemplate: "title-template",
-            header: {
-                title: "Nombre"
-            }
-        });
-
-        cols.push({
-            colTemplate: "edad-template",
-            headTemplate: "title-template",
-            header: {
-                title: "Edad"
-            }
-        });
-
-        rows.push({
+        builder.load([{
             nombre: "Rodrigo",
             edad: 33
-        });
-
-        rows.push({
+        },
+        {
             nombre: "Juan",
-            edad: 23
-        })
+            edad: 22
+        }]);
 
-        let model = new TableModel(ko);
-
-        model.load(cols, rows);
-
-
-        return model;
+        return builder.get();
     });
 
     ko.applyBindings();

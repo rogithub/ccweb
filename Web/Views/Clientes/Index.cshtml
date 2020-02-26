@@ -9,21 +9,4 @@
     <script type="text/javascript" src="~/js/clientes.js"></script>    
 }
 
-<script type="text/html" id="label-template">
-    <label data-bind="text: $data"></label>
-    <i class="fas fa-sort-down"></i>
-</script>
-
-<script type="text/html" id="title-template">
-    <!-- ko template: { name: "label-template", data: $data.title } --><!-- /ko -->
-</script>
-
-<script type="text/html" id="nombre-template">
-    <!-- ko template: { name: "label-template", data: $data.nombre } --><!-- /ko -->
-</script>
-
-<script type="text/html" id="edad-template">
-    <!-- ko template: { name: "label-template", data: $data.edad } --><!-- /ko -->
-</script>
-
-<table-component></table-component>
+<partial name="/Views/Shared/DataTable.cshtml" />
