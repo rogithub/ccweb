@@ -1,4 +1,4 @@
-import { ComponentService } from '../utils/componentService';
+import { ComponentService } from '../../utils/componentService';
 
 describe('ComponentService', () => {
     let model = {};
