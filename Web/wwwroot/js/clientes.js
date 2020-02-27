@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -91,33 +91,33 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var View = __webpack_require__(3);
-exports.View = View;
-var model_1 = __webpack_require__(4);
-exports.Model = model_1.Model;
-
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var componentService_1 = __webpack_require__(2);
-var dataTable_1 = __webpack_require__(0);
+var componentService_1 = __webpack_require__(1);
+var dataTable_1 = __webpack_require__(2);
 var dataCell_1 = __webpack_require__(5);
-var dataTableBuilder_1 = __webpack_require__(8);
+var Constants = __webpack_require__(8);
+var sortableHeaderCell_1 = __webpack_require__(9);
 $(function () {
     var component = new componentService_1.ComponentService(ko);
     component.register("data-cell", dataCell_1.View.default, function (params) {
         return new dataCell_1.Model(ko, params.template, params.data);
     });
     component.register("data-table", dataTable_1.View.default, function () {
-        var builder = new dataTableBuilder_1.DataTableBuilder(ko);
-        builder.addTextCol("Nombre", "nombre");
-        builder.addSortableCol("Edad", "edad");
-        builder.load([{
+        var model = new dataTable_1.Model(ko);
+        model.cols.push({
+            celTemplate: Constants.default.DATA_CELL_DEFAULT_TEMPLATE,
+            headTemplate: Constants.default.DATA_CELL_DEFAULT_TEMPLATE,
+            getCellData: function (r) { return r["nombre"]; },
+            getHeadData: function (h) { return h.title; },
+            header: { title: "Nombre" }
+        });
+        model.cols.push({
+            celTemplate: Constants.default.DATA_CELL_DEFAULT_TEMPLATE,
+            headTemplate: Constants.default.DATA_CELL_SORTABLE_HEADER,
+            getCellData: function (r) { return r["edad"]; },
+            getHeadData: function (h) { return new sortableHeaderCell_1.SortableHeaderCell(ko, h.title); },
+            header: { title: "Edad" }
+        });
+        model.rows([{
                 nombre: "Rodrigo",
                 edad: 33
             },
@@ -125,14 +125,14 @@ $(function () {
                 nombre: "Juan",
                 edad: 22
             }]);
-        return builder.get();
+        return model;
     });
     ko.applyBindings();
 });
 
 
 /***/ }),
-/* 2 */
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -152,6 +152,19 @@ var ComponentService = /** @class */ (function () {
     return ComponentService;
 }());
 exports.ComponentService = ComponentService;
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var View = __webpack_require__(3);
+exports.View = View;
+var model_1 = __webpack_require__(4);
+exports.Model = model_1.Model;
 
 
 /***/ }),
@@ -226,43 +239,10 @@ exports.Model = Model;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var dataTable_1 = __webpack_require__(0);
-var sortableHeaderCell_1 = __webpack_require__(9);
-var DataTableBuilder = /** @class */ (function () {
-    function DataTableBuilder(ko) {
-        var _this = this;
-        this.get = function () { return _this.model; };
-        this.addSortableCol = function (title, rowKey, celTemplate, headTemplate) {
-            if (celTemplate === void 0) { celTemplate = "data-cell-default-data-template"; }
-            if (headTemplate === void 0) { headTemplate = "data-cell-sortable-header-template"; }
-            _this.model.cols.push({
-                celTemplate: celTemplate,
-                headTemplate: headTemplate,
-                header: { title: title },
-                getCellData: function (r) { return r[rowKey]; },
-                getHeadData: function (h) { return new sortableHeaderCell_1.SortableHeaderCell(_this.ko, h.title); }
-            });
-        };
-        this.addTextCol = function (title, rowKey, celTemplate, headTemplate) {
-            if (celTemplate === void 0) { celTemplate = "data-cell-default-data-template"; }
-            if (headTemplate === void 0) { headTemplate = "data-cell-default-data-template"; }
-            _this.model.cols.push({
-                celTemplate: celTemplate,
-                headTemplate: headTemplate,
-                header: { title: title },
-                getCellData: function (r) { return r[rowKey]; },
-                getHeadData: function (h) { return h.title; }
-            });
-        };
-        this.load = function (rows) {
-            _this.model.rows(rows);
-        };
-        this.ko = ko;
-        this.model = new dataTable_1.Model(this.ko);
-    }
-    return DataTableBuilder;
-}());
-exports.DataTableBuilder = DataTableBuilder;
+exports.default = {
+    DATA_CELL_DEFAULT_TEMPLATE: "data-cell-default-data-template",
+    DATA_CELL_SORTABLE_HEADER: "data-cell-sortable-header-template"
+};
 
 
 /***/ }),

@@ -1,8 +1,9 @@
 
 import { ComponentService } from '../utils/componentService';
-import { View as DataTableView } from '../components/dataTable';
+import { View as DataTableView, Model as DataTableModel } from '../components/dataTable';
 import { View as DataCellView, Model as DataCellModel } from '../components/dataCell';
-import { DataTableBuilder } from '../models/dataTableBuilder';
+import * as Constants from '../models/dataTableConstants';
+import { SortableHeaderCell } from '../models/sortableHeaderCell';
 
 $(() => {
     let component = new ComponentService(ko);
@@ -12,11 +13,25 @@ $(() => {
     });
 
     component.register("data-table", DataTableView.default, () => {
-        let builder = new DataTableBuilder(ko);
-        builder.addTextCol("Nombre", "nombre");
-        builder.addSortableCol("Edad", "edad");
+        let model = new DataTableModel(ko);
 
-        builder.load([{
+        model.cols.push({
+            celTemplate: Constants.default.DATA_CELL_DEFAULT_TEMPLATE,
+            headTemplate: Constants.default.DATA_CELL_DEFAULT_TEMPLATE,
+            getCellData: r => r["nombre"],
+            getHeadData: h => h.title,
+            header: { title: "Nombre" }
+        });
+
+        model.cols.push({
+            celTemplate: Constants.default.DATA_CELL_DEFAULT_TEMPLATE,
+            headTemplate: Constants.default.DATA_CELL_SORTABLE_HEADER,
+            getCellData: r => r["edad"],
+            getHeadData: h => new SortableHeaderCell(ko, h.title),
+            header: { title: "Edad" }
+        });
+
+        model.rows([{
             nombre: "Rodrigo",
             edad: 33
         },
@@ -25,7 +40,7 @@ $(() => {
             edad: 22
         }]);
 
-        return builder.get();
+        return model;
     });
 
     ko.applyBindings();
