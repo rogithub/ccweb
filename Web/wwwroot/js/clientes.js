@@ -261,13 +261,13 @@ var SortableHeaderCell = /** @class */ (function () {
             switch (_this.order()) {
                 case sortOrder_1.SortOrder.None:
                     _this.order(sortOrder_1.SortOrder.Asc);
-                    break;
+                    return;
                 case sortOrder_1.SortOrder.Asc:
                     _this.order(sortOrder_1.SortOrder.Desc);
-                    break;
+                    return;
                 case sortOrder_1.SortOrder.Desc:
                     _this.order(sortOrder_1.SortOrder.None);
-                    break;
+                    return;
             }
         };
         this.ko = ko;

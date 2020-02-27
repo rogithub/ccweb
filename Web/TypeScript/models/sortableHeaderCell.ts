@@ -15,13 +15,13 @@ export class SortableHeaderCell {
         switch (this.order()) {
             case SortOrder.None:
                 this.order(SortOrder.Asc);
-                break;
+                return;
             case SortOrder.Asc:
                 this.order(SortOrder.Desc);
-                break;
+                return;
             case SortOrder.Desc:
                 this.order(SortOrder.None);
-                break;
+                return;
         }
     }
 }
