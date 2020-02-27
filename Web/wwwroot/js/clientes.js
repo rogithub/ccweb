@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -91,39 +91,40 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var component_1 = __webpack_require__(1);
-var dataTable_1 = __webpack_require__(2);
+var view_html_1 = __webpack_require__(3);
+exports.View = view_html_1.default;
+var model_1 = __webpack_require__(4);
+exports.Model = model_1.Model;
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var component_1 = __webpack_require__(2);
+var dataTable_1 = __webpack_require__(0);
 var dataCell_1 = __webpack_require__(5);
-var dataTableConstants_1 = __webpack_require__(8);
-var sortableHeaderCell_1 = __webpack_require__(9);
+var jsonDataTable_1 = __webpack_require__(8);
 $(function () {
     var component = new component_1.Component(ko);
     component.register("data-cell", dataCell_1.View, function (params) {
         return new dataCell_1.Model(ko, params.template, params.data);
     });
     component.register("data-table", dataTable_1.View, function () {
-        var model = new dataTable_1.Model(ko);
-        model.cols.push({
-            celTemplate: dataTableConstants_1.default.DATA_CELL_DEFAULT_TEMPLATE,
-            headTemplate: dataTableConstants_1.default.DATA_CELL_DEFAULT_TEMPLATE,
-            getCellData: function (r) { return r["nombre"]; },
-            getHeadData: function (h) { return h.title; },
-            header: { title: "Nombre" }
-        });
-        model.cols.push({
-            celTemplate: dataTableConstants_1.default.DATA_CELL_DEFAULT_TEMPLATE,
-            headTemplate: dataTableConstants_1.default.DATA_CELL_SORTABLE_HEADER,
-            getCellData: function (r) { return r["edad"]; },
-            getHeadData: function (h) { return new sortableHeaderCell_1.SortableHeaderCell(ko, h.title); },
-            header: { title: "Edad" }
-        });
+        var model = new jsonDataTable_1.JsonDataTable(ko, [{
+                title: "Nombre", rowKey: "nombre", sortable: false
+            }, {
+                title: "Edad", rowKey: "edad", sortable: true
+            }]);
         model.rows([{
                 nombre: "Rodrigo",
-                edad: 33
-            },
-            {
+                edad: 100
+            }, {
                 nombre: "Juan",
-                edad: 22
+                edad: 200
             }]);
         return model;
     });
@@ -132,7 +133,7 @@ $(function () {
 
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -152,19 +153,6 @@ var Component = /** @class */ (function () {
     return Component;
 }());
 exports.Component = Component;
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var view_html_1 = __webpack_require__(3);
-exports.View = view_html_1.default;
-var model_1 = __webpack_require__(4);
-exports.Model = model_1.Model;
 
 
 /***/ }),
@@ -238,11 +226,48 @@ exports.Model = Model;
 
 "use strict";
 
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = {
-    DATA_CELL_DEFAULT_TEMPLATE: "data-cell-default-data-template",
-    DATA_CELL_SORTABLE_HEADER: "data-cell-sortable-header-template"
-};
+var dataTable_1 = __webpack_require__(0);
+var dataTableConstants_1 = __webpack_require__(9);
+var sortableHeaderCell_1 = __webpack_require__(10);
+var JsonDataTable = /** @class */ (function (_super) {
+    __extends(JsonDataTable, _super);
+    function JsonDataTable(ko, cols) {
+        var _this = _super.call(this, ko) || this;
+        ko.utils.arrayMap(cols, function (c) {
+            var hTemplate = c.sortable ?
+                dataTableConstants_1.default.DATA_CELL_SORTABLE_HEADER :
+                dataTableConstants_1.default.DATA_CELL_DEFAULT_TEMPLATE;
+            var hDataFn;
+            hDataFn = c.sortable ?
+                function (h) { return new sortableHeaderCell_1.SortableHeaderCell(ko, h.title); } :
+                function (h) { return h.title; };
+            _this.cols.push({
+                celTemplate: dataTableConstants_1.default.DATA_CELL_DEFAULT_TEMPLATE,
+                headTemplate: hTemplate,
+                getCellData: function (r) { return r[c.rowKey]; },
+                getHeadData: hDataFn,
+                header: c
+            });
+        });
+        return _this;
+    }
+    return JsonDataTable;
+}(dataTable_1.Model));
+exports.JsonDataTable = JsonDataTable;
 
 
 /***/ }),
@@ -252,7 +277,20 @@ exports.default = {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var sortOrder_1 = __webpack_require__(10);
+exports.default = {
+    DATA_CELL_DEFAULT_TEMPLATE: "data-cell-default-data-template",
+    DATA_CELL_SORTABLE_HEADER: "data-cell-sortable-header-template"
+};
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var sortOrder_1 = __webpack_require__(11);
 var SortableHeaderCell = /** @class */ (function () {
     function SortableHeaderCell(ko, title) {
         var _this = this;
@@ -280,7 +318,7 @@ exports.SortableHeaderCell = SortableHeaderCell;
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
