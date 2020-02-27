@@ -15,6 +15,7 @@
             "TypeScript/pages",
             "TypeScript/spec/",
             "TypeScript/enums/",
+	    "TypeScript/constants/",
             "**/[Ii]ndex.ts",
             "wwwroot/",
             "**/*Spec.js"

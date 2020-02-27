@@ -2,7 +2,7 @@
 import { ComponentService } from '../utils/componentService';
 import { View as DataTableView, Model as DataTableModel } from '../components/dataTable';
 import { View as DataCellView, Model as DataCellModel } from '../components/dataCell';
-import * as Constants from '../models/dataTableConstants';
+import * as Constants from '../constants/dataTableConstants';
 import { SortableHeaderCell } from '../models/sortableHeaderCell';
 
 $(() => {
