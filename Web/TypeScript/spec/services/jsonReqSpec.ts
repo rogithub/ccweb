@@ -1,10 +1,12 @@
-import { Request } from '../../services/request';
+import { JsonReq } from '../../services/jsonReq';
 
 describe('Component', () => {
-    let service: Request;
+    let service: JsonReq;
 
     beforeEach(() => {
-        service = new Request();
+        let fetch = jasmine.createSpy("fetch");
+
+        service = new JsonReq("localhost", fetch);
     });
 
     describe('get', () => {
