@@ -1,5 +1,5 @@
 
-export class ComponentService {
+export class Component {
     private ko: KnockoutStatic;
 
     constructor(ko: KnockoutStatic) {

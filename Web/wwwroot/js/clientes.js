@@ -91,13 +91,13 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var componentService_1 = __webpack_require__(1);
+var component_1 = __webpack_require__(1);
 var dataTable_1 = __webpack_require__(2);
 var dataCell_1 = __webpack_require__(5);
 var Constants = __webpack_require__(8);
 var sortableHeaderCell_1 = __webpack_require__(9);
 $(function () {
-    var component = new componentService_1.ComponentService(ko);
+    var component = new component_1.Component(ko);
     component.register("data-cell", dataCell_1.View.default, function (params) {
         return new dataCell_1.Model(ko, params.template, params.data);
     });
@@ -138,20 +138,20 @@ $(function () {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var ComponentService = /** @class */ (function () {
-    function ComponentService(ko) {
+var Component = /** @class */ (function () {
+    function Component(ko) {
         this.ko = ko;
     }
-    ComponentService.prototype.register = function (name, template, factory) {
+    Component.prototype.register = function (name, template, factory) {
         var self = this;
         self.ko.components.register(name, {
             viewModel: { createViewModel: factory },
             template: template
         });
     };
-    return ComponentService;
+    return Component;
 }());
-exports.ComponentService = ComponentService;
+exports.Component = Component;
 
 
 /***/ }),

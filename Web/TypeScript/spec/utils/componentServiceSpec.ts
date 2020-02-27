@@ -1,14 +1,14 @@
-import { ComponentService } from '../../utils/componentService';
+import { Component } from '../../services/component';
 import ko from '../specHelpers/koMock';
 
 describe('ComponentService', () => {
     let model = {};
-    let service: ComponentService;
+    let service: Component;
 
     beforeEach(() => {
         ko["components"] = jasmine.createSpyObj('components', ['register']);
 
-        service = new ComponentService(ko);
+        service = new Component(ko);
     });
 
     describe('register', () => {

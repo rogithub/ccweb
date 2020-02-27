@@ -1,12 +1,12 @@
 
-import { ComponentService } from '../utils/componentService';
+import { Component } from '../services/component';
 import { View as DataTableView, Model as DataTableModel } from '../components/dataTable';
 import { View as DataCellView, Model as DataCellModel } from '../components/dataCell';
 import * as Constants from '../constants/dataTableConstants';
 import { SortableHeaderCell } from '../models/sortableHeaderCell';
 
 $(() => {
-    let component = new ComponentService(ko);
+    let component = new Component(ko);
 
     component.register("data-cell", DataCellView.default, (params) => {
         return new DataCellModel(ko, params.template, params.data);
