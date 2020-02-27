@@ -94,25 +94,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var component_1 = __webpack_require__(1);
 var dataTable_1 = __webpack_require__(2);
 var dataCell_1 = __webpack_require__(5);
-var Constants = __webpack_require__(8);
+var dataTableConstants_1 = __webpack_require__(8);
 var sortableHeaderCell_1 = __webpack_require__(9);
 $(function () {
     var component = new component_1.Component(ko);
-    component.register("data-cell", dataCell_1.View.default, function (params) {
+    component.register("data-cell", dataCell_1.View, function (params) {
         return new dataCell_1.Model(ko, params.template, params.data);
     });
-    component.register("data-table", dataTable_1.View.default, function () {
+    component.register("data-table", dataTable_1.View, function () {
         var model = new dataTable_1.Model(ko);
         model.cols.push({
-            celTemplate: Constants.default.DATA_CELL_DEFAULT_TEMPLATE,
-            headTemplate: Constants.default.DATA_CELL_DEFAULT_TEMPLATE,
+            celTemplate: dataTableConstants_1.default.DATA_CELL_DEFAULT_TEMPLATE,
+            headTemplate: dataTableConstants_1.default.DATA_CELL_DEFAULT_TEMPLATE,
             getCellData: function (r) { return r["nombre"]; },
             getHeadData: function (h) { return h.title; },
             header: { title: "Nombre" }
         });
         model.cols.push({
-            celTemplate: Constants.default.DATA_CELL_DEFAULT_TEMPLATE,
-            headTemplate: Constants.default.DATA_CELL_SORTABLE_HEADER,
+            celTemplate: dataTableConstants_1.default.DATA_CELL_DEFAULT_TEMPLATE,
+            headTemplate: dataTableConstants_1.default.DATA_CELL_SORTABLE_HEADER,
             getCellData: function (r) { return r["edad"]; },
             getHeadData: function (h) { return new sortableHeaderCell_1.SortableHeaderCell(ko, h.title); },
             header: { title: "Edad" }
@@ -161,8 +161,8 @@ exports.Component = Component;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var View = __webpack_require__(3);
-exports.View = View;
+var view_html_1 = __webpack_require__(3);
+exports.View = view_html_1.default;
 var model_1 = __webpack_require__(4);
 exports.Model = model_1.Model;
 
@@ -200,8 +200,8 @@ exports.Model = Model;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var View = __webpack_require__(6);
-exports.View = View;
+var view_html_1 = __webpack_require__(6);
+exports.View = view_html_1.default;
 var model_1 = __webpack_require__(7);
 exports.Model = model_1.Model;
 
