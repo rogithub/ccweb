@@ -1,7 +1,7 @@
 import { Component } from '../../services/component';
 import ko from '../specHelpers/koMock';
 
-describe('ComponentService', () => {
+describe('Component', () => {
     let model = {};
     let service: Component;
 
