@@ -1,13 +1,11 @@
 import { ComponentService } from '../../utils/componentService';
+import ko from '../specHelpers/koMock';
 
 describe('ComponentService', () => {
     let model = {};
-    let ko: any;
-    let el = {} as HTMLElement;
     let service: ComponentService;
-    beforeEach(() => {
 
-        ko = jasmine.createSpyObj('ko', ['cleanNode', 'applyBindings', 'register']);
+    beforeEach(() => {
         ko["components"] = jasmine.createSpyObj('components', ['register']);
 
         service = new ComponentService(ko);

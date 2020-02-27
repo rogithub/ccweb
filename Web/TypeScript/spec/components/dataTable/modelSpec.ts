@@ -1,15 +1,10 @@
 import { Model } from '../../../components/dataTable/model';
 import { ObjectLiteral } from '../../../interfaces/objectLiteral';
 import { TableColumn } from '../../../interfaces/tableColumn';
+import ko from '../../specHelpers/koMock';
 
 describe('Model', () => {
     describe('load', () => {
-
-        let ko: any = {
-            observableArray: function <T>(val: T[]) {
-                return () => val;
-            }
-        };
 
         it("should load table", function (done) {
             let m = new Model(ko);
