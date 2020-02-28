@@ -16,7 +16,7 @@ $(() => {
     component.register("data-table", DataTableView, () => {
         let api = new JsonReq(serverInfo.host, fetch);
 
-        let model = new JsonDataTable(ko, api, [
+        let model = new JsonDataTable(ko, api, "/clientes/search", [
             new ColumnBuilder("Folio", "id").sortHeader(ko),
             new ColumnBuilder("Empresa").build(),
             new ColumnBuilder("Contacto").build(),
@@ -25,7 +25,7 @@ $(() => {
             new ColumnBuilder("Cliente Desde", "fechaCreado").customCell(r => new Date(r.fechaCreado).toLocaleDateString())
         ]);
 
-        model.fetch("/clientes/search")
+        model.fetch();
 
         return model;
     });

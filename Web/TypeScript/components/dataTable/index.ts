@@ -1,7 +1,8 @@
 import View from './view.html';
-import { Model } from './model';
+import { Model, ColumnModel } from './model';
 
 export {
     View,
-    Model
+    Model,
+    ColumnModel
 }

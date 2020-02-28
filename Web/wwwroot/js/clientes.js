@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -91,10 +91,11 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var view_html_1 = __webpack_require__(3);
+var view_html_1 = __webpack_require__(4);
 exports.View = view_html_1.default;
-var model_1 = __webpack_require__(4);
+var model_1 = __webpack_require__(5);
 exports.Model = model_1.Model;
+exports.ColumnModel = model_1.ColumnModel;
 
 
 /***/ }),
@@ -104,13 +105,28 @@ exports.Model = model_1.Model;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var component_1 = __webpack_require__(2);
+var SortOrder;
+(function (SortOrder) {
+    SortOrder[SortOrder["None"] = 0] = "None";
+    SortOrder[SortOrder["Asc"] = 1] = "Asc";
+    SortOrder[SortOrder["Desc"] = 2] = "Desc";
+})(SortOrder = exports.SortOrder || (exports.SortOrder = {}));
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var component_1 = __webpack_require__(3);
 var dataTable_1 = __webpack_require__(0);
-var dataCell_1 = __webpack_require__(5);
-var jsonDataTable_1 = __webpack_require__(8);
-var jsonReq_1 = __webpack_require__(9);
-var serverInfo_1 = __webpack_require__(10);
-var columnBuilder_1 = __webpack_require__(11);
+var dataCell_1 = __webpack_require__(6);
+var jsonDataTable_1 = __webpack_require__(9);
+var jsonReq_1 = __webpack_require__(10);
+var serverInfo_1 = __webpack_require__(11);
+var columnBuilder_1 = __webpack_require__(12);
 $(function () {
     var component = new component_1.Component(ko);
     component.register("data-cell", dataCell_1.View, function (params) {
@@ -118,7 +134,7 @@ $(function () {
     });
     component.register("data-table", dataTable_1.View, function () {
         var api = new jsonReq_1.JsonReq(serverInfo_1.default.host, fetch);
-        var model = new jsonDataTable_1.JsonDataTable(ko, api, [
+        var model = new jsonDataTable_1.JsonDataTable(ko, api, "/clientes/search", [
             new columnBuilder_1.ColumnBuilder("Folio", "id").sortHeader(ko),
             new columnBuilder_1.ColumnBuilder("Empresa").build(),
             new columnBuilder_1.ColumnBuilder("Contacto").build(),
@@ -126,7 +142,7 @@ $(function () {
             new columnBuilder_1.ColumnBuilder("Email", "email").build(),
             new columnBuilder_1.ColumnBuilder("Cliente Desde", "fechaCreado").customCell(function (r) { return new Date(r.fechaCreado).toLocaleDateString(); })
         ]);
-        model.fetch("/clientes/search");
+        model.fetch();
         return model;
     });
     ko.applyBindings();
@@ -134,7 +150,7 @@ $(function () {
 
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -157,20 +173,28 @@ exports.Component = Component;
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<table class=\"table\">\n    <thead>\n        <tr>\n            <!-- ko foreach: { data: cols, as: 'c' } -->\n            <th>\n                <data-cell params=\"template: headTemplate, data: getHeadData(c.header)\"></data-cell>\n            </th>\n            <!-- /ko -->\n        </tr>\n    </thead>\n    <tbody>\n        <!-- ko foreach: { data: rows, as: 'r' } -->\n        <tr>\n            <!-- ko foreach: $parent.cols() -->\n            <td>\n                <data-cell params=\"template: celTemplate, data: getCellData(r)\"></data-cell>\n            </td>\n            <!-- /ko -->\n        </tr>\n        <!-- /ko -->\n    </tbody>\n</table>");
+/* harmony default export */ __webpack_exports__["default"] = ("<table class=\"table\">\n    <thead>\n        <tr>\n            <!-- ko foreach: { data: cols, as: 'c' } -->\n            <th>\n                <data-cell params=\"template: c.info.headTemplate, data: c.model\"></data-cell>\n            </th>\n            <!-- /ko -->\n        </tr>\n    </thead>\n    <tbody>\n        <!-- ko foreach: { data: rows, as: 'r' } -->\n        <tr>\n            <!-- ko foreach: $parent.cols() -->\n            <td>\n                <data-cell params=\"template: info.celTemplate, data: info.getCellData(r)\"></data-cell>\n            </td>\n            <!-- /ko -->\n        </tr>\n        <!-- /ko -->\n    </tbody>\n</table>");
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+var ColumnModel = /** @class */ (function () {
+    function ColumnModel(info) {
+        this.info = info;
+        this.model = info.getHeadData(info.header);
+    }
+    return ColumnModel;
+}());
+exports.ColumnModel = ColumnModel;
 var Model = /** @class */ (function () {
     function Model(ko) {
         this.ko = ko;
@@ -183,20 +207,20 @@ exports.Model = Model;
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var view_html_1 = __webpack_require__(6);
+var view_html_1 = __webpack_require__(7);
 exports.View = view_html_1.default;
-var model_1 = __webpack_require__(7);
+var model_1 = __webpack_require__(8);
 exports.Model = model_1.Model;
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -204,7 +228,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("<script type=\"text/html\" id=\"data-cell-sortable-header-template\">\n    <a data-bind=\"click: changeOrder\">\n        <label data-bind=\"text: title\" style=\"cursor: pointer;\"></label>\n        <!-- ko if: order() === 0 -->\n        <i class=\"fas fa-sort\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 1 -->\n        <i class=\"fas fa-sort-up\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 2 -->\n        <i class=\"fas fa-sort-down\"></i>\n        <!-- /ko -->\n    </a>\n</script>\n\n<script type=\"text/html\" id=\"data-cell-default-data-template\">\n    <label data-bind=\"text: $data\"></label>\n</script>\n\n<!-- ko template: { name: template, data: data } -->\n<!-- /ko -->\n");
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -222,7 +246,7 @@ exports.Model = Model;
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -278,20 +302,23 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var dataTable_1 = __webpack_require__(0);
+var sortOrder_1 = __webpack_require__(1);
 var JsonDataTable = /** @class */ (function (_super) {
     __extends(JsonDataTable, _super);
-    function JsonDataTable(ko, api, cols) {
+    function JsonDataTable(ko, api, searchUrl, cols) {
         var _this = _super.call(this, ko) || this;
-        _this.fetch = function (url) { return __awaiter(_this, void 0, void 0, function () {
+        _this.fetch = function () { return __awaiter(_this, void 0, void 0, function () {
             var data, set;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         data = {
                             limit: this.pageSize(),
-                            offset: (this.page() - 1)
+                            offset: (this.page() - 1),
+                            columns: this.sorting(),
+                            pattern: this.searchText()
                         };
-                        return [4 /*yield*/, this.api.post(url, data)];
+                        return [4 /*yield*/, this.api.post(this.searchUrl, data)];
                     case 1:
                         set = _a.sent();
                         this.totalRows(set.totalRows);
@@ -301,11 +328,31 @@ var JsonDataTable = /** @class */ (function (_super) {
             });
         }); };
         _this.api = api;
-        _this.cols(cols);
+        _this.searchUrl = searchUrl;
+        _this.cols(_this.ko.utils.arrayMap(cols, function (c) { return new dataTable_1.ColumnModel(c); }));
         _this.page = _this.ko.observable(1);
         _this.pageSize = _this.ko.observable(20);
         _this.searchText = _this.ko.observable("");
         _this.totalRows = _this.ko.observable(0);
+        _this.sorting = _this.ko.pureComputed(function () {
+            var cols = _this.ko.utils.arrayFilter(_this.cols(), function (c) {
+                if (typeof c.model.order !== "function")
+                    return false;
+                var item = c.model;
+                return item.order() !== sortOrder_1.SortOrder.None;
+            });
+            return _this.ko.utils.arrayMap(cols, function (c) {
+                var item = c.model;
+                return {
+                    col: c.info.header["rowKey"],
+                    order: item.order() === sortOrder_1.SortOrder.Asc ? 0 : 1
+                };
+            });
+        });
+        _this.page.subscribe(_this.fetch);
+        _this.pageSize.subscribe(_this.fetch);
+        _this.searchText.subscribe(_this.fetch);
+        _this.sorting.subscribe(_this.fetch);
         return _this;
     }
     return JsonDataTable;
@@ -314,7 +361,7 @@ exports.JsonDataTable = JsonDataTable;
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -408,7 +455,7 @@ exports.JsonReq = JsonReq;
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -420,14 +467,14 @@ exports.default = {
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var dataTableConstants_1 = __webpack_require__(12);
-var sortableHeaderCell_1 = __webpack_require__(13);
+var dataTableConstants_1 = __webpack_require__(13);
+var sortableHeaderCell_1 = __webpack_require__(14);
 var ColumnBuilder = /** @class */ (function () {
     function ColumnBuilder(title, rowKey, sortable) {
         var _this = this;
@@ -463,7 +510,7 @@ exports.ColumnBuilder = ColumnBuilder;
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -476,13 +523,13 @@ exports.default = {
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var sortOrder_1 = __webpack_require__(14);
+var sortOrder_1 = __webpack_require__(1);
 var SortableHeaderCell = /** @class */ (function () {
     function SortableHeaderCell(ko, title) {
         var _this = this;
@@ -507,21 +554,6 @@ var SortableHeaderCell = /** @class */ (function () {
     return SortableHeaderCell;
 }());
 exports.SortableHeaderCell = SortableHeaderCell;
-
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var SortOrder;
-(function (SortOrder) {
-    SortOrder[SortOrder["None"] = 0] = "None";
-    SortOrder[SortOrder["Asc"] = 1] = "Asc";
-    SortOrder[SortOrder["Desc"] = 2] = "Desc";
-})(SortOrder = exports.SortOrder || (exports.SortOrder = {}));
 
 
 /***/ })

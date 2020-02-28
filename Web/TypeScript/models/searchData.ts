@@ -8,5 +8,5 @@ export interface SearchData {
     limit: number;
     offset: number;
     pattern?: string;
-    columns?: OrderCol;
+    columns?: OrderCol[];
 }

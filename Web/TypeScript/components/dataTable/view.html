@@ -3,7 +3,7 @@
         <tr>
             <!-- ko foreach: { data: cols, as: 'c' } -->
             <th>
-                <data-cell params="template: headTemplate, data: getHeadData(c.header)"></data-cell>
+                <data-cell params="template: c.info.headTemplate, data: c.model"></data-cell>
             </th>
             <!-- /ko -->
         </tr>
@@ -13,7 +13,7 @@
         <tr>
             <!-- ko foreach: $parent.cols() -->
             <td>
-                <data-cell params="template: celTemplate, data: getCellData(r)"></data-cell>
+                <data-cell params="template: info.celTemplate, data: info.getCellData(r)"></data-cell>
             </td>
             <!-- /ko -->
         </tr>
