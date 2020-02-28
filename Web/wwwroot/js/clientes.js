@@ -108,8 +108,9 @@ var component_1 = __webpack_require__(2);
 var dataTable_1 = __webpack_require__(0);
 var dataCell_1 = __webpack_require__(5);
 var jsonDataTable_1 = __webpack_require__(8);
-var jsonReq_1 = __webpack_require__(13);
-var serverInfo_1 = __webpack_require__(14);
+var jsonReq_1 = __webpack_require__(9);
+var serverInfo_1 = __webpack_require__(10);
+var columnBuilder_1 = __webpack_require__(11);
 $(function () {
     var component = new component_1.Component(ko);
     component.register("data-cell", dataCell_1.View, function (params) {
@@ -117,19 +118,14 @@ $(function () {
     });
     component.register("data-table", dataTable_1.View, function () {
         var api = new jsonReq_1.JsonReq(serverInfo_1.default.host, fetch);
-        var model = new jsonDataTable_1.JsonDataTable(ko, api, [{
-                title: "Folio", rowKey: "id", sortable: false
-            }, {
-                title: "Empresa", rowKey: "empresa", sortable: false
-            }, {
-                title: "Contacto", rowKey: "contacto", sortable: false
-            }, {
-                title: "Teléfono", rowKey: "telefono", sortable: false
-            }, {
-                title: "Email", rowKey: "email", sortable: false
-            }, {
-                title: "Cliente desde", rowKey: "fechaCreado", sortable: true
-            }]);
+        var model = new jsonDataTable_1.JsonDataTable(ko, api, [
+            columnBuilder_1.default("Folio", "id"),
+            columnBuilder_1.default("Empresa"),
+            columnBuilder_1.default("Contacto"),
+            columnBuilder_1.default("Teléfono", "telefono"),
+            columnBuilder_1.default("Email", "email"),
+            columnBuilder_1.default("Cliente Desde", "fechaCreado")
+        ]);
         model.fetch("/clientes/search");
         return model;
     });
@@ -205,7 +201,7 @@ exports.Model = model_1.Model;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<script type=\"text/html\" id=\"data-cell-sortable-header-template\">\n    <a data-bind=\"click: changeOrder\">\n        <label data-bind=\"text: title\" style=\"cursor: pointer;\"></label>\n        <!-- ko if: order() === 0 -->\n        <i class=\"fas fa-sort\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 1 -->\n        <i class=\"fas fa-sort-up\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 2 -->\n        <i class=\"fas fa-sort-down\"></i>\n        <!-- /ko -->\n    </a>\n</script>\n\n<script type=\"text/html\" id=\"data-cell-default-data-template\">\n    <label data-bind=\"text: $data\"></label>\n</script>\n\n<!-- ko template: { name: template, data: data } -->\n<!-- /ko -->");
+/* harmony default export */ __webpack_exports__["default"] = ("<script type=\"text/html\" id=\"data-cell-sortable-header-template\">\n    <a data-bind=\"click: changeOrder\">\n        <label data-bind=\"text: title\" style=\"cursor: pointer;\"></label>\n        <!-- ko if: order() === 0 -->\n        <i class=\"fas fa-sort\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 1 -->\n        <i class=\"fas fa-sort-up\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 2 -->\n        <i class=\"fas fa-sort-down\"></i>\n        <!-- /ko -->\n    </a>\n</script>\n\n<script type=\"text/html\" id=\"data-cell-default-data-template\">\n    <label data-bind=\"text: $data\"></label>\n</script>\n\n<!-- ko template: { name: template, data: data } -->\n<!-- /ko -->\n");
 
 /***/ }),
 /* 7 */
@@ -282,7 +278,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var dataTable_1 = __webpack_require__(0);
-var toTableCol_1 = __webpack_require__(9);
 var JsonDataTable = /** @class */ (function (_super) {
     __extends(JsonDataTable, _super);
     function JsonDataTable(ko, api, cols) {
@@ -306,7 +301,7 @@ var JsonDataTable = /** @class */ (function (_super) {
             });
         }); };
         _this.api = api;
-        _this.cols(_this.ko.utils.arrayMap(cols, function (c) { return toTableCol_1.default(ko, c); }));
+        _this.cols(cols);
         _this.page = _this.ko.observable(1);
         _this.pageSize = _this.ko.observable(20);
         _this.searchText = _this.ko.observable("");
@@ -320,95 +315,6 @@ exports.JsonDataTable = JsonDataTable;
 
 /***/ }),
 /* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var dataTableConstants_1 = __webpack_require__(10);
-var sortableHeaderCell_1 = __webpack_require__(11);
-exports.default = (function (ko, c) {
-    var hTemplate = c.sortable ?
-        dataTableConstants_1.default.DATA_CELL_SORTABLE_HEADER :
-        dataTableConstants_1.default.DATA_CELL_DEFAULT_TEMPLATE;
-    var hDataFn;
-    hDataFn = c.sortable ?
-        function (h) { return new sortableHeaderCell_1.SortableHeaderCell(ko, h.title); } :
-        function (h) { return h.title; };
-    return {
-        celTemplate: dataTableConstants_1.default.DATA_CELL_DEFAULT_TEMPLATE,
-        headTemplate: hTemplate,
-        getCellData: function (r) { return r[c.rowKey]; },
-        getHeadData: hDataFn,
-        header: c
-    };
-});
-
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = {
-    DATA_CELL_DEFAULT_TEMPLATE: "data-cell-default-data-template",
-    DATA_CELL_SORTABLE_HEADER: "data-cell-sortable-header-template"
-};
-
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var sortOrder_1 = __webpack_require__(12);
-var SortableHeaderCell = /** @class */ (function () {
-    function SortableHeaderCell(ko, title) {
-        var _this = this;
-        if (title === void 0) { title = ""; }
-        this.changeOrder = function () {
-            switch (_this.order()) {
-                case sortOrder_1.SortOrder.None:
-                    _this.order(sortOrder_1.SortOrder.Asc);
-                    return;
-                case sortOrder_1.SortOrder.Asc:
-                    _this.order(sortOrder_1.SortOrder.Desc);
-                    return;
-                case sortOrder_1.SortOrder.Desc:
-                    _this.order(sortOrder_1.SortOrder.None);
-                    return;
-            }
-        };
-        this.ko = ko;
-        this.order = this.ko.observable(sortOrder_1.SortOrder.None);
-        this.title = this.ko.observable(title);
-    }
-    return SortableHeaderCell;
-}());
-exports.SortableHeaderCell = SortableHeaderCell;
-
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var SortOrder;
-(function (SortOrder) {
-    SortOrder[SortOrder["None"] = 0] = "None";
-    SortOrder[SortOrder["Asc"] = 1] = "Asc";
-    SortOrder[SortOrder["Desc"] = 2] = "Desc";
-})(SortOrder = exports.SortOrder || (exports.SortOrder = {}));
-
-
-/***/ }),
-/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -502,7 +408,7 @@ exports.JsonReq = JsonReq;
 
 
 /***/ }),
-/* 14 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -510,6 +416,45 @@ exports.JsonReq = JsonReq;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = {
     host: "https://localhost:5001"
+};
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var dataTableConstants_1 = __webpack_require__(12);
+exports.default = (function (title, rowKey, sortable, header, celTemplate, headTemplate, getCellData, getHeadData) {
+    if (rowKey === void 0) { rowKey = title.toLowerCase(); }
+    if (sortable === void 0) { sortable = false; }
+    if (header === void 0) { header = { title: title, rowKey: rowKey, sortable: sortable }; }
+    if (celTemplate === void 0) { celTemplate = dataTableConstants_1.default.DATA_CELL_DEFAULT_TEMPLATE; }
+    if (headTemplate === void 0) { headTemplate = dataTableConstants_1.default.DATA_CELL_DEFAULT_TEMPLATE; }
+    if (getCellData === void 0) { getCellData = function (row) { return row[header.rowKey]; }; }
+    if (getHeadData === void 0) { getHeadData = function (header) { return header.title; }; }
+    return {
+        celTemplate: celTemplate,
+        headTemplate: headTemplate,
+        getCellData: getCellData,
+        getHeadData: getHeadData,
+        header: header,
+    };
+});
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = {
+    DATA_CELL_DEFAULT_TEMPLATE: "data-cell-default-data-template",
+    DATA_CELL_SORTABLE_HEADER: "data-cell-sortable-header-template"
 };
 
 

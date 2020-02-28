@@ -1,10 +1,9 @@
 import { Model as DataTableModel } from '../components/dataTable';
-import { DataColInfo } from '../interfaces/dataColInfo';
 import { Api } from '../interfaces/api';
-import toTableCol from '../mappers/toTableCol';
 import { ResultSet } from './resultSet';
 import { Cliente } from './cliente';
 import { SearchData } from './searchData';
+import { TableColumn } from '../interfaces/tableColumn';
 
 export class JsonDataTable extends DataTableModel {
     private api: Api;
@@ -13,10 +12,10 @@ export class JsonDataTable extends DataTableModel {
     public searchText: KnockoutObservable<string>;
     public totalRows: KnockoutObservable<number>;
 
-    constructor(ko: KnockoutStatic, api: Api, cols: DataColInfo[]) {
+    constructor(ko: KnockoutStatic, api: Api, cols: TableColumn[]) {
         super(ko);
         this.api = api;
-        this.cols(this.ko.utils.arrayMap(cols, c => toTableCol(ko, c)));
+        this.cols(cols);
         this.page = this.ko.observable<number>(1);
         this.pageSize = this.ko.observable<number>(20);
         this.searchText = this.ko.observable<string>("");
