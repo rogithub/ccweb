@@ -10,13 +10,28 @@ export class JsonReq implements Api {
         this.fn = fetchFn;
     }
 
+    toFullUrl = (url: string) => `${this.baseURL}${url}`
+
     get = async <T>(url: string): Promise<T> => {
-        let response = await this.fn(`${this.baseURL}${url}`);
+        let response = await this.fn(this.toFullUrl(url));
         return response.json()
     }
 
-    post = <T>(url: string, jsonData: ObjectLiteral): Promise<T> => {
-        throw new Error("Method not implemented.");
+    post = async <T>(url: string, jsonData: ObjectLiteral): Promise<T> => {
+        console.log(JSON.stringify(jsonData));
+        const response = await fetch(this.toFullUrl(url), {
+            method: 'POST',
+            mode: 'no-cors', // no-cors, *cors, same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', // include, *same-origin, omit
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            redirect: 'follow', // manual, *follow, error
+            referrerPolicy: 'no-referrer', // no-referrer, *client
+            body: JSON.stringify(jsonData)
+        });
+        return await response.json();
     }
 
     put = <T>(url: string, jsonData: ObjectLiteral): Promise<T> => {

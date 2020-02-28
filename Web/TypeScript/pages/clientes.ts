@@ -1,8 +1,8 @@
-
 import { Component } from '../services/component';
 import { View as DataTableView } from '../components/dataTable';
 import { View as DataCellView, Model as DataCellModel } from '../components/dataCell';
 import { JsonDataTable } from '../models/jsonDataTable';
+import { JsonReq } from '../services/jsonReq';
 
 $(() => {
     let component = new Component(ko);
@@ -12,20 +12,15 @@ $(() => {
     });
 
     component.register("data-table", DataTableView, () => {
+        let api = new JsonReq("https://localhost:5001", fetch);
 
-        let model = new JsonDataTable(ko, [{
-            title: "Nombre", rowKey: "nombre", sortable: false
+        let model = new JsonDataTable(ko, api, [{
+            title: "Empresa", rowKey: "empresa", sortable: false
         }, {
-            title: "Edad", rowKey: "edad", sortable: true
+            title: "Contacto", rowKey: "contacto", sortable: true
         }]);
 
-        model.rows([{
-            nombre: "Rodrigo",
-            edad: 100
-        }, {
-            nombre: "Juan",
-            edad: 200
-        }]);
+        model.fetch("/clientes/search")
 
         return model;
     });
