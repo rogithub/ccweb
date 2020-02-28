@@ -1,6 +1,11 @@
 <table class="table">
     <thead>
         <tr>
+            <th data-bind="attr: { colspan: cols().length }">
+                <search-field params="model: searchModel"></search-field>
+            </th>
+        </tr>
+        <tr>
             <!-- ko foreach: { data: cols, as: 'c' } -->
             <th>
                 <data-cell params="template: c.info.headTemplate, data: c.model"></data-cell>

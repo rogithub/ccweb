@@ -1,5 +1,6 @@
 import { Model as DataTableModel, ColumnModel } from '../components/dataTable';
 import { Model as PaginationModel } from '../components/pagination';
+import { Model as SearchFieldModel } from '../components/searchField';
 import { Api } from '../shared/api';
 import { ResultSet } from './resultSet';
 import { Cliente } from './cliente';
@@ -10,7 +11,7 @@ import { SortableColumn } from '../models/sortableColumn';
 
 export class JsonDataTable extends DataTableModel {
     private api: Api;
-    public searchText: KnockoutObservable<string>;
+    public searchModel: SearchFieldModel;
     public searchUrl: string;
     public sorting: KnockoutComputed<OrderCol[]>;
     public pagination: PaginationModel;
@@ -20,7 +21,7 @@ export class JsonDataTable extends DataTableModel {
         this.api = api;
         this.searchUrl = searchUrl;
         this.cols(this.ko.utils.arrayMap(cols, c => new ColumnModel(c)));
-        this.searchText = this.ko.observable<string>("");
+        this.searchModel = new SearchFieldModel(ko);
         this.pagination = new PaginationModel(ko);
 
         this.sorting = this.ko.pureComputed<OrderCol[]>(() => {
@@ -41,7 +42,7 @@ export class JsonDataTable extends DataTableModel {
 
         this.pagination.page.subscribe(this.fetch);
         this.pagination.pageSize.subscribe(this.fetch);
-        this.searchText.subscribe(this.fetch);
+        this.searchModel.searchText.subscribe(this.fetch);
         this.sorting.subscribe(this.fetch);
     }
 
@@ -51,7 +52,7 @@ export class JsonDataTable extends DataTableModel {
             limit: this.pagination.pageSize(),
             offset: (this.pagination.page() - 1),
             columns: this.sorting(),
-            pattern: this.searchText()
+            pattern: this.searchModel.searchText()
         }
 
         let set = await this.api.post<ResultSet<Cliente[]>>(this.searchUrl, data);

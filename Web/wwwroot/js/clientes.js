@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -91,9 +91,9 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var view_html_1 = __webpack_require__(5);
+var view_html_1 = __webpack_require__(6);
 exports.View = view_html_1.default;
-var model_1 = __webpack_require__(6);
+var model_1 = __webpack_require__(7);
 exports.Model = model_1.Model;
 exports.ColumnModel = model_1.ColumnModel;
 
@@ -105,14 +105,27 @@ exports.ColumnModel = model_1.ColumnModel;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var view_html_1 = __webpack_require__(7);
+var view_html_1 = __webpack_require__(8);
 exports.View = view_html_1.default;
-var model_1 = __webpack_require__(8);
+var model_1 = __webpack_require__(9);
 exports.Model = model_1.Model;
 
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var view_html_1 = __webpack_require__(11);
+exports.View = view_html_1.default;
+var model_1 = __webpack_require__(12);
+exports.Model = model_1.Model;
+
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -127,23 +140,27 @@ var SortOrder;
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var component_1 = __webpack_require__(4);
+var component_1 = __webpack_require__(5);
 var dataTable_1 = __webpack_require__(0);
 var pagination_1 = __webpack_require__(1);
-var dataCell_1 = __webpack_require__(10);
-var jsonDataTable_1 = __webpack_require__(13);
-var jsonReq_1 = __webpack_require__(14);
-var serverInfo_1 = __webpack_require__(15);
-var columnBuilder_1 = __webpack_require__(16);
+var searchField_1 = __webpack_require__(2);
+var dataCell_1 = __webpack_require__(13);
+var jsonDataTable_1 = __webpack_require__(16);
+var jsonReq_1 = __webpack_require__(17);
+var serverInfo_1 = __webpack_require__(18);
+var columnBuilder_1 = __webpack_require__(19);
 $(function () {
     var component = new component_1.Component(ko);
     component.register("pagination", pagination_1.View, function (params) {
+        return params.model;
+    });
+    component.register("search-field", searchField_1.View, function (params) {
         return params.model;
     });
     component.register("data-cell", dataCell_1.View, function (params) {
@@ -167,7 +184,7 @@ $(function () {
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -190,15 +207,15 @@ exports.Component = Component;
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<table class=\"table\">\n    <thead>\n        <tr>\n            <!-- ko foreach: { data: cols, as: 'c' } -->\n            <th>\n                <data-cell params=\"template: c.info.headTemplate, data: c.model\"></data-cell>\n            </th>\n            <!-- /ko -->\n        </tr>\n    </thead>\n    <tbody>\n        <!-- ko foreach: { data: rows, as: 'r' } -->\n        <tr>\n            <!-- ko foreach: $parent.cols() -->\n            <td>\n                <data-cell params=\"template: info.celTemplate, data: info.getCellData(r)\"></data-cell>\n            </td>\n            <!-- /ko -->\n        </tr>\n        <!-- /ko -->\n    </tbody>\n    <tfoot>\n        <tr>\n            <td data-bind=\"attr: { colspan: cols().length }\">\n                <pagination params=\"model: pagination\"></pagination>\n            </td>\n        </tr>\n    </tfoot>\n</table>");
+/* harmony default export */ __webpack_exports__["default"] = ("<table class=\"table\">\n    <thead>\n        <tr>\n            <th data-bind=\"attr: { colspan: cols().length }\">\n                <search-field params=\"model: searchModel\"></search-field>\n            </th>\n        </tr>\n        <tr>\n            <!-- ko foreach: { data: cols, as: 'c' } -->\n            <th>\n                <data-cell params=\"template: c.info.headTemplate, data: c.model\"></data-cell>\n            </th>\n            <!-- /ko -->\n        </tr>\n    </thead>\n    <tbody>\n        <!-- ko foreach: { data: rows, as: 'r' } -->\n        <tr>\n            <!-- ko foreach: $parent.cols() -->\n            <td>\n                <data-cell params=\"template: info.celTemplate, data: info.getCellData(r)\"></data-cell>\n            </td>\n            <!-- /ko -->\n        </tr>\n        <!-- /ko -->\n    </tbody>\n    <tfoot>\n        <tr>\n            <td data-bind=\"attr: { colspan: cols().length }\">\n                <pagination params=\"model: pagination\"></pagination>\n            </td>\n        </tr>\n    </tfoot>\n</table>");
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -224,21 +241,21 @@ exports.Model = Model;
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<nav aria-label=\"Page navigation example\">\n    <ul class=\"pagination justify-content-center\">\n\n        <li data-bind=\"if: page() !== 1, click: () => page(page()-1)\" style=\"cursor: pointer;\" class=\"page-item\"\n            aria-label=\"Previous\">\n            <span aria-hidden=\"true\">&laquo;</span>\n        </li>\n\n        <!-- ko foreach: list -->\n        <li class=\"page-item\" data-bind=\"css: { 'active': $data === $parent.page() }, \n                click: () => { if ($data !== $parent.page()) $parent.page($data) }\" style=\"cursor: pointer;\">\n            <a class=\"page-link\" data-bind=\"text: $data\"></a>\n        </li>\n        <!-- /ko -->\n\n\n        <li data-bind=\"if: page() !== list()[list().length-1], \n                    click: () => page(page()+1)\" class=\"page-item\" style=\"cursor: pointer;\" aria-label=\"Next\">\n            <span aria-hidden=\"true\">&raquo;</span>\n        </li>\n    </ul>\n</nav>");
+/* harmony default export */ __webpack_exports__["default"] = ("<nav aria-label=\"Page navigation example\" data-bind=\"if: list().length > 0\">\n    <ul class=\"pagination justify-content-center\">\n\n        <li data-bind=\"if: page() !== 1, click: () => page(page()-1)\" style=\"cursor: pointer;\" class=\"page-item\"\n            aria-label=\"Previous\">\n            <span aria-hidden=\"true\">&laquo;</span>\n        </li>\n\n        <!-- ko foreach: list -->\n        <li class=\"page-item\" data-bind=\"css: { 'active': $data === $parent.page() }, \n                click: () => { if ($data !== $parent.page()) $parent.page($data) }\" style=\"cursor: pointer;\">\n            <a class=\"page-link\" data-bind=\"text: $data\"></a>\n        </li>\n        <!-- /ko -->\n\n\n        <li data-bind=\"if: page() !== list()[list().length-1], \n                    click: () => page(page()+1)\" class=\"page-item\" style=\"cursor: pointer;\" aria-label=\"Next\">\n            <span aria-hidden=\"true\">&raquo;</span>\n        </li>\n    </ul>\n</nav>");
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var range_1 = __webpack_require__(9);
+var range_1 = __webpack_require__(10);
 var Model = /** @class */ (function () {
     function Model(ko) {
         var _this = this;
@@ -263,7 +280,7 @@ exports.Model = Model;
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -275,20 +292,45 @@ exports.default = (function (start, stop, step) {
 
 
 /***/ }),
-/* 10 */
+/* 11 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"input-group mb-3\">\n    <input type=\"text\" class=\"form-control\" placeholder=\"Buscar...\" aria-label=\"Search\"\n        aria-describedby=\"search-field-button\" data-bind=\"textInput: searchText\">\n    <div class=\"input-group-append\">\n        <button data-bind=\"click: () => searchText('')\" class=\"btn btn-outline-secondary\" type=\"button\"\n            id=\"search-field-button\">Limpiar</button>\n    </div>\n</div>");
+
+/***/ }),
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var view_html_1 = __webpack_require__(11);
+var Model = /** @class */ (function () {
+    function Model(ko) {
+        this.ko = ko;
+        this.searchText = this.ko.observable("");
+    }
+    return Model;
+}());
+exports.Model = Model;
+
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var view_html_1 = __webpack_require__(14);
 exports.View = view_html_1.default;
-var model_1 = __webpack_require__(12);
+var model_1 = __webpack_require__(15);
 exports.Model = model_1.Model;
 
 
 /***/ }),
-/* 11 */
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -296,7 +338,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("<script type=\"text/html\" id=\"data-cell-sortable-header-template\">\n    <a data-bind=\"click: changeOrder\">\n        <label data-bind=\"text: title\" style=\"cursor: pointer;\"></label>\n        <!-- ko if: order() === 0 -->\n        <i class=\"fas fa-sort\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 1 -->\n        <i class=\"fas fa-sort-up\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 2 -->\n        <i class=\"fas fa-sort-down\"></i>\n        <!-- /ko -->\n    </a>\n</script>\n\n<script type=\"text/html\" id=\"data-cell-default-data-template\">\n    <label data-bind=\"text: $data\"></label>\n</script>\n\n<!-- ko template: { name: template, data: data } -->\n<!-- /ko -->\n");
 
 /***/ }),
-/* 12 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -314,7 +356,7 @@ exports.Model = Model;
 
 
 /***/ }),
-/* 13 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -371,7 +413,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var dataTable_1 = __webpack_require__(0);
 var pagination_1 = __webpack_require__(1);
-var sortOrder_1 = __webpack_require__(2);
+var searchField_1 = __webpack_require__(2);
+var sortOrder_1 = __webpack_require__(3);
 var JsonDataTable = /** @class */ (function (_super) {
     __extends(JsonDataTable, _super);
     function JsonDataTable(ko, api, searchUrl, cols) {
@@ -385,7 +428,7 @@ var JsonDataTable = /** @class */ (function (_super) {
                             limit: this.pagination.pageSize(),
                             offset: (this.pagination.page() - 1),
                             columns: this.sorting(),
-                            pattern: this.searchText()
+                            pattern: this.searchModel.searchText()
                         };
                         return [4 /*yield*/, this.api.post(this.searchUrl, data)];
                     case 1:
@@ -399,7 +442,7 @@ var JsonDataTable = /** @class */ (function (_super) {
         _this.api = api;
         _this.searchUrl = searchUrl;
         _this.cols(_this.ko.utils.arrayMap(cols, function (c) { return new dataTable_1.ColumnModel(c); }));
-        _this.searchText = _this.ko.observable("");
+        _this.searchModel = new searchField_1.Model(ko);
         _this.pagination = new pagination_1.Model(ko);
         _this.sorting = _this.ko.pureComputed(function () {
             var cols = _this.ko.utils.arrayFilter(_this.cols(), function (c) {
@@ -418,7 +461,7 @@ var JsonDataTable = /** @class */ (function (_super) {
         });
         _this.pagination.page.subscribe(_this.fetch);
         _this.pagination.pageSize.subscribe(_this.fetch);
-        _this.searchText.subscribe(_this.fetch);
+        _this.searchModel.searchText.subscribe(_this.fetch);
         _this.sorting.subscribe(_this.fetch);
         return _this;
     }
@@ -428,7 +471,7 @@ exports.JsonDataTable = JsonDataTable;
 
 
 /***/ }),
-/* 14 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -522,7 +565,7 @@ exports.JsonReq = JsonReq;
 
 
 /***/ }),
-/* 15 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -534,14 +577,14 @@ exports.default = {
 
 
 /***/ }),
-/* 16 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var dataTableConstants_1 = __webpack_require__(17);
-var sortableHeaderCell_1 = __webpack_require__(18);
+var dataTableConstants_1 = __webpack_require__(20);
+var sortableHeaderCell_1 = __webpack_require__(21);
 var ColumnBuilder = /** @class */ (function () {
     function ColumnBuilder(title, rowKey, sortable) {
         var _this = this;
@@ -577,7 +620,7 @@ exports.ColumnBuilder = ColumnBuilder;
 
 
 /***/ }),
-/* 17 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -590,13 +633,13 @@ exports.default = {
 
 
 /***/ }),
-/* 18 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var sortOrder_1 = __webpack_require__(2);
+var sortOrder_1 = __webpack_require__(3);
 var SortableHeaderCell = /** @class */ (function () {
     function SortableHeaderCell(ko, title) {
         var _this = this;

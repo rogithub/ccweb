@@ -1,6 +1,7 @@
 import { Component } from '../services/component';
 import { View as DataTableView } from '../components/dataTable';
-import { View as PaginationView, Model as PaginationModel } from '../components/pagination';
+import { View as PaginationView } from '../components/pagination';
+import { View as SearchFieldView } from '../components/searchField';
 import { View as DataCellView, Model as DataCellModel } from '../components/dataCell';
 import { JsonDataTable } from '../models/jsonDataTable';
 import { JsonReq } from '../services/jsonReq';
@@ -11,6 +12,9 @@ $(() => {
     let component = new Component(ko);
 
     component.register("pagination", PaginationView, (params) => {
+        return params.model;
+    });
+    component.register("search-field", SearchFieldView, (params) => {
         return params.model;
     });
 
