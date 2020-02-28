@@ -19,4 +19,11 @@
         </tr>
         <!-- /ko -->
     </tbody>
+    <tfoot>
+        <tr>
+            <td data-bind="attr: { colspan: cols().length }">
+                <pagination params="model: pagination"></pagination>
+            </td>
+        </tr>
+    </tfoot>
 </table>

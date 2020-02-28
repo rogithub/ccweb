@@ -1,5 +1,6 @@
 import { Component } from '../services/component';
 import { View as DataTableView } from '../components/dataTable';
+import { View as PaginationView, Model as PaginationModel } from '../components/pagination';
 import { View as DataCellView, Model as DataCellModel } from '../components/dataCell';
 import { JsonDataTable } from '../models/jsonDataTable';
 import { JsonReq } from '../services/jsonReq';
@@ -8,6 +9,10 @@ import { ColumnBuilder } from '../models/columnBuilder';
 
 $(() => {
     let component = new Component(ko);
+
+    component.register("pagination", PaginationView, (params) => {
+        return params.model;
+    });
 
     component.register("data-cell", DataCellView, (params) => {
         return new DataCellModel(ko, params.template, params.data);
