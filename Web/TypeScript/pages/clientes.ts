@@ -4,7 +4,7 @@ import { View as DataCellView, Model as DataCellModel } from '../components/data
 import { JsonDataTable } from '../models/jsonDataTable';
 import { JsonReq } from '../services/jsonReq';
 import serverInfo from '../constants/serverInfo';
-import colBuilder from '../models/columnBuilder';
+import { ColumnBuilder } from '../models/columnBuilder';
 
 $(() => {
     let component = new Component(ko);
@@ -17,12 +17,12 @@ $(() => {
         let api = new JsonReq(serverInfo.host, fetch);
 
         let model = new JsonDataTable(ko, api, [
-            colBuilder("Folio", "id"),
-            colBuilder("Empresa"),
-            colBuilder("Contacto"),
-            colBuilder("Teléfono", "telefono"),
-            colBuilder("Email", "email"),
-            colBuilder("Cliente Desde", "fechaCreado")
+            new ColumnBuilder("Folio", "id").sortHeader(ko),
+            new ColumnBuilder("Empresa").build(),
+            new ColumnBuilder("Contacto").build(),
+            new ColumnBuilder("Teléfono", "telefono").build(),
+            new ColumnBuilder("Email", "email").build(),
+            new ColumnBuilder("Cliente Desde", "fechaCreado").build()
         ]);
 
         model.fetch("/clientes/search")
