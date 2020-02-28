@@ -15,7 +15,7 @@
             "TypeScript/pages",
             "TypeScript/spec/",
             "TypeScript/enums/",
-	    "TypeScript/constants/",
+            "TypeScript/constants/",
             "**/[Ii]ndex.ts",
             "wwwroot/",
             "**/*Spec.js"
@@ -23,25 +23,7 @@
         "branches": 80,
         "lines": 80,
         "functions": 80,
-        "statements": 80,
-        "watermarks": {
-            "lines": [
-                80,
-                95
-            ],
-            "functions": [
-                80,
-                95
-            ],
-            "branches": [
-                80,
-                95
-            ],
-            "statements": [
-                80,
-                95
-            ]
-        }
+        "statements": 80
     },
     "author": "",
     "repository": {

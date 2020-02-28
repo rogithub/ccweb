@@ -1,6 +1,8 @@
 import { SortOrder } from '../enums/sortOrder';
+import { SortableColumn } from './sortableColumn';
 
-export class SortableHeaderCell {
+
+export class SortableHeaderCell implements SortableColumn {
     public order: KnockoutObservable<SortOrder>;
     public title: KnockoutObservable<string>;
     private ko: KnockoutStatic;
