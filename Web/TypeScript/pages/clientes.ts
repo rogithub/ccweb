@@ -22,7 +22,7 @@ $(() => {
             new ColumnBuilder("Contacto").build(),
             new ColumnBuilder("Teléfono", "telefono").build(),
             new ColumnBuilder("Email", "email").build(),
-            new ColumnBuilder("Cliente Desde", "fechaCreado").build()
+            new ColumnBuilder("Cliente Desde", "fechaCreado").customCell(r => new Date(r.fechaCreado).toLocaleDateString())
         ]);
 
         model.fetch("/clientes/search")

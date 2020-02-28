@@ -48,8 +48,8 @@ export class ColumnBuilder {
         return this.build(null, null, getHeadData, headTemplate);
     }
 
-    public customCell = (
-        getCellData?: (head: ObjectLiteral) => ObjectLiteral,
+    public customCell = <T>(
+        getCellData?: (row: ObjectLiteral) => T,
         celTemplate?: string
     ):
         TableColumn => {

@@ -124,7 +124,7 @@ $(function () {
             new columnBuilder_1.ColumnBuilder("Contacto").build(),
             new columnBuilder_1.ColumnBuilder("Teléfono", "telefono").build(),
             new columnBuilder_1.ColumnBuilder("Email", "email").build(),
-            new columnBuilder_1.ColumnBuilder("Cliente Desde", "fechaCreado").build()
+            new columnBuilder_1.ColumnBuilder("Cliente Desde", "fechaCreado").customCell(function (r) { return new Date(r.fechaCreado).toLocaleDateString(); })
         ]);
         model.fetch("/clientes/search");
         return model;
