@@ -109,13 +109,14 @@ var dataTable_1 = __webpack_require__(0);
 var dataCell_1 = __webpack_require__(5);
 var jsonDataTable_1 = __webpack_require__(8);
 var jsonReq_1 = __webpack_require__(13);
+var serverInfo_1 = __webpack_require__(14);
 $(function () {
     var component = new component_1.Component(ko);
     component.register("data-cell", dataCell_1.View, function (params) {
         return new dataCell_1.Model(ko, params.template, params.data);
     });
     component.register("data-table", dataTable_1.View, function () {
-        var api = new jsonReq_1.JsonReq("https://localhost:5001", fetch);
+        var api = new jsonReq_1.JsonReq(serverInfo_1.default.host, fetch);
         var model = new jsonDataTable_1.JsonDataTable(ko, api, [{
                 title: "Folio", rowKey: "id", sortable: false
             }, {
@@ -498,6 +499,18 @@ var JsonReq = /** @class */ (function () {
     return JsonReq;
 }());
 exports.JsonReq = JsonReq;
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = {
+    host: "https://localhost:5001"
+};
 
 
 /***/ })

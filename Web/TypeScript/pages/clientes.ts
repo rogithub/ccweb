@@ -3,6 +3,7 @@ import { View as DataTableView } from '../components/dataTable';
 import { View as DataCellView, Model as DataCellModel } from '../components/dataCell';
 import { JsonDataTable } from '../models/jsonDataTable';
 import { JsonReq } from '../services/jsonReq';
+import serverInfo from '../constants/serverInfo';
 
 $(() => {
     let component = new Component(ko);
@@ -12,7 +13,7 @@ $(() => {
     });
 
     component.register("data-table", DataTableView, () => {
-        let api = new JsonReq("https://localhost:5001", fetch);
+        let api = new JsonReq(serverInfo.host, fetch);
 
         let model = new JsonDataTable(ko, api, [{
             title: "Folio", rowKey: "id", sortable: false
