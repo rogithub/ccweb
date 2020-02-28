@@ -15,9 +15,17 @@ $(() => {
         let api = new JsonReq("https://localhost:5001", fetch);
 
         let model = new JsonDataTable(ko, api, [{
+            title: "Folio", rowKey: "id", sortable: false
+        },{
             title: "Empresa", rowKey: "empresa", sortable: false
+        },{
+            title: "Contacto", rowKey: "contacto", sortable: false
+        },{
+            title: "Teléfono", rowKey: "telefono", sortable: false
+        },{
+            title: "Email", rowKey: "email", sortable: false
         }, {
-            title: "Contacto", rowKey: "contacto", sortable: true
+            title: "Cliente desde", rowKey: "fechaCreado", sortable: true
         }]);
 
         model.fetch("/clientes/search")

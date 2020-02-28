@@ -117,9 +117,17 @@ $(function () {
     component.register("data-table", dataTable_1.View, function () {
         var api = new jsonReq_1.JsonReq("https://localhost:5001", fetch);
         var model = new jsonDataTable_1.JsonDataTable(ko, api, [{
+                title: "Folio", rowKey: "id", sortable: false
+            }, {
                 title: "Empresa", rowKey: "empresa", sortable: false
             }, {
-                title: "Contacto", rowKey: "contacto", sortable: true
+                title: "Contacto", rowKey: "contacto", sortable: false
+            }, {
+                title: "Teléfono", rowKey: "telefono", sortable: false
+            }, {
+                title: "Email", rowKey: "email", sortable: false
+            }, {
+                title: "Cliente desde", rowKey: "fechaCreado", sortable: true
             }]);
         model.fetch("/clientes/search");
         return model;
@@ -460,20 +468,14 @@ var JsonReq = /** @class */ (function () {
             var response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        console.log(JSON.stringify(jsonData));
-                        return [4 /*yield*/, fetch(this.toFullUrl(url), {
-                                method: 'POST',
-                                mode: 'no-cors',
-                                cache: 'no-cache',
-                                credentials: 'same-origin',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                redirect: 'follow',
-                                referrerPolicy: 'no-referrer',
-                                body: JSON.stringify(jsonData)
-                            })];
+                    case 0: return [4 /*yield*/, fetch(this.toFullUrl(url), {
+                            method: 'POST',
+                            mode: 'cors',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(jsonData)
+                        })];
                     case 1:
                         response = _a.sent();
                         return [4 /*yield*/, response.json()];

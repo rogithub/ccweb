@@ -18,19 +18,15 @@ export class JsonReq implements Api {
     }
 
     post = async <T>(url: string, jsonData: ObjectLiteral): Promise<T> => {
-        console.log(JSON.stringify(jsonData));
         const response = await fetch(this.toFullUrl(url), {
             method: 'POST',
-            mode: 'no-cors', // no-cors, *cors, same-origin
-            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: 'same-origin', // include, *same-origin, omit
+            mode: 'cors',            
             headers: {
-                'Content-Type': 'application/json'
+		'Content-Type': 'application/json'
             },
-            redirect: 'follow', // manual, *follow, error
-            referrerPolicy: 'no-referrer', // no-referrer, *client
             body: JSON.stringify(jsonData)
         });
+	
         return await response.json();
     }
 
