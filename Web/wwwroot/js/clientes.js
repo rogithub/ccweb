@@ -229,7 +229,7 @@ exports.Model = Model;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<nav aria-label=\"Page navigation example\">\n    <ul class=\"pagination justify-content-center\">\n\n        <li data-bind=\"if: page() !== 1\" class=\"page-item\" aria-label=\"Previous\">\n            <span aria-hidden=\"true\">&laquo;</span>\n        </li>\n\n        <!-- ko foreach: list -->\n        <li class=\"page-item\" data-bind=\"css: { 'active': $data === $parent.page() }\">\n            <a class=\"page-link\" data-bind=\"text: $data\"></a>\n        </li>\n        <!-- /ko -->\n\n\n        <li data-bind=\"if: page() !== list()[list().length-1]\" class=\"page-item\" aria-label=\"Next\">\n            <span aria-hidden=\"true\">&raquo;</span>\n        </li>\n    </ul>\n</nav>");
+/* harmony default export */ __webpack_exports__["default"] = ("<nav aria-label=\"Page navigation example\">\n    <ul class=\"pagination justify-content-center\">\n\n        <li data-bind=\"if: page() !== 1, click: () => page(page()-1)\" class=\"page-item\" aria-label=\"Previous\">\n            <span aria-hidden=\"true\">&laquo;</span>\n        </li>\n\n        <!-- ko foreach: list -->\n        <li class=\"page-item\" data-bind=\"css: { 'active': $data === $parent.page() }\">\n            <a class=\"page-link\" data-bind=\"text: $data, click: () => $parent.page($data)\"></a>\n        </li>\n        <!-- /ko -->\n\n\n        <li data-bind=\"if: page() !== list()[list().length-1], \n                    click: () => page(page()+1)\" class=\"page-item\" aria-label=\"Next\">\n            <span aria-hidden=\"true\">&raquo;</span>\n        </li>\n    </ul>\n</nav>");
 
 /***/ }),
 /* 8 */

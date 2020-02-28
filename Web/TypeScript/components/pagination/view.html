@@ -1,18 +1,19 @@
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
 
-        <li data-bind="if: page() !== 1" class="page-item" aria-label="Previous">
+        <li data-bind="if: page() !== 1, click: () => page(page()-1)" class="page-item" aria-label="Previous">
             <span aria-hidden="true">&laquo;</span>
         </li>
 
         <!-- ko foreach: list -->
         <li class="page-item" data-bind="css: { 'active': $data === $parent.page() }">
-            <a class="page-link" data-bind="text: $data"></a>
+            <a class="page-link" data-bind="text: $data, click: () => $parent.page($data)"></a>
         </li>
         <!-- /ko -->
 
 
-        <li data-bind="if: page() !== list()[list().length-1]" class="page-item" aria-label="Next">
+        <li data-bind="if: page() !== list()[list().length-1], 
+                    click: () => page(page()+1)" class="page-item" aria-label="Next">
             <span aria-hidden="true">&raquo;</span>
         </li>
     </ul>
