@@ -1,12 +1,12 @@
 import { Component } from '../services/component';
-import { View as DataTableView } from '../components/dataTable';
+import { View as DataTableView, Model as DataTableModel } from '../components/dataTable';
 import { View as PaginationView } from '../components/pagination';
 import { View as SearchFieldView } from '../components/searchField';
 import { View as DataCellView, Model as DataCellModel } from '../components/dataCell';
-import { JsonDataTable } from '../models/jsonDataTable';
 import { JsonReq } from '../services/jsonReq';
 import serverInfo from '../constants/serverInfo';
 import { ColumnBuilder } from '../models/columnBuilder';
+import { Cliente } from '../models/cliente';
 
 $(() => {
     let component = new Component(ko);
@@ -25,7 +25,7 @@ $(() => {
     component.register("data-table", DataTableView, () => {
         let api = new JsonReq(serverInfo.host, fetch);
 
-        let model = new JsonDataTable(ko, api, "/clientes/search", [
+        let model = new DataTableModel<Cliente>(ko, api, "/clientes/search", [
             new ColumnBuilder("Folio", "id").sortHeader(ko),
             new ColumnBuilder("Empresa").build(),
             new ColumnBuilder("Contacto").build(),
