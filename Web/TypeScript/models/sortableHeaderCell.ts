@@ -1,4 +1,4 @@
-import { SortOrder } from '../enums/sortOrder';
+import { SortOrder } from '../constants/sortOrder';
 import { SortableColumn } from './sortableColumn';
 
 

@@ -1,5 +1,5 @@
-import { Api } from '../interfaces/api';
-import { ObjectLiteral } from '../interfaces/objectLiteral';
+import { Api } from '../shared/api';
+import { ObjectLiteral } from '../shared/objectLiteral';
 
 export class JsonReq implements Api {
     private baseURL: string;
@@ -20,13 +20,13 @@ export class JsonReq implements Api {
     post = async <T>(url: string, jsonData: ObjectLiteral): Promise<T> => {
         const response = await fetch(this.toFullUrl(url), {
             method: 'POST',
-            mode: 'cors',            
+            mode: 'cors',
             headers: {
-		'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(jsonData)
         });
-	
+
         return await response.json();
     }
 

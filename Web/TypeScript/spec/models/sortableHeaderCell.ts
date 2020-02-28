@@ -1,5 +1,5 @@
 import { SortableHeaderCell } from '../../models/sortableHeaderCell';
-import { SortOrder } from '../../enums/sortOrder';
+import { SortOrder } from '../../constants/sortOrder';
 import ko from '../specHelpers/koMock';
 
 describe('SortableHeaderCell', () => {

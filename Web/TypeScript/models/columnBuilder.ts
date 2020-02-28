@@ -1,7 +1,7 @@
-import { DataColInfo } from '../interfaces/dataColInfo';
-import { TableColumn } from '../interfaces/tableColumn';
+import { DataColInfo } from '../shared/dataColInfo';
+import { TableColumn } from '../shared/tableColumn';
 import Constants from '../constants/dataTableConstants';
-import { ObjectLiteral } from '../interfaces/objectLiteral';
+import { ObjectLiteral } from '../shared/objectLiteral';
 import { SortableHeaderCell } from './sortableHeaderCell';
 
 export class ColumnBuilder {

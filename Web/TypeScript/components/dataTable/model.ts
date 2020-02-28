@@ -1,5 +1,5 @@
-import { ObjectLiteral } from '../../interfaces/objectLiteral';
-import { TableColumn } from '../../interfaces/tableColumn';
+import { ObjectLiteral } from '../../shared/objectLiteral';
+import { TableColumn } from '../../shared/tableColumn';
 
 export class Model {
     public cols: KnockoutObservableArray<TableColumn>;

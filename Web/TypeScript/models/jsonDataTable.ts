@@ -1,9 +1,9 @@
 import { Model as DataTableModel } from '../components/dataTable';
-import { Api } from '../interfaces/api';
+import { Api } from '../shared/api';
 import { ResultSet } from './resultSet';
 import { Cliente } from './cliente';
 import { SearchData } from './searchData';
-import { TableColumn } from '../interfaces/tableColumn';
+import { TableColumn } from '../shared/tableColumn';
 
 export class JsonDataTable extends DataTableModel {
     private api: Api;

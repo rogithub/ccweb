@@ -1,6 +1,6 @@
 import { Model } from '../../../components/dataTable/model';
-import { ObjectLiteral } from '../../../interfaces/objectLiteral';
-import { TableColumn } from '../../../interfaces/tableColumn';
+import { ObjectLiteral } from '../../../shared/objectLiteral';
+import { TableColumn } from '../../../shared/tableColumn';
 import ko from '../../specHelpers/koMock';
 
 describe('Model', () => {
