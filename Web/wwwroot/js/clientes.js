@@ -136,15 +136,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var component_1 = __webpack_require__(4);
 var dataTable_1 = __webpack_require__(0);
 var pagination_1 = __webpack_require__(1);
-var dataCell_1 = __webpack_require__(9);
-var jsonDataTable_1 = __webpack_require__(12);
-var jsonReq_1 = __webpack_require__(13);
-var serverInfo_1 = __webpack_require__(14);
-var columnBuilder_1 = __webpack_require__(15);
+var dataCell_1 = __webpack_require__(10);
+var jsonDataTable_1 = __webpack_require__(13);
+var jsonReq_1 = __webpack_require__(14);
+var serverInfo_1 = __webpack_require__(15);
+var columnBuilder_1 = __webpack_require__(16);
 $(function () {
     var component = new component_1.Component(ko);
     component.register("pagination", pagination_1.View, function (params) {
-        console.log(JSON.stringify(params));
         return params.model;
     });
     component.register("data-cell", dataCell_1.View, function (params) {
@@ -230,7 +229,7 @@ exports.Model = Model;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<nav aria-label=\"Page navigation example\">\n    <ul class=\"pagination justify-content-center\">\n        <li class=\"page-item disabled\">\n            <a class=\"page-link\" href=\"#\" tabindex=\"-1\" aria-disabled=\"true\">Previous</a>\n        </li>\n        <li class=\"page-item\"><a class=\"page-link\" href=\"#\">1</a></li>\n        <li class=\"page-item\"><a class=\"page-link\" href=\"#\">2</a></li>\n        <li class=\"page-item\"><a class=\"page-link\" href=\"#\">3</a></li>\n        <li class=\"page-item\">\n            <a class=\"page-link\" href=\"#\">Next</a>\n        </li>\n    </ul>\n</nav>\n\nPage: <span data-bind=\"text: page\"></span>\nPage Size: <span data-bind=\"text: pageSize\"></span>\nTotal Rows: <span data-bind=\"text: totalRows\"></span>");
+/* harmony default export */ __webpack_exports__["default"] = ("<nav aria-label=\"Page navigation example\">\n    <ul class=\"pagination justify-content-center\">\n\n        <li data-bind=\"if: page() !== 1\" class=\"page-item\" aria-label=\"Previous\">\n            <span aria-hidden=\"true\">&laquo;</span>\n        </li>\n\n        <!-- ko foreach: list -->\n        <li class=\"page-item\" data-bind=\"css: { 'active': $data === $parent.page() }\">\n            <a class=\"page-link\" data-bind=\"text: $data\"></a>\n        </li>\n        <!-- /ko -->\n\n\n        <li data-bind=\"if: page() !== list()[list().length-1]\" class=\"page-item\" aria-label=\"Next\">\n            <span aria-hidden=\"true\">&raquo;</span>\n        </li>\n    </ul>\n</nav>");
 
 /***/ }),
 /* 8 */
@@ -239,12 +238,24 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+var range_1 = __webpack_require__(9);
 var Model = /** @class */ (function () {
     function Model(ko) {
+        var _this = this;
         this.ko = ko;
         this.page = this.ko.observable(1);
         this.pageSize = this.ko.observable(20);
         this.totalRows = this.ko.observable(0);
+        this.list = this.ko.pureComputed(function () {
+            if (_this.totalRows() <= 0)
+                return [];
+            var pageCount = _this.totalRows() / _this.pageSize();
+            var remainder = _this.totalRows() % _this.pageSize();
+            if (remainder > 0) {
+                pageCount += 1;
+            }
+            return range_1.default(1, pageCount, 1);
+        });
     }
     return Model;
 }());
@@ -258,14 +269,26 @@ exports.Model = Model;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var view_html_1 = __webpack_require__(10);
-exports.View = view_html_1.default;
-var model_1 = __webpack_require__(11);
-exports.Model = model_1.Model;
+exports.default = (function (start, stop, step) {
+    return Array.from({ length: (stop - start) / step + 1 }, function (_, i) { return start + (i * step); });
+});
 
 
 /***/ }),
 /* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var view_html_1 = __webpack_require__(11);
+exports.View = view_html_1.default;
+var model_1 = __webpack_require__(12);
+exports.Model = model_1.Model;
+
+
+/***/ }),
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -273,7 +296,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("<script type=\"text/html\" id=\"data-cell-sortable-header-template\">\n    <a data-bind=\"click: changeOrder\">\n        <label data-bind=\"text: title\" style=\"cursor: pointer;\"></label>\n        <!-- ko if: order() === 0 -->\n        <i class=\"fas fa-sort\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 1 -->\n        <i class=\"fas fa-sort-up\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 2 -->\n        <i class=\"fas fa-sort-down\"></i>\n        <!-- /ko -->\n    </a>\n</script>\n\n<script type=\"text/html\" id=\"data-cell-default-data-template\">\n    <label data-bind=\"text: $data\"></label>\n</script>\n\n<!-- ko template: { name: template, data: data } -->\n<!-- /ko -->\n");
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -291,7 +314,7 @@ exports.Model = Model;
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -405,7 +428,7 @@ exports.JsonDataTable = JsonDataTable;
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -499,7 +522,7 @@ exports.JsonReq = JsonReq;
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -511,14 +534,14 @@ exports.default = {
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var dataTableConstants_1 = __webpack_require__(16);
-var sortableHeaderCell_1 = __webpack_require__(17);
+var dataTableConstants_1 = __webpack_require__(17);
+var sortableHeaderCell_1 = __webpack_require__(18);
 var ColumnBuilder = /** @class */ (function () {
     function ColumnBuilder(title, rowKey, sortable) {
         var _this = this;
@@ -554,7 +577,7 @@ exports.ColumnBuilder = ColumnBuilder;
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -567,7 +590,7 @@ exports.default = {
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
