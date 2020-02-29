@@ -30,15 +30,41 @@ export class JsonReq implements Api {
         return await response.json();
     }
 
-    put = <T>(url: string, jsonData: ObjectLiteral): Promise<T> => {
-        throw new Error("Method not implemented.");
+    put = async <T>(url: string, jsonData: ObjectLiteral): Promise<T> => {
+        const response = await this.fn(this.toFullUrl(url), {
+            method: 'PUT',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(jsonData)
+        });
+
+        return await response.json();
     }
 
-    patch = <T>(url: string, jsonData: ObjectLiteral): Promise<T> => {
-        throw new Error("Method not implemented.");
+    patch = async <T>(url: string, jsonData: ObjectLiteral): Promise<T> => {
+        const response = await this.fn(this.toFullUrl(url), {
+            method: 'PATCH',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(jsonData)
+        });
+
+        return await response.json();
     }
 
-    del = <T>(url: string): Promise<T> => {
-        throw new Error("Method not implemented.");
+    del = async <T>(url: string): Promise<T> => {
+        const response = await this.fn(this.toFullUrl(url), {
+            method: 'DELETE',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        return await response.json();
     }
 }

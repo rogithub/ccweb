@@ -26,6 +26,24 @@ describe('Component', () => {
 
             done();
         });
+        it("should put data", async (done) => {
+            let n = await service.put<number>("/put/1", { data: "test" });
+            expect(n).toBe(1);
+
+            done();
+        });
+        it("should patch data", async (done) => {
+            let n = await service.patch<number>("/patch/1", { data: "test" });
+            expect(n).toBe(1);
+
+            done();
+        });
+        it("should delete data", async (done) => {
+            let n = await service.del<number>("/delete/1");
+            expect(n).toBe(1);
+
+            done();
+        });
     });
 
 });
