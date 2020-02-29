@@ -6,7 +6,7 @@ import { Api } from '../../shared/api';
 import { ResultSet } from '../../models/resultSet';
 import { SearchData, OrderCol } from '../../models/searchData';
 import { SortOrder } from '../../constants/sortOrder';
-import { SortableColumn } from '../../models/sortableColumn';
+import { SortableHeaderCell } from '../../models/sortableHeaderCell';
 
 
 export class ColumnModel {
@@ -43,13 +43,13 @@ export class Model<T> {
 
         this.sorting = this.ko.pureComputed<OrderCol[]>(() => {
             let cols = this.ko.utils.arrayFilter(this.cols(), c => {
-                if (typeof c.model.order !== "function") return false;
-                let item = c.model as SortableColumn;
+                if (c.model instanceof SortableHeaderCell === false) return false;
+                let item = c.model as SortableHeaderCell;
                 return item.order() !== SortOrder.None;
             });
 
             return this.ko.utils.arrayMap(cols, (c: ColumnModel): OrderCol => {
-                let item = c.model as SortableColumn;
+                let item = c.model as SortableHeaderCell;
                 return {
                     col: c.info.header["rowKey"],
                     order: item.order() === SortOrder.Asc ? 0 : 1
