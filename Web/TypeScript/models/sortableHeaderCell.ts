@@ -1,8 +1,6 @@
 import { SortOrder } from '../constants/sortOrder';
-import { SortableColumn } from './sortableColumn';
 
-
-export class SortableHeaderCell implements SortableColumn {
+export class SortableHeaderCell {
     public order: KnockoutObservable<SortOrder>;
     public title: KnockoutObservable<string>;
     private ko: KnockoutStatic;
