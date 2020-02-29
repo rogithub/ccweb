@@ -1,23 +1,28 @@
-import { Model, ColumnModel } from '../../../components/dataTable/model';
+import { Model } from '../../../components/dataTable/model';
+import { DefaultColumn } from '../../../components/dataCell/defaultColumn';
 import { ObjectLiteral } from '../../../shared/objectLiteral';
 import ko from '../../specHelpers/koMock';
 import { ApiMock } from '../../specHelpers/apiMock';
-import { TableColumn } from '../../../shared/tableColumn';
+
+interface Persona {
+    nombre: string,
+    edad: number
+}
 
 describe('Model', () => {
-    describe('load', () => {
+    describe('constructor', () => {
 
-        it("should load table", (done) => {
-            /*
-            let tblCols: TableColumn[] = [];
+        it("should init table", (done) => {
 
-            let m = new Model<ObjectLiteral>(ko, new ApiMock(), "/search", tblCols);
-            let cols: ColumnModel[] = [];
-            let rows: ObjectLiteral[] = [];
+            let searchUrl = "/search"
+            let m = new Model<Persona>(ko, new ApiMock(), searchUrl, [
+                new DefaultColumn("Nombre"),
+                new DefaultColumn("Edad")
+            ]);
 
-            expect(m.cols()).toEqual(cols);
-            expect(m.rows()).toEqual(rows); 
-            */
+            expect(m.searchUrl).toBe(searchUrl);
+            expect(m.searchModel.searchText()).toBe("");
+
             done();
         });
     });
