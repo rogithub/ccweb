@@ -17,6 +17,10 @@ let ko: any = {
             }
             val = newVal;
         };
+    },
+
+    pureComputed<T>(fn: () => T): () => T {
+        return fn;
     }
 }
 

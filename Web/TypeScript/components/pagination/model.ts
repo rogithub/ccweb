@@ -14,7 +14,7 @@ export class Model {
         this.pageSize = this.ko.observable<number>(20);
         this.totalRows = this.ko.observable<number>(0);
 
-        this.list = this.ko.pureComputed(() => {
+        this.list = this.ko.pureComputed<number[]>(() => {
             if (this.totalRows() <= 0) return [];
 
             let pageCount = this.totalRows() / this.pageSize();
