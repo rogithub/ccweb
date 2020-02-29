@@ -39,10 +39,11 @@ let ko: any = {
 
     pureComputed<T>(fn: () => T): () => T {
         let subscribableSpiable = {
+            calculate: () => fn(),
             subscribe: (f: (subsNewVal: T) => void) => f(fn())
         };
-        let newF = Object.assign(fn, subscribableSpiable);
 
+        let newF = Object.assign(fn, subscribableSpiable);
         return newF;
     },
 
