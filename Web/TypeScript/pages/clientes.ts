@@ -31,8 +31,7 @@ $(() => {
             new DefaultColumn("Contacto"),
             new DefaultColumn("Teléfono", "telefono"),
             new DefaultColumn("Email", "email"),
-            new DefaultColumn("Cliente Desde", "fechaCreado")
-                .setGetCellData(r => new Date(r.fechaCreado).toLocaleDateString())
+            new DefaultColumn("Cliente Desde", "fechaCreado").setGetCellData(r => new Date(r.fechaCreado).toLocaleDateString())
         ]);
 
         model.fetch();

@@ -4,6 +4,6 @@ export interface TableColumn {
     header: ObjectLiteral;
     celTemplate: string;
     headTemplate: string;
-    getCellData: (row: ObjectLiteral) => ObjectLiteral;
-    getHeadData: (header: ObjectLiteral) => ObjectLiteral;
+    getCellData: <T>(row: ObjectLiteral) => T;
+    getHeadData: <T>(header: ObjectLiteral) => T;
 }

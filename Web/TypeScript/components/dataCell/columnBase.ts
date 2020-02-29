@@ -6,8 +6,8 @@ export class ColumnBase implements TableColumn {
     public header: ObjectLiteral;
     public celTemplate: string;
     public headTemplate: string;
-    public getCellData: (row: ObjectLiteral) => ObjectLiteral;
-    public getHeadData: (header: ObjectLiteral) => ObjectLiteral;
+    public getCellData: (row: ObjectLiteral) => any;
+    public getHeadData: (header: ObjectLiteral) => any;
 
     constructor(title: string, rowKey: string = title.toLocaleLowerCase()) {
         this.celTemplate = Constants.DATA_CELL_DEFAULT_TEMPLATE;
@@ -17,12 +17,12 @@ export class ColumnBase implements TableColumn {
         this.getHeadData = head => head.title;
     }
 
-    public setGetCellData = <T>(fn: (row: ObjectLiteral) => T): ColumnBase => {
-        this.getHeadData = fn;
+    public setGetCellData = (fn: (row: ObjectLiteral) => any): ColumnBase => {
+        this.getCellData = fn;
         return this;
     }
 
-    public setGetHeadData = <T>(fn: (row: ObjectLiteral) => T): ColumnBase => {
+    public setGetHeadData = (fn: (row: ObjectLiteral) => any): ColumnBase => {
         this.getHeadData = fn;
         return this;
     }

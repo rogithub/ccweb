@@ -97,7 +97,7 @@ var ColumnBase = /** @class */ (function () {
         var _this = this;
         if (rowKey === void 0) { rowKey = title.toLocaleLowerCase(); }
         this.setGetCellData = function (fn) {
-            _this.getHeadData = fn;
+            _this.getCellData = fn;
             return _this;
         };
         this.setGetHeadData = function (fn) {
@@ -278,8 +278,7 @@ $(function () {
             new dataCell_1.DefaultColumn("Contacto"),
             new dataCell_1.DefaultColumn("Teléfono", "telefono"),
             new dataCell_1.DefaultColumn("Email", "email"),
-            new dataCell_1.DefaultColumn("Cliente Desde", "fechaCreado")
-                .setGetCellData(function (r) { return new Date(r.fechaCreado).toLocaleDateString(); })
+            new dataCell_1.DefaultColumn("Cliente Desde", "fechaCreado").setGetCellData(function (r) { return new Date(r.fechaCreado).toLocaleDateString(); })
         ]);
         model.fetch();
         return model;
