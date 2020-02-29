@@ -11,7 +11,7 @@ describe('Component', () => {
 
     describe('get', () => {
 
-        it("should fetch data", function (done) {
+        it("should fetch data", (done) => {
             done();
         });
     });

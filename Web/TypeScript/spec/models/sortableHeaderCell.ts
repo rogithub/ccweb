@@ -8,7 +8,7 @@ describe('SortableHeaderCell', () => {
 
     describe('constructor', () => {
 
-        it("should initialize object", function (done) {
+        it("should initialize object", (done) => {
             let cell = new SortableHeaderCell(ko, title);
 
             expect(cell.order()).toBe(SortOrder.None);
@@ -25,7 +25,7 @@ describe('SortableHeaderCell', () => {
 
     describe('changeOrder', () => {
 
-        it("should change order incrementally", function (done) {
+        it("should change order incrementally", (done) => {
             let cell = new SortableHeaderCell(ko, title);
 
             expect(cell.order()).toBe(SortOrder.None);

@@ -13,7 +13,7 @@ describe('Component', () => {
 
     describe('register', () => {
 
-        it("should register new component", function (done) {
+        it("should register new component", (done) => {
             let componentName = "test-component";
             let factory = () => { model };
             let template = `<!-- ko template: { name: 'TestTemplate' } --><!-- /ko -->`;

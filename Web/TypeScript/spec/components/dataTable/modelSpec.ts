@@ -7,7 +7,7 @@ import { TableColumn } from '../../../shared/tableColumn';
 describe('Model', () => {
     describe('load', () => {
 
-        it("should load table", function (done) {
+        it("should load table", (done) => {
             /*
             let tblCols: TableColumn[] = [];
 
