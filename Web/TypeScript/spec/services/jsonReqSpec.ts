@@ -2,20 +2,26 @@ import { JsonReq } from '../../services/jsonReq';
 
 describe('Component', () => {
 
-    let service: JsonReq;
     let fetch;
+    let service: JsonReq;
+    let response = {
+        json: () => 1
+    }
 
     beforeEach(() => {
-        fetch = jasmine.createSpy("fetch").and.resolveTo({
-            json: () => 1
-        });
-
+        fetch = jasmine.createSpy("fetch").and.resolveTo(response);
         service = new JsonReq("localhost:80", fetch);
     });
 
-    describe('get', () => {
+    describe('response', () => {
         it("should get data", async (done) => {
             let n = await service.get<number>("/get");
+            expect(n).toBe(1);
+
+            done();
+        });
+        it("should post data", async (done) => {
+            let n = await service.post<number>("/post", { data: "test" });
             expect(n).toBe(1);
 
             done();

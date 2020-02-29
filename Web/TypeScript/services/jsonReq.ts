@@ -18,7 +18,7 @@ export class JsonReq implements Api {
     }
 
     post = async <T>(url: string, jsonData: ObjectLiteral): Promise<T> => {
-        const response = await fetch(this.toFullUrl(url), {
+        const response = await this.fn(this.toFullUrl(url), {
             method: 'POST',
             mode: 'cors',
             headers: {
