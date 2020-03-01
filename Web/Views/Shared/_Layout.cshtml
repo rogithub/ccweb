@@ -23,8 +23,14 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Clientes" asp-action="Index">Clientes</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Clientes
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-area="" asp-controller="Clientes" asp-action="Index">Todos</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Clientes" asp-action="Nuevo">Nuevo</a>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -42,6 +48,10 @@
             &copy; 2020
         </div>
     </footer>
+    
+    <script type="text/javascript" src="~/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/lib/knockout/knockout.js"></script>
     
     @RenderSection("Scripts", required: false)
 </body>
