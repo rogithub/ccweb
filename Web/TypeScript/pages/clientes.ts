@@ -32,7 +32,7 @@ $(() => {
             new DefaultColumn("Teléfono", "telefono"),
             new DefaultColumn("Email", "email"),
             new DefaultColumn("Cliente Desde", "fechaCreado").setGetCellData(r => new Date(r.fechaCreado).toLocaleDateString()),
-            new ActionsColumn("Actions")
+            new ActionsColumn("Acciones")
         ]);
 
         model.load();
