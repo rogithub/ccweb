@@ -91,7 +91,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var dataTableConstants_1 = __webpack_require__(6);
+var dataTableConstants_1 = __webpack_require__(1);
 var ColumnBase = /** @class */ (function () {
     function ColumnBase(title, rowKey) {
         var _this = this;
@@ -122,6 +122,20 @@ exports.ColumnBase = ColumnBase;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = {
+    DATA_CELL_DEFAULT_TEMPLATE: "data-cell-default-data-template",
+    DATA_CELL_SORTABLE_HEADER: "data-cell-sortable-header-template",
+    DATA_CELL_ACTIONS_HEADER: "data-cell-actions-header-template"
+};
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
 var range_1 = __webpack_require__(12);
 var Model = /** @class */ (function () {
     function Model(ko) {
@@ -147,7 +161,7 @@ exports.Model = Model;
 
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -164,7 +178,7 @@ exports.Model = Model;
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -179,13 +193,13 @@ var SortOrder;
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var sortOrder_1 = __webpack_require__(3);
+var sortOrder_1 = __webpack_require__(4);
 var SortableHeaderCell = /** @class */ (function () {
     function SortableHeaderCell(ko, title) {
         var _this = this;
@@ -213,7 +227,7 @@ exports.SortableHeaderCell = SortableHeaderCell;
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -229,19 +243,8 @@ var sortableColumn_1 = __webpack_require__(20);
 exports.SortableColumn = sortableColumn_1.SortableColumn;
 var columnBase_1 = __webpack_require__(0);
 exports.ColumnBase = columnBase_1.ColumnBase;
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = {
-    DATA_CELL_DEFAULT_TEMPLATE: "data-cell-default-data-template",
-    DATA_CELL_SORTABLE_HEADER: "data-cell-sortable-header-template"
-};
+var actionsColumn_1 = __webpack_require__(21);
+exports.ActionsColumn = actionsColumn_1.ActionsColumn;
 
 
 /***/ }),
@@ -255,10 +258,10 @@ var component_1 = __webpack_require__(8);
 var dataTable_1 = __webpack_require__(9);
 var pagination_1 = __webpack_require__(13);
 var searchField_1 = __webpack_require__(15);
-var dataCell_1 = __webpack_require__(5);
-var dataCell_2 = __webpack_require__(5);
-var jsonReq_1 = __webpack_require__(21);
-var serverInfo_1 = __webpack_require__(22);
+var dataCell_1 = __webpack_require__(6);
+var dataCell_2 = __webpack_require__(6);
+var jsonReq_1 = __webpack_require__(22);
+var serverInfo_1 = __webpack_require__(23);
 $(function () {
     var api = new jsonReq_1.JsonReq(serverInfo_1.default.host, window);
     var component = new component_1.Component(ko);
@@ -278,7 +281,8 @@ $(function () {
             new dataCell_1.DefaultColumn("Contacto"),
             new dataCell_1.DefaultColumn("Teléfono", "telefono"),
             new dataCell_1.DefaultColumn("Email", "email"),
-            new dataCell_1.DefaultColumn("Cliente Desde", "fechaCreado").setGetCellData(function (r) { return new Date(r.fechaCreado).toLocaleDateString(); })
+            new dataCell_1.DefaultColumn("Cliente Desde", "fechaCreado").setGetCellData(function (r) { return new Date(r.fechaCreado).toLocaleDateString(); }),
+            new dataCell_1.ActionsColumn("Actions")
         ]);
         model.load();
         return model;
@@ -375,10 +379,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var model_1 = __webpack_require__(1);
-var model_2 = __webpack_require__(2);
-var sortOrder_1 = __webpack_require__(3);
-var sortableHeaderCell_1 = __webpack_require__(4);
+var model_1 = __webpack_require__(2);
+var model_2 = __webpack_require__(3);
+var sortOrder_1 = __webpack_require__(4);
+var sortableHeaderCell_1 = __webpack_require__(5);
 var ColumnModel = /** @class */ (function () {
     function ColumnModel(info) {
         this.info = info;
@@ -464,7 +468,7 @@ exports.default = (function (start, stop, step) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var view_html_1 = __webpack_require__(14);
 exports.View = view_html_1.default;
-var model_1 = __webpack_require__(1);
+var model_1 = __webpack_require__(2);
 exports.Model = model_1.Model;
 
 
@@ -485,7 +489,7 @@ __webpack_require__.r(__webpack_exports__);
 Object.defineProperty(exports, "__esModule", { value: true });
 var view_html_1 = __webpack_require__(16);
 exports.View = view_html_1.default;
-var model_1 = __webpack_require__(2);
+var model_1 = __webpack_require__(3);
 exports.Model = model_1.Model;
 
 
@@ -503,7 +507,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<script type=\"text/html\" id=\"data-cell-sortable-header-template\">\n    <a data-bind=\"click: changeOrder\">\n        <label data-bind=\"text: title\" style=\"cursor: pointer;\"></label>\n        <!-- ko if: order() === 0 -->\n        <i class=\"fas fa-sort\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 1 -->\n        <i class=\"fas fa-sort-up\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 2 -->\n        <i class=\"fas fa-sort-down\"></i>\n        <!-- /ko -->\n    </a>\n</script>\n\n<script type=\"text/html\" id=\"data-cell-default-data-template\">\n    <label data-bind=\"text: $data\"></label>\n</script>\n\n<!-- ko template: { name: template, data: data } -->\n<!-- /ko -->\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<script type=\"text/html\" id=\"data-cell-sortable-header-template\">\n    <a data-bind=\"click: changeOrder\">\n        <label data-bind=\"text: title\" style=\"cursor: pointer;\"></label>\n        <!-- ko if: order() === 0 -->\n        <i class=\"fas fa-sort\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 1 -->\n        <i class=\"fas fa-sort-up\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 2 -->\n        <i class=\"fas fa-sort-down\"></i>\n        <!-- /ko -->\n    </a>\n</script>\n\n<script type=\"text/html\" id=\"data-cell-default-data-template\">\n    <label data-bind=\"text: $data\"></label>\n</script>\n\n<script type=\"text/html\" id=\"data-cell-actions-header-template\">\n    ACTIONS HERE\n</script>\n\n\n\n<!-- ko template: { name: template, data: data } -->\n<!-- /ko -->");
 
 /***/ }),
 /* 18 */
@@ -574,8 +578,8 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var dataTableConstants_1 = __webpack_require__(6);
-var sortableHeaderCell_1 = __webpack_require__(4);
+var dataTableConstants_1 = __webpack_require__(1);
+var sortableHeaderCell_1 = __webpack_require__(5);
 var columnBase_1 = __webpack_require__(0);
 var SortableColumn = /** @class */ (function (_super) {
     __extends(SortableColumn, _super);
@@ -592,6 +596,41 @@ exports.SortableColumn = SortableColumn;
 
 /***/ }),
 /* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var dataTableConstants_1 = __webpack_require__(1);
+var columnBase_1 = __webpack_require__(0);
+var ActionsColumn = /** @class */ (function (_super) {
+    __extends(ActionsColumn, _super);
+    function ActionsColumn(title, rowKey) {
+        var _this = _super.call(this, title, rowKey) || this;
+        _this.celTemplate = dataTableConstants_1.default.DATA_CELL_ACTIONS_HEADER;
+        _this.setGetCellData(function (r) { return r; });
+        return _this;
+    }
+    return ActionsColumn;
+}(columnBase_1.ColumnBase));
+exports.ActionsColumn = ActionsColumn;
+
+
+/***/ }),
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -742,7 +781,7 @@ exports.JsonReq = JsonReq;
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

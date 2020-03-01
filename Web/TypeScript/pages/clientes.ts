@@ -2,7 +2,7 @@ import { Component } from '../services/component';
 import { View as DataTableView, Model as DataTableModel } from '../components/dataTable';
 import { View as PaginationView } from '../components/pagination';
 import { View as SearchFieldView } from '../components/searchField';
-import { DefaultColumn, SortableColumn } from '../components/dataCell';
+import { DefaultColumn, SortableColumn, ActionsColumn } from '../components/dataCell';
 import { View as DataCellView, Model as DataCellModel } from '../components/dataCell';
 import { JsonReq } from '../services/jsonReq';
 import serverInfo from '../constants/serverInfo';
@@ -31,7 +31,8 @@ $(() => {
             new DefaultColumn("Contacto"),
             new DefaultColumn("Teléfono", "telefono"),
             new DefaultColumn("Email", "email"),
-            new DefaultColumn("Cliente Desde", "fechaCreado").setGetCellData(r => new Date(r.fechaCreado).toLocaleDateString())
+            new DefaultColumn("Cliente Desde", "fechaCreado").setGetCellData(r => new Date(r.fechaCreado).toLocaleDateString()),
+            new ActionsColumn("Actions")
         ]);
 
         model.load();

@@ -2,7 +2,6 @@ import { JsonReq } from '../../services/jsonReq';
 
 describe('Component', () => {
 
-    let fetch;
     let window;
     let service: JsonReq;
     let response = {

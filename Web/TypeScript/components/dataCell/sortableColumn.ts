@@ -1,6 +1,5 @@
 import Constants from '../../constants/dataTableConstants';
 import { SortableHeaderCell } from '../../models/sortableHeaderCell';
-import { ObjectLiteral } from '../../shared/objectLiteral';
 
 import { ColumnBase } from './columnBase';
 
