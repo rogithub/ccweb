@@ -260,6 +260,7 @@ var dataCell_2 = __webpack_require__(5);
 var jsonReq_1 = __webpack_require__(21);
 var serverInfo_1 = __webpack_require__(22);
 $(function () {
+    var api = new jsonReq_1.JsonReq(serverInfo_1.default.host, window);
     var component = new component_1.Component(ko);
     component.register("pagination", pagination_1.View, function (params) {
         return params.model;
@@ -271,7 +272,6 @@ $(function () {
         return new dataCell_2.Model(ko, params.template, params.data);
     });
     component.register("data-table", dataTable_1.View, function () {
-        var api = new jsonReq_1.JsonReq(serverInfo_1.default.host, fetch);
         var model = new dataTable_1.Model(ko, api, "/clientes/search", [
             new dataCell_1.SortableColumn(ko, "Folio", "id"),
             new dataCell_1.DefaultColumn("Empresa"),
@@ -280,7 +280,7 @@ $(function () {
             new dataCell_1.DefaultColumn("Email", "email"),
             new dataCell_1.DefaultColumn("Cliente Desde", "fechaCreado").setGetCellData(function (r) { return new Date(r.fechaCreado).toLocaleDateString(); })
         ]);
-        model.fetch();
+        model.load();
         return model;
     });
     ko.applyBindings();
@@ -390,7 +390,7 @@ exports.ColumnModel = ColumnModel;
 var Model = /** @class */ (function () {
     function Model(ko, api, searchUrl, cols) {
         var _this = this;
-        this.fetch = function () { return __awaiter(_this, void 0, void 0, function () {
+        this.load = function () { return __awaiter(_this, void 0, void 0, function () {
             var data, set;
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -433,10 +433,10 @@ var Model = /** @class */ (function () {
                 };
             });
         });
-        this.pagination.page.subscribe(this.fetch);
-        this.pagination.pageSize.subscribe(this.fetch);
-        this.searchModel.searchText.subscribe(this.fetch);
-        this.sorting.subscribe(this.fetch);
+        this.pagination.page.subscribe(this.load);
+        this.pagination.pageSize.subscribe(this.load);
+        this.searchModel.searchText.subscribe(this.load);
+        this.sorting.subscribe(this.load);
     }
     return Model;
 }());
@@ -634,14 +634,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var JsonReq = /** @class */ (function () {
-    function JsonReq(baseUrl, fetchFn) {
+    function JsonReq(baseUrl, window) {
         var _this = this;
         this.toFullUrl = function (url) { return "" + _this.baseURL + url; };
         this.get = function (url) { return __awaiter(_this, void 0, void 0, function () {
-            var response;
+            var self, response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.fn(this.toFullUrl(url))];
+                    case 0:
+                        self = this;
+                        return [4 /*yield*/, self.window.fetch(self.toFullUrl(url))];
                     case 1:
                         response = _a.sent();
                         return [2 /*return*/, response.json()];
@@ -649,17 +651,19 @@ var JsonReq = /** @class */ (function () {
             });
         }); };
         this.post = function (url, jsonData) { return __awaiter(_this, void 0, void 0, function () {
-            var response;
+            var self, response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, fetch(this.toFullUrl(url), {
-                            method: 'POST',
-                            mode: 'cors',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(jsonData)
-                        })];
+                    case 0:
+                        self = this;
+                        return [4 /*yield*/, self.window.fetch(self.toFullUrl(url), {
+                                method: 'POST',
+                                mode: 'cors',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(jsonData)
+                            })];
                     case 1:
                         response = _a.sent();
                         return [4 /*yield*/, response.json()];
@@ -667,17 +671,70 @@ var JsonReq = /** @class */ (function () {
                 }
             });
         }); };
-        this.put = function (url, jsonData) {
-            throw new Error("Method not implemented.");
-        };
-        this.patch = function (url, jsonData) {
-            throw new Error("Method not implemented.");
-        };
-        this.del = function (url) {
-            throw new Error("Method not implemented.");
-        };
+        this.put = function (url, jsonData) { return __awaiter(_this, void 0, void 0, function () {
+            var self, response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        self = this;
+                        return [4 /*yield*/, self.window.fetch(self.toFullUrl(url), {
+                                method: 'PUT',
+                                mode: 'cors',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(jsonData)
+                            })];
+                    case 1:
+                        response = _a.sent();
+                        return [4 /*yield*/, response.json()];
+                    case 2: return [2 /*return*/, _a.sent()];
+                }
+            });
+        }); };
+        this.patch = function (url, jsonData) { return __awaiter(_this, void 0, void 0, function () {
+            var self, response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        self = this;
+                        return [4 /*yield*/, self.window.fetch(self.toFullUrl(url), {
+                                method: 'PATCH',
+                                mode: 'cors',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(jsonData)
+                            })];
+                    case 1:
+                        response = _a.sent();
+                        return [4 /*yield*/, response.json()];
+                    case 2: return [2 /*return*/, _a.sent()];
+                }
+            });
+        }); };
+        this.del = function (url) { return __awaiter(_this, void 0, void 0, function () {
+            var self, response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        self = this;
+                        return [4 /*yield*/, self.window.fetch(self.toFullUrl(url), {
+                                method: 'DELETE',
+                                mode: 'cors',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                }
+                            })];
+                    case 1:
+                        response = _a.sent();
+                        return [4 /*yield*/, response.json()];
+                    case 2: return [2 /*return*/, _a.sent()];
+                }
+            });
+        }); };
         this.baseURL = baseUrl;
-        this.fn = fetchFn;
+        this.window = window;
     }
     return JsonReq;
 }());

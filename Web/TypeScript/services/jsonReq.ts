@@ -3,22 +3,24 @@ import { ObjectLiteral } from '../shared/objectLiteral';
 
 export class JsonReq implements Api {
     private baseURL: string;
-    private fn: (input: RequestInfo, init?: RequestInit) => Promise<Response>;
+    private window: Window;
 
-    constructor(baseUrl: string, fetchFn: (input: RequestInfo, init?: RequestInit) => Promise<Response>) {
+    constructor(baseUrl: string, window: Window) {
         this.baseURL = baseUrl;
-        this.fn = fetchFn;
+        this.window = window;
     }
 
     toFullUrl = (url: string) => `${this.baseURL}${url}`
 
     get = async <T>(url: string): Promise<T> => {
-        let response = await this.fn(this.toFullUrl(url));
+        const self = this;
+        let response = await self.window.fetch(self.toFullUrl(url));
         return response.json()
     }
 
     post = async <T>(url: string, jsonData: ObjectLiteral): Promise<T> => {
-        const response = await this.fn(this.toFullUrl(url), {
+        const self = this;
+        const response = await self.window.fetch(self.toFullUrl(url), {
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -31,7 +33,8 @@ export class JsonReq implements Api {
     }
 
     put = async <T>(url: string, jsonData: ObjectLiteral): Promise<T> => {
-        const response = await this.fn(this.toFullUrl(url), {
+        const self = this;
+        const response = await self.window.fetch(self.toFullUrl(url), {
             method: 'PUT',
             mode: 'cors',
             headers: {
@@ -44,7 +47,8 @@ export class JsonReq implements Api {
     }
 
     patch = async <T>(url: string, jsonData: ObjectLiteral): Promise<T> => {
-        const response = await this.fn(this.toFullUrl(url), {
+        const self = this;
+        const response = await self.window.fetch(self.toFullUrl(url), {
             method: 'PATCH',
             mode: 'cors',
             headers: {
@@ -57,7 +61,8 @@ export class JsonReq implements Api {
     }
 
     del = async <T>(url: string): Promise<T> => {
-        const response = await this.fn(this.toFullUrl(url), {
+        const self = this;
+        const response = await self.window.fetch(self.toFullUrl(url), {
             method: 'DELETE',
             mode: 'cors',
             headers: {

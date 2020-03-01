@@ -57,13 +57,13 @@ export class Model<T> {
             });
         });
 
-        this.pagination.page.subscribe(this.fetch);
-        this.pagination.pageSize.subscribe(this.fetch);
-        this.searchModel.searchText.subscribe(this.fetch);
-        this.sorting.subscribe(this.fetch);
+        this.pagination.page.subscribe(this.load);
+        this.pagination.pageSize.subscribe(this.load);
+        this.searchModel.searchText.subscribe(this.load);
+        this.sorting.subscribe(this.load);
     }
 
-    fetch = async () => {
+    load = async () => {
 
         let data: SearchData = {
             limit: this.pagination.pageSize(),

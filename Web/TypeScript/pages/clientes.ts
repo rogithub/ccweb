@@ -9,6 +9,7 @@ import serverInfo from '../constants/serverInfo';
 import { Cliente } from '../models/cliente';
 
 $(() => {
+    let api = new JsonReq(serverInfo.host, window);
     let component = new Component(ko);
 
     component.register("pagination", PaginationView, (params) => {
@@ -23,7 +24,6 @@ $(() => {
     });
 
     component.register("data-table", DataTableView, () => {
-        let api = new JsonReq(serverInfo.host, fetch);
 
         let model = new DataTableModel<Cliente>(ko, api, "/clientes/search", [
             new SortableColumn(ko, "Folio", "id"),
@@ -34,7 +34,7 @@ $(() => {
             new DefaultColumn("Cliente Desde", "fechaCreado").setGetCellData(r => new Date(r.fechaCreado).toLocaleDateString())
         ]);
 
-        model.fetch();
+        model.load();
 
         return model;
     });

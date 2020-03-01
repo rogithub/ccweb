@@ -3,14 +3,16 @@ import { JsonReq } from '../../services/jsonReq';
 describe('Component', () => {
 
     let fetch;
+    let window;
     let service: JsonReq;
     let response = {
         json: () => 1
     }
 
     beforeEach(() => {
-        fetch = jasmine.createSpy("fetch").and.resolveTo(response);
-        service = new JsonReq("localhost:80", fetch);
+        window = jasmine.createSpyObj("window", ["fetch"]);
+        window.fetch = jasmine.createSpy("fetch").and.resolveTo(response);
+        service = new JsonReq("localhost:80", window);
     });
 
     describe('response', () => {
