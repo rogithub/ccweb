@@ -434,3 +434,4 @@ $RECYCLE.BIN/
 
 dist/
 .nyc_output/
+Web/wwwroot/js/*
