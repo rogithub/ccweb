@@ -13,19 +13,61 @@
 
   <div class="form-row">
     <div class="col-md-12 mb-3">
-      <label for="txtNombre">Nombre</label>
-      <input type="text" class="form-control" id="txtNombre" value="" required>
+      <label for="txtNombre">Nombre de Contacto</label>
+      <input type="text" class="form-control"  maxlength="100" id="txtNombre" value="" required>
       <div class="valid-feedback">
         !Muy bien!
       </div>
       <div class="invalid-feedback">
-          Nombre no puede estar vacío.
+          Éste campo no puede estar vacío.
+        </div>
+    </div>
+    <div class="col-md-12 mb-3">
+      <label for="txtEmpresa">Empresa</label>
+      <input type="text" class="form-control" maxlength="100" id="txtEmpresa" value="" required>
+      <div class="valid-feedback">
+        !Muy bien!
+      </div>
+      <div class="invalid-feedback">
+          Éste campo no puede estar vacío.
+        </div>
+    </div>
+    <div class="col-md-12 mb-3">
+      <label for="txtTelefono">Teléfono</label>
+      <input type="text" class="form-control" id="txtTelefono" value="" maxlength="10" required>
+      <div class="valid-feedback">
+        !Muy bien!
+      </div>
+      <div class="invalid-feedback">
+          Éste campo no puede estar vacío.
+        </div>
+    </div>
+    <div class="col-md-12 mb-3">
+      <label for="txtEmail">Email</label>
+      <input type="email" class="form-control" id="txtEmail" value="" maxlength="100" required>
+      <div class="valid-feedback">
+        !Muy bien!
+      </div>
+      <div class="invalid-feedback">
+          Éste campo no puede estar vacío.
+        </div>
+    </div>
+    <div class="col-md-12 mb-3">
+      <label for="txtDomicilio">Domicilio</label>
+      <textarea class="form-control" id="txtDomicilio" value="" maxlength="300">
+      </textarea> 
+      <div class="valid-feedback">
+        !Muy bien!
+      </div>
+      <div class="invalid-feedback">
+          Éste campo no puede estar vacío.
         </div>
     </div>
   </div>
   
-  
-  <button class="btn btn-primary" type="submit">Submit form</button>
+  <div class="text-right">
+    <button class="btn btn-primary" type="submit">Guardar</button>
+  </div>
 </form>
 
 <script>
