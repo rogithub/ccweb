@@ -1,6 +1,66 @@
 /******/ (function(modules) { // webpackBootstrap
+/******/ 	// install a JSONP callback for chunk loading
+/******/ 	function webpackJsonpCallback(data) {
+/******/ 		var chunkIds = data[0];
+/******/ 		var moreModules = data[1];
+/******/ 		var executeModules = data[2];
+/******/
+/******/ 		// add "moreModules" to the modules object,
+/******/ 		// then flag all "chunkIds" as loaded and fire callback
+/******/ 		var moduleId, chunkId, i = 0, resolves = [];
+/******/ 		for(;i < chunkIds.length; i++) {
+/******/ 			chunkId = chunkIds[i];
+/******/ 			if(Object.prototype.hasOwnProperty.call(installedChunks, chunkId) && installedChunks[chunkId]) {
+/******/ 				resolves.push(installedChunks[chunkId][0]);
+/******/ 			}
+/******/ 			installedChunks[chunkId] = 0;
+/******/ 		}
+/******/ 		for(moduleId in moreModules) {
+/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
+/******/ 				modules[moduleId] = moreModules[moduleId];
+/******/ 			}
+/******/ 		}
+/******/ 		if(parentJsonpFunction) parentJsonpFunction(data);
+/******/
+/******/ 		while(resolves.length) {
+/******/ 			resolves.shift()();
+/******/ 		}
+/******/
+/******/ 		// add entry modules from loaded chunk to deferred list
+/******/ 		deferredModules.push.apply(deferredModules, executeModules || []);
+/******/
+/******/ 		// run deferred modules when all chunks ready
+/******/ 		return checkDeferredModules();
+/******/ 	};
+/******/ 	function checkDeferredModules() {
+/******/ 		var result;
+/******/ 		for(var i = 0; i < deferredModules.length; i++) {
+/******/ 			var deferredModule = deferredModules[i];
+/******/ 			var fulfilled = true;
+/******/ 			for(var j = 1; j < deferredModule.length; j++) {
+/******/ 				var depId = deferredModule[j];
+/******/ 				if(installedChunks[depId] !== 0) fulfilled = false;
+/******/ 			}
+/******/ 			if(fulfilled) {
+/******/ 				deferredModules.splice(i--, 1);
+/******/ 				result = __webpack_require__(__webpack_require__.s = deferredModule[0]);
+/******/ 			}
+/******/ 		}
+/******/
+/******/ 		return result;
+/******/ 	}
+/******/
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
+/******/
+/******/ 	// object to store loaded and loading chunks
+/******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 	// Promise = chunk loading, 0 = chunk loaded
+/******/ 	var installedChunks = {
+/******/ 		1: 0
+/******/ 	};
+/******/
+/******/ 	var deferredModules = [];
 /******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
@@ -79,9 +139,18 @@
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/
+/******/ 	var jsonpArray = window["webpackJsonp"] = window["webpackJsonp"] || [];
+/******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
+/******/ 	jsonpArray.push = webpackJsonpCallback;
+/******/ 	jsonpArray = jsonpArray.slice();
+/******/ 	for(var i = 0; i < jsonpArray.length; i++) webpackJsonpCallback(jsonpArray[i]);
+/******/ 	var parentJsonpFunction = oldJsonpFunction;
 /******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/
+/******/ 	// add entry module to deferred list
+/******/ 	deferredModules.push([16,0]);
+/******/ 	// run deferred modules when ready
+/******/ 	return checkDeferredModules();
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -91,7 +160,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var dataTableConstants_1 = __webpack_require__(1);
+var dataTableConstants_1 = __webpack_require__(2);
 var ColumnBase = /** @class */ (function () {
     function ColumnBase(title, rowKey) {
         var _this = this;
@@ -116,7 +185,8 @@ exports.ColumnBase = ColumnBase;
 
 
 /***/ }),
-/* 1 */
+/* 1 */,
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -130,13 +200,15 @@ exports.default = {
 
 
 /***/ }),
-/* 2 */
+/* 3 */,
+/* 4 */,
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var range_1 = __webpack_require__(12);
+var range_1 = __webpack_require__(20);
 var Model = /** @class */ (function () {
     function Model(ko) {
         var _this = this;
@@ -161,7 +233,7 @@ exports.Model = Model;
 
 
 /***/ }),
-/* 3 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -178,7 +250,7 @@ exports.Model = Model;
 
 
 /***/ }),
-/* 4 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -193,13 +265,13 @@ var SortOrder;
 
 
 /***/ }),
-/* 5 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var sortOrder_1 = __webpack_require__(4);
+var sortOrder_1 = __webpack_require__(7);
 var SortableHeaderCell = /** @class */ (function () {
     function SortableHeaderCell(ko, title) {
         var _this = this;
@@ -227,41 +299,47 @@ exports.SortableHeaderCell = SortableHeaderCell;
 
 
 /***/ }),
-/* 6 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var view_html_1 = __webpack_require__(17);
+var view_html_1 = __webpack_require__(25);
 exports.View = view_html_1.default;
-var model_1 = __webpack_require__(18);
+var model_1 = __webpack_require__(26);
 exports.Model = model_1.Model;
-var defaultColumn_1 = __webpack_require__(19);
+var defaultColumn_1 = __webpack_require__(27);
 exports.DefaultColumn = defaultColumn_1.DefaultColumn;
-var sortableColumn_1 = __webpack_require__(20);
+var sortableColumn_1 = __webpack_require__(28);
 exports.SortableColumn = sortableColumn_1.SortableColumn;
 var columnBase_1 = __webpack_require__(0);
 exports.ColumnBase = columnBase_1.ColumnBase;
-var actionsColumn_1 = __webpack_require__(21);
+var actionsColumn_1 = __webpack_require__(29);
 exports.ActionsColumn = actionsColumn_1.ActionsColumn;
 
 
 /***/ }),
-/* 7 */
+/* 10 */,
+/* 11 */,
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */,
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var component_1 = __webpack_require__(8);
-var dataTable_1 = __webpack_require__(9);
-var pagination_1 = __webpack_require__(13);
-var searchField_1 = __webpack_require__(15);
-var dataCell_1 = __webpack_require__(6);
-var dataCell_2 = __webpack_require__(6);
-var jsonReq_1 = __webpack_require__(22);
-var serverInfo_1 = __webpack_require__(23);
+var component_1 = __webpack_require__(4);
+var dataTable_1 = __webpack_require__(17);
+var pagination_1 = __webpack_require__(21);
+var searchField_1 = __webpack_require__(23);
+var dataCell_1 = __webpack_require__(9);
+var dataCell_2 = __webpack_require__(9);
+var jsonReq_1 = __webpack_require__(10);
+var serverInfo_1 = __webpack_require__(11);
 $(function () {
     var api = new jsonReq_1.JsonReq(serverInfo_1.default.host, window);
     var component = new component_1.Component(ko);
@@ -275,7 +353,7 @@ $(function () {
         return new dataCell_2.Model(ko, params.template, params.data);
     });
     component.register("data-table", dataTable_1.View, function () {
-        var model = new dataTable_1.Model(ko, api, "/clientes/search", [
+        var model = new dataTable_1.Model(ko, api, serverInfo_1.default.api.clientes.search, [
             new dataCell_1.SortableColumn(ko, "Folio", "id"),
             new dataCell_1.DefaultColumn("Empresa"),
             new dataCell_1.DefaultColumn("Contacto"),
@@ -292,44 +370,21 @@ $(function () {
 
 
 /***/ }),
-/* 8 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var Component = /** @class */ (function () {
-    function Component(ko) {
-        this.ko = ko;
-    }
-    Component.prototype.register = function (name, template, factory) {
-        var self = this;
-        self.ko.components.register(name, {
-            viewModel: { createViewModel: factory },
-            template: template
-        });
-    };
-    return Component;
-}());
-exports.Component = Component;
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var view_html_1 = __webpack_require__(10);
+var view_html_1 = __webpack_require__(18);
 exports.View = view_html_1.default;
-var model_1 = __webpack_require__(11);
+var model_1 = __webpack_require__(19);
 exports.Model = model_1.Model;
 exports.ColumnModel = model_1.ColumnModel;
 
 
 /***/ }),
-/* 10 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -337,7 +392,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("<table class=\"table\">\n    <thead>\n        <tr>\n            <th data-bind=\"attr: { colspan: cols().length }\">\n                <search-field params=\"model: searchModel\"></search-field>\n            </th>\n        </tr>\n        <tr>\n            <!-- ko foreach: { data: cols, as: 'c' } -->\n            <th>\n                <data-cell params=\"template: c.info.headTemplate, data: c.model\"></data-cell>\n            </th>\n            <!-- /ko -->\n        </tr>\n    </thead>\n    <tbody>\n        <!-- ko foreach: { data: rows, as: 'r' } -->\n        <tr>\n            <!-- ko foreach: $parent.cols() -->\n            <td>\n                <data-cell params=\"template: info.celTemplate, data: info.getCellData(r)\"></data-cell>\n            </td>\n            <!-- /ko -->\n        </tr>\n        <!-- /ko -->\n    </tbody>\n    <tfoot>\n        <tr>\n            <td data-bind=\"attr: { colspan: cols().length }\">\n                <pagination params=\"model: pagination\"></pagination>\n            </td>\n        </tr>\n    </tfoot>\n</table>");
 
 /***/ }),
-/* 11 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -379,10 +434,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var model_1 = __webpack_require__(2);
-var model_2 = __webpack_require__(3);
-var sortOrder_1 = __webpack_require__(4);
-var sortableHeaderCell_1 = __webpack_require__(5);
+var model_1 = __webpack_require__(5);
+var model_2 = __webpack_require__(6);
+var sortOrder_1 = __webpack_require__(7);
+var sortableHeaderCell_1 = __webpack_require__(8);
 var ColumnModel = /** @class */ (function () {
     function ColumnModel(info) {
         this.info = info;
@@ -448,7 +503,7 @@ exports.Model = Model;
 
 
 /***/ }),
-/* 12 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -460,20 +515,20 @@ exports.default = (function (start, stop, step) {
 
 
 /***/ }),
-/* 13 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var view_html_1 = __webpack_require__(14);
+var view_html_1 = __webpack_require__(22);
 exports.View = view_html_1.default;
-var model_1 = __webpack_require__(2);
+var model_1 = __webpack_require__(5);
 exports.Model = model_1.Model;
 
 
 /***/ }),
-/* 14 */
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -481,20 +536,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("<nav aria-label=\"Page navigation example\" data-bind=\"if: list().length > 0\">\n    <ul class=\"pagination justify-content-center\">\n\n        <li data-bind=\"if: page() !== 1, click: () => page(page()-1)\" style=\"cursor: pointer;\" class=\"page-item\"\n            aria-label=\"Previous\">\n            <span aria-hidden=\"true\">&laquo;</span>\n        </li>\n\n        <!-- ko foreach: list -->\n        <li class=\"page-item\" data-bind=\"css: { 'active': $data === $parent.page() }, \n                click: () => { if ($data !== $parent.page()) $parent.page($data) }\" style=\"cursor: pointer;\">\n            <a class=\"page-link\" data-bind=\"text: $data\"></a>\n        </li>\n        <!-- /ko -->\n\n\n        <li data-bind=\"if: page() !== list()[list().length-1], \n                    click: () => page(page()+1)\" class=\"page-item\" style=\"cursor: pointer;\" aria-label=\"Next\">\n            <span aria-hidden=\"true\">&raquo;</span>\n        </li>\n    </ul>\n</nav>");
 
 /***/ }),
-/* 15 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var view_html_1 = __webpack_require__(16);
+var view_html_1 = __webpack_require__(24);
 exports.View = view_html_1.default;
-var model_1 = __webpack_require__(3);
+var model_1 = __webpack_require__(6);
 exports.Model = model_1.Model;
 
 
 /***/ }),
-/* 16 */
+/* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -502,7 +557,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"input-group mb-3\">\n    <input type=\"text\" class=\"form-control\" placeholder=\"Buscar...\" aria-label=\"Search\"\n        aria-describedby=\"search-field-button\" data-bind=\"textInput: searchText\">\n    <div class=\"input-group-append\">\n        <button data-bind=\"click: () => searchText('')\" class=\"btn btn-outline-secondary\" type=\"button\"\n            id=\"search-field-button\">Limpiar</button>\n    </div>\n</div>");
 
 /***/ }),
-/* 17 */
+/* 25 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -510,7 +565,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("<script type=\"text/html\" id=\"data-cell-sortable-header-template\">\n    <a data-bind=\"click: changeOrder\">\n        <label data-bind=\"text: title\" style=\"cursor: pointer;\"></label>\n        <!-- ko if: order() === 0 -->\n        <i class=\"fas fa-sort\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 1 -->\n        <i class=\"fas fa-sort-up\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 2 -->\n        <i class=\"fas fa-sort-down\"></i>\n        <!-- /ko -->\n    </a>\n</script>\n\n<script type=\"text/html\" id=\"data-cell-default-data-template\">\n    <label data-bind=\"text: $data\"></label>\n</script>\n\n<script type=\"text/html\" id=\"data-cell-actions-header-template\">\n    <a class=\"btn btn-outline-danger\">\n        <i class=\"far fa-trash-alt\"></i>\n    </a>\n\n    <a class=\"btn btn-outline-success\">\n        <i class=\"far fa-edit\"></i>\n    </a>\n\n</script>\n\n\n\n<!-- ko template: { name: template, data: data } -->\n<!-- /ko -->");
 
 /***/ }),
-/* 18 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -528,7 +583,7 @@ exports.Model = Model;
 
 
 /***/ }),
-/* 19 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -559,7 +614,7 @@ exports.DefaultColumn = DefaultColumn;
 
 
 /***/ }),
-/* 20 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -578,8 +633,8 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var dataTableConstants_1 = __webpack_require__(1);
-var sortableHeaderCell_1 = __webpack_require__(5);
+var dataTableConstants_1 = __webpack_require__(2);
+var sortableHeaderCell_1 = __webpack_require__(8);
 var columnBase_1 = __webpack_require__(0);
 var SortableColumn = /** @class */ (function (_super) {
     __extends(SortableColumn, _super);
@@ -595,7 +650,7 @@ exports.SortableColumn = SortableColumn;
 
 
 /***/ }),
-/* 21 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -614,7 +669,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var dataTableConstants_1 = __webpack_require__(1);
+var dataTableConstants_1 = __webpack_require__(2);
 var columnBase_1 = __webpack_require__(0);
 var ActionsColumn = /** @class */ (function (_super) {
     __extends(ActionsColumn, _super);
@@ -627,169 +682,6 @@ var ActionsColumn = /** @class */ (function (_super) {
     return ActionsColumn;
 }(columnBase_1.ColumnBase));
 exports.ActionsColumn = ActionsColumn;
-
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var JsonReq = /** @class */ (function () {
-    function JsonReq(baseUrl, window) {
-        var _this = this;
-        this.toFullUrl = function (url) { return "" + _this.baseURL + url; };
-        this.get = function (url) { return __awaiter(_this, void 0, void 0, function () {
-            var self, response;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        self = this;
-                        return [4 /*yield*/, self.window.fetch(self.toFullUrl(url))];
-                    case 1:
-                        response = _a.sent();
-                        return [2 /*return*/, response.json()];
-                }
-            });
-        }); };
-        this.post = function (url, jsonData) { return __awaiter(_this, void 0, void 0, function () {
-            var self, response;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        self = this;
-                        return [4 /*yield*/, self.window.fetch(self.toFullUrl(url), {
-                                method: 'POST',
-                                mode: 'cors',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(jsonData)
-                            })];
-                    case 1:
-                        response = _a.sent();
-                        return [4 /*yield*/, response.json()];
-                    case 2: return [2 /*return*/, _a.sent()];
-                }
-            });
-        }); };
-        this.put = function (url, jsonData) { return __awaiter(_this, void 0, void 0, function () {
-            var self, response;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        self = this;
-                        return [4 /*yield*/, self.window.fetch(self.toFullUrl(url), {
-                                method: 'PUT',
-                                mode: 'cors',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(jsonData)
-                            })];
-                    case 1:
-                        response = _a.sent();
-                        return [4 /*yield*/, response.json()];
-                    case 2: return [2 /*return*/, _a.sent()];
-                }
-            });
-        }); };
-        this.patch = function (url, jsonData) { return __awaiter(_this, void 0, void 0, function () {
-            var self, response;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        self = this;
-                        return [4 /*yield*/, self.window.fetch(self.toFullUrl(url), {
-                                method: 'PATCH',
-                                mode: 'cors',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(jsonData)
-                            })];
-                    case 1:
-                        response = _a.sent();
-                        return [4 /*yield*/, response.json()];
-                    case 2: return [2 /*return*/, _a.sent()];
-                }
-            });
-        }); };
-        this.del = function (url) { return __awaiter(_this, void 0, void 0, function () {
-            var self, response;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        self = this;
-                        return [4 /*yield*/, self.window.fetch(self.toFullUrl(url), {
-                                method: 'DELETE',
-                                mode: 'cors',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                }
-                            })];
-                    case 1:
-                        response = _a.sent();
-                        return [4 /*yield*/, response.json()];
-                    case 2: return [2 /*return*/, _a.sent()];
-                }
-            });
-        }); };
-        this.baseURL = baseUrl;
-        this.window = window;
-    }
-    return JsonReq;
-}());
-exports.JsonReq = JsonReq;
-
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = {
-    host: "https://localhost:5001"
-};
 
 
 /***/ })
