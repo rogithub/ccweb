@@ -25,7 +25,7 @@ $(() => {
 
     component.register("data-table", DataTableView, () => {
 
-        let model = new DataTableModel<Cliente>(ko, api, "/clientes/search", [
+        let model = new DataTableModel<Cliente>(ko, api, serverInfo.api.clientes.search, [
             new SortableColumn(ko, "Folio", "id"),
             new DefaultColumn("Empresa"),
             new DefaultColumn("Contacto"),

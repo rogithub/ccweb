@@ -15,7 +15,7 @@
     },
     "license": "ISC",
     "devDependencies": {
-        "@rogithub/valiko": "^1.0.0",
+        "@rogithub/valiko": "^1.0.1",
         "@types/bootstrap": "^4.3.1",
         "@types/jasmine": "^3.5.7",
         "@types/jquery": "^3.3.33",
