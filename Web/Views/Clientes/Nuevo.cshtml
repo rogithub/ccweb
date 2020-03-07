@@ -9,22 +9,22 @@
 
 <h2>Nuevo Cliente</h2>
 
-<form class="needs-validation" novalidate>
+<form novalidate >
 
   <div class="form-row">
     <div class="col-md-12 mb-3">
       <label for="txtNombre">Nombre de Contacto</label>
-      <input type="text" class="form-control"  maxlength="100" id="txtNombre" value="" required>
+      <input type="text" class="form-control is-invalid"  maxlength="100" id="txtNombre">
       <div class="valid-feedback">
         !Muy bien!
       </div>
       <div class="invalid-feedback">
           Éste campo no puede estar vacío.
-        </div>
+      </div>
     </div>
     <div class="col-md-12 mb-3">
       <label for="txtEmpresa">Empresa</label>
-      <input type="text" class="form-control" maxlength="100" id="txtEmpresa" value="" required>
+      <input type="text" class="form-control is-valid" maxlength="100" id="txtEmpresa">
       <div class="valid-feedback">
         !Muy bien!
       </div>
@@ -34,7 +34,7 @@
     </div>
     <div class="col-md-12 mb-3">
       <label for="txtTelefono">Teléfono</label>
-      <input type="text" class="form-control" id="txtTelefono" value="" maxlength="10" required>
+      <input type="text" class="form-control" id="txtTelefono" maxlength="10">
       <div class="valid-feedback">
         !Muy bien!
       </div>
@@ -44,7 +44,7 @@
     </div>
     <div class="col-md-12 mb-3">
       <label for="txtEmail">Email</label>
-      <input type="email" class="form-control" id="txtEmail" value="" maxlength="100" required>
+      <input type="email" class="form-control" id="txtEmail" maxlength="100">
       <div class="valid-feedback">
         !Muy bien!
       </div>
@@ -54,7 +54,7 @@
     </div>
     <div class="col-md-12 mb-3">
       <label for="txtDomicilio">Domicilio</label>
-      <textarea class="form-control" id="txtDomicilio" value="" maxlength="300">
+      <textarea class="form-control" id="txtDomicilio" maxlength="300">
       </textarea> 
       <div class="valid-feedback">
         !Muy bien!
@@ -69,24 +69,3 @@
     <button class="btn btn-primary" type="submit">Guardar</button>
   </div>
 </form>
-
-<script>
-// Example starter JavaScript for disabling form submissions if there are invalid fields
-(function() {
-  'use strict';
-  window.addEventListener('load', function() {
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.getElementsByClassName('needs-validation');
-    // Loop over them and prevent submission
-    var validation = Array.prototype.filter.call(forms, function(form) {
-      form.addEventListener('submit', function(event) {
-        if (form.checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        form.classList.add('was-validated');
-      }, false);
-    });
-  }, false);
-})();
-</script>
