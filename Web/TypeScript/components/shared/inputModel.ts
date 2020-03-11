@@ -1,4 +1,4 @@
-import { ObsExtension } from '@rogithub/valiko';
+import { ObsExtension } from 'valiko';
 
 export interface InputModelOptions<T> {
     id: string;

@@ -1,4 +1,4 @@
-import { ObsExtension, ObsFrm } from '@rogithub/valiko';
+import { ObsExtension, ObsFrm } from 'valiko';
 import { Cliente } from '../../models/cliente';
 import { Api } from '../../shared/api';
 
