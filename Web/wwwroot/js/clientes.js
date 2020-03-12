@@ -210,21 +210,39 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", { value: true });
 var range_1 = __webpack_require__(20);
 var Model = /** @class */ (function () {
-    function Model(ko) {
-        var _this = this;
+    function Model(ko, page, pageSizes, totalRows) {
+        if (page === void 0) { page = 1; }
+        if (pageSizes === void 0) { pageSizes = [10, 20, 50, 100]; }
+        if (totalRows === void 0) { totalRows = 0; }
         this.ko = ko;
-        this.page = this.ko.observable(1);
-        this.pageSize = this.ko.observable(20);
-        this.totalRows = this.ko.observable(0);
-        this.list = this.ko.pureComputed(function () {
-            if (_this.totalRows() <= 0)
+        this.page = this.ko.observable(page);
+        this.pageSizes = this.ko.observableArray(pageSizes);
+        this.pageSize = this.ko.observable(pageSizes[0]);
+        this.totalRows = this.ko.observable(totalRows);
+        this.jumpToPage = this.ko.observable(page.toString());
+        var self = this;
+        self.list = self.ko.pureComputed(function () {
+            if (self.totalRows() <= 0)
                 return [];
-            var pageCount = _this.totalRows() / _this.pageSize();
-            var remainder = _this.totalRows() % _this.pageSize();
+            var pageCount = self.totalRows() / self.pageSize();
+            var remainder = self.totalRows() % self.pageSize();
             if (remainder > 0) {
                 pageCount += 1;
             }
             return range_1.default(1, pageCount, 1);
+        }, self);
+        this.jumpToPage.subscribe(function (newPage) {
+            var tryNewPage = parseInt(newPage);
+            if (isNaN(tryNewPage) || self.list().indexOf(tryNewPage) === -1 || self.page() === tryNewPage) {
+                return;
+            }
+            self.page(tryNewPage);
+        });
+        this.page.subscribe(function (newPage) {
+            self.jumpToPage(newPage.toString());
+        });
+        this.pageSize.subscribe(function () {
+            self.page(1);
         });
     }
     return Model;
@@ -533,7 +551,7 @@ exports.Model = model_1.Model;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<nav aria-label=\"Page navigation example\" data-bind=\"if: list().length > 0\">\n    <ul class=\"pagination justify-content-center\">\n\n        <li data-bind=\"if: page() !== 1, click: () => page(page()-1)\" style=\"cursor: pointer;\" class=\"page-item\"\n            aria-label=\"Previous\">\n            <span aria-hidden=\"true\">&laquo;</span>\n        </li>\n\n        <!-- ko foreach: list -->\n        <li class=\"page-item\" data-bind=\"css: { 'active': $data === $parent.page() }, \n                click: () => { if ($data !== $parent.page()) $parent.page($data) }\" style=\"cursor: pointer;\">\n            <a class=\"page-link\" data-bind=\"text: $data\"></a>\n        </li>\n        <!-- /ko -->\n\n\n        <li data-bind=\"if: page() !== list()[list().length-1], \n                    click: () => page(page()+1)\" class=\"page-item\" style=\"cursor: pointer;\" aria-label=\"Next\">\n            <span aria-hidden=\"true\">&raquo;</span>\n        </li>\n    </ul>\n</nav>");
+/* harmony default export */ __webpack_exports__["default"] = ("<script type=\"text/html\" id=\"PaginationPartial\">\n\n    <div class=\"row\" data-bind=\"if: list().length > 0\">\n        <div class=\"col-md-4\">\n\n        </div>\n\n        <div class=\"col-md-4\">\n            <button type=\"button\" class=\"btn btn-default\" data-bind=\"enable: page() !== 1, click: () => page(1)\">\n                <i class=\"fas fa-angle-double-left\"></i>\n            </button>\n            <button type=\"button\" class=\"btn btn-default\" data-bind=\"enable: page() !== 1, click: () => page(page()-1)\">\n                <i class=\"fas fa-angle-left\"></i>\n            </button>\n\n            <input class=\"form-control\" style=\"width:50px; display:inline-block\" maxlength=\"3\" type=\"text\" data-bind=\"value: jumpToPage\" />\n\n            <button type=\"button\" class=\"btn btn-default\" data-bind=\"enable: page() !== list()[list().length-1], click: () => page(page()+1)\">\n                <i class=\"fas fa-angle-right\"></i>\n            </button>\n            <button type=\"button\" class=\"btn btn-default\" data-bind=\"enable: page() !== list()[list().length-1], click: () => page(list().length)\">\n                <i class=\"fas fa-angle-double-right\"></i>\n            </button>\n        </div>\n\n        <div class=\"col-md-1\">\n            <select class=\"form-control\" data-bind=\"options: pageSizes, value: pageSize\"></select>\n        </div>\n\n        <div class=\"col-md-3\">\n            <div class=\"text-right\">\n                Viendo\n                <span data-bind=\"text: `${ (page() * pageSize()) - (pageSize() - 1) } al ${ page() * pageSize() }`\"></span>\n                de\n                <span data-bind=\"text: totalRows()\"></span>\n            </div>\n        </div>\n    </div>\n\n</script>");
 
 /***/ }),
 /* 23 */
