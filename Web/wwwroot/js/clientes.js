@@ -148,7 +148,7 @@
 /******/
 /******/
 /******/ 	// add entry module to deferred list
-/******/ 	deferredModules.push([16,0]);
+/******/ 	deferredModules.push([17,0]);
 /******/ 	// run deferred modules when ready
 /******/ 	return checkDeferredModules();
 /******/ })
@@ -208,7 +208,7 @@ exports.default = {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var range_1 = __webpack_require__(20);
+var range_1 = __webpack_require__(21);
 var Model = /** @class */ (function () {
     function Model(ko, page, pageSizes, totalRows) {
         if (page === void 0) { page = 1; }
@@ -323,41 +323,57 @@ exports.SortableHeaderCell = SortableHeaderCell;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var view_html_1 = __webpack_require__(25);
+var view_html_1 = __webpack_require__(26);
 exports.View = view_html_1.default;
-var model_1 = __webpack_require__(26);
+var model_1 = __webpack_require__(27);
 exports.Model = model_1.Model;
-var defaultColumn_1 = __webpack_require__(27);
+var defaultColumn_1 = __webpack_require__(28);
 exports.DefaultColumn = defaultColumn_1.DefaultColumn;
-var sortableColumn_1 = __webpack_require__(28);
+var sortableColumn_1 = __webpack_require__(29);
 exports.SortableColumn = sortableColumn_1.SortableColumn;
 var columnBase_1 = __webpack_require__(0);
 exports.ColumnBase = columnBase_1.ColumnBase;
-var actionsColumn_1 = __webpack_require__(29);
+var actionsColumn_1 = __webpack_require__(30);
 exports.ActionsColumn = actionsColumn_1.ActionsColumn;
 
 
 /***/ }),
 /* 10 */,
 /* 11 */,
-/* 12 */,
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var view_html_1 = __webpack_require__(31);
+exports.View = view_html_1.default;
+var model_1 = __webpack_require__(32);
+exports.Model = model_1.Model;
+exports.PopupSize = model_1.PopupSize;
+
+
+/***/ }),
 /* 13 */,
 /* 14 */,
 /* 15 */,
-/* 16 */
+/* 16 */,
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var component_1 = __webpack_require__(4);
-var dataTable_1 = __webpack_require__(17);
-var pagination_1 = __webpack_require__(21);
-var searchField_1 = __webpack_require__(23);
+var dataTable_1 = __webpack_require__(18);
+var pagination_1 = __webpack_require__(22);
+var searchField_1 = __webpack_require__(24);
 var dataCell_1 = __webpack_require__(9);
 var dataCell_2 = __webpack_require__(9);
 var jsonReq_1 = __webpack_require__(10);
 var serverInfo_1 = __webpack_require__(11);
+var dialog_1 = __webpack_require__(12);
+var accionesCliente_1 = __webpack_require__(33);
 $(function () {
     var api = new jsonReq_1.JsonReq(serverInfo_1.default.host, window);
     var component = new component_1.Component(ko);
@@ -370,15 +386,19 @@ $(function () {
     component.register("data-cell", dataCell_2.View, function (params) {
         return new dataCell_2.Model(ko, params.template, params.data);
     });
+    component.register("dialog", dialog_1.View, function () {
+        return {}; //empty model
+    });
     component.register("data-table", dataTable_1.View, function () {
-        var model = new dataTable_1.Model(ko, api, serverInfo_1.default.api.clientes.search, [
+        var model;
+        model = new dataTable_1.Model(ko, api, serverInfo_1.default.api.clientes.search, [
             new dataCell_1.SortableColumn(ko, "Folio", "id"),
             new dataCell_1.DefaultColumn("Empresa"),
             new dataCell_1.DefaultColumn("Contacto"),
             new dataCell_1.DefaultColumn("Teléfono", "telefono"),
             new dataCell_1.DefaultColumn("Email", "email"),
             new dataCell_1.DefaultColumn("Cliente Desde", "fechaCreado").setGetCellData(function (r) { return new Date(r.fechaCreado).toLocaleDateString(); }),
-            new dataCell_1.ActionsColumn("Acciones")
+            new dataCell_1.ActionsColumn("Acciones").setGetCellData(function (r) { return new accionesCliente_1.AccionesCliente(ko, $, r, model); })
         ]);
         model.load();
         return model;
@@ -388,21 +408,21 @@ $(function () {
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var view_html_1 = __webpack_require__(18);
+var view_html_1 = __webpack_require__(19);
 exports.View = view_html_1.default;
-var model_1 = __webpack_require__(19);
+var model_1 = __webpack_require__(20);
 exports.Model = model_1.Model;
 exports.ColumnModel = model_1.ColumnModel;
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -410,7 +430,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("<table class=\"table\">\n    <thead>\n        <tr>\n            <th data-bind=\"attr: { colspan: cols().length }\">\n                <search-field params=\"model: searchModel\"></search-field>\n            </th>\n        </tr>\n        <tr>\n            <!-- ko foreach: { data: cols, as: 'c' } -->\n            <th>\n                <data-cell params=\"template: c.info.headTemplate, data: c.model\"></data-cell>\n            </th>\n            <!-- /ko -->\n        </tr>\n    </thead>\n    <tbody>\n        <!-- ko foreach: { data: rows, as: 'r' } -->\n        <tr>\n            <!-- ko foreach: $parent.cols() -->\n            <td>\n                <data-cell params=\"template: info.celTemplate, data: info.getCellData(r)\"></data-cell>\n            </td>\n            <!-- /ko -->\n        </tr>\n        <!-- /ko -->\n    </tbody>\n    <tfoot>\n        <tr>\n            <td data-bind=\"attr: { colspan: cols().length }\">\n                <pagination params=\"model: pagination\"></pagination>\n            </td>\n        </tr>\n    </tfoot>\n</table>");
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -521,7 +541,7 @@ exports.Model = Model;
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -533,20 +553,20 @@ exports.default = (function (start, stop, step) {
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var view_html_1 = __webpack_require__(22);
+var view_html_1 = __webpack_require__(23);
 exports.View = view_html_1.default;
 var model_1 = __webpack_require__(5);
 exports.Model = model_1.Model;
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -554,25 +574,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"row\" data-bind=\"if: list().length > 0\">\n    <div class=\"col-md-4\">\n\n    </div>\n\n    <div class=\"col-md-4\">\n        <button type=\"button\" class=\"btn btn-default\" data-bind=\"enable: page() !== 1, click: () => page(1)\">\n            <i class=\"fas fa-angle-double-left\"></i>\n        </button>\n        <button type=\"button\" class=\"btn btn-default\" data-bind=\"enable: page() !== 1, click: () => page(page()-1)\">\n            <i class=\"fas fa-angle-left\"></i>\n        </button>\n\n        <input class=\"form-control\" style=\"width:50px; display:inline-block\" maxlength=\"3\" type=\"text\"\n            data-bind=\"value: jumpToPage\" />\n\n        <button type=\"button\" class=\"btn btn-default\"\n            data-bind=\"enable: page() !== list()[list().length-1], click: () => page(page()+1)\">\n            <i class=\"fas fa-angle-right\"></i>\n        </button>\n        <button type=\"button\" class=\"btn btn-default\"\n            data-bind=\"enable: page() !== list()[list().length-1], click: () => page(list().length)\">\n            <i class=\"fas fa-angle-double-right\"></i>\n        </button>\n    </div>\n\n    <div class=\"col-md-1\">\n        <select class=\"form-control\" data-bind=\"options: pageSizes, value: pageSize\"></select>\n    </div>\n\n    <div class=\"col-md-3\">\n        <div class=\"text-right\">\n            Viendo\n            <span data-bind=\"text: `${ (page() * pageSize()) - (pageSize() - 1) } al ${ page() * pageSize() }`\"></span>\n            de\n            <span data-bind=\"text: totalRows()\"></span>\n        </div>\n    </div>\n</div>");
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var view_html_1 = __webpack_require__(24);
+var view_html_1 = __webpack_require__(25);
 exports.View = view_html_1.default;
 var model_1 = __webpack_require__(6);
 exports.Model = model_1.Model;
 
-
-/***/ }),
-/* 24 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"input-group mb-3\">\n    <input type=\"text\" class=\"form-control\" placeholder=\"Buscar...\" aria-label=\"Search\"\n        aria-describedby=\"search-field-button\" data-bind=\"textInput: searchText\">\n    <div class=\"input-group-append\">\n        <button data-bind=\"click: () => searchText('')\" class=\"btn btn-outline-secondary\" type=\"button\"\n            id=\"search-field-button\">Limpiar</button>\n    </div>\n</div>");
 
 /***/ }),
 /* 25 */
@@ -580,10 +592,18 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<script type=\"text/html\" id=\"data-cell-sortable-header-template\">\n    <a data-bind=\"click: changeOrder\">\n        <label data-bind=\"text: title\" style=\"cursor: pointer;\"></label>\n        <!-- ko if: order() === 0 -->\n        <i class=\"fas fa-sort\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 1 -->\n        <i class=\"fas fa-sort-up\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 2 -->\n        <i class=\"fas fa-sort-down\"></i>\n        <!-- /ko -->\n    </a>\n</script>\n\n<script type=\"text/html\" id=\"data-cell-default-data-template\">\n    <label data-bind=\"text: $data\"></label>\n</script>\n\n<script type=\"text/html\" id=\"data-cell-actions-header-template\">\n    <a class=\"btn btn-outline-danger\">\n        <i class=\"far fa-trash-alt\"></i>\n    </a>\n\n    <a class=\"btn btn-outline-success\">\n        <i class=\"far fa-edit\"></i>\n    </a>\n\n</script>\n\n\n\n<!-- ko template: { name: template, data: data } -->\n<!-- /ko -->");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"input-group mb-3\">\n    <input type=\"text\" class=\"form-control\" placeholder=\"Buscar...\" aria-label=\"Search\"\n        aria-describedby=\"search-field-button\" data-bind=\"textInput: searchText\">\n    <div class=\"input-group-append\">\n        <button data-bind=\"click: () => searchText('')\" class=\"btn btn-outline-secondary\" type=\"button\"\n            id=\"search-field-button\">Limpiar</button>\n    </div>\n</div>");
 
 /***/ }),
 /* 26 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<script type=\"text/html\" id=\"data-cell-sortable-header-template\">\n    <a data-bind=\"click: changeOrder\">\n        <label data-bind=\"text: title\" style=\"cursor: pointer;\"></label>\n        <!-- ko if: order() === 0 -->\n        <i class=\"fas fa-sort\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 1 -->\n        <i class=\"fas fa-sort-up\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 2 -->\n        <i class=\"fas fa-sort-down\"></i>\n        <!-- /ko -->\n    </a>\n</script>\n\n<script type=\"text/html\" id=\"data-cell-default-data-template\">\n    <label data-bind=\"text: $data\"></label>\n</script>\n\n<script type=\"text/html\" id=\"data-cell-actions-header-template\">\n    <a class=\"btn btn-outline-danger\" data-bind=\"click: onDelete\" >\n        <i class=\"far fa-trash-alt\"></i>\n    </a>\n\n    <a class=\"btn btn-outline-success\" data-bind=\"click: onEdit\">\n        <i class=\"far fa-edit\"></i>\n    </a>\n\n</script>\n\n\n\n<!-- ko template: { name: template, data: data } -->\n<!-- /ko -->");
+
+/***/ }),
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -601,7 +621,7 @@ exports.Model = Model;
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -632,7 +652,7 @@ exports.DefaultColumn = DefaultColumn;
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -668,7 +688,7 @@ exports.SortableColumn = SortableColumn;
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -700,6 +720,111 @@ var ActionsColumn = /** @class */ (function (_super) {
     return ActionsColumn;
 }(columnBase_1.ColumnBase));
 exports.ActionsColumn = ActionsColumn;
+
+
+/***/ }),
+/* 31 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<script type=\"text/html\" id=\"ModalPartial\">\n    <div class=\"content\">\n\n        <div class=\"modal\" tabindex=\"-1\" role=\"dialog\">\n            <div class=\"modal-dialog\" role=\"document\" data-copy=\"css: { 'modal-sm': size === 0, 'modal-md': size === 1, 'modal-lg': size === 2 }\">\n                <div class=\"modal-content\">\n                    <div class=\"modal-header\">\n                        \n                        <h5 class=\"modal-title\" data-copy=\"text: title\"></h5>\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n                            <span aria-hidden=\"true\">&times;</span>\n                        </button>\n\n                    </div>\n                    <div class=\"modal-body\" data-copy=\"template: { name: contentTemplate }\">\n\n                    </div>\n                    <div class=\"modal-footer\" data-copy=\"template: { name: footerTemplate }\">\n\n                    </div>\n                </div>\n            </div>\n        </div>\n\n        \n    </div>\n</script>");
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var PopupSize;
+(function (PopupSize) {
+    PopupSize[PopupSize["small"] = 0] = "small";
+    PopupSize[PopupSize["medium"] = 1] = "medium";
+    PopupSize[PopupSize["large"] = 2] = "large";
+})(PopupSize = exports.PopupSize || (exports.PopupSize = {}));
+var Model = /** @class */ (function () {
+    function Model(ko, $) {
+        this.jqContainerSelector = "ModalBase_Global_Notifications_Container";
+        this.$ = $;
+        this.ko = ko;
+    }
+    Model.prototype.getContainer = function () {
+        var self = this;
+        var container = self.$("#" + self.jqContainerSelector);
+        if (container.length === 0) {
+            container = self.$("<div id=" + self.jqContainerSelector + "></div>");
+            container.prependTo(document.body);
+        }
+        else {
+            self.ko.cleanNode(container.get()[0]);
+            container.empty();
+        }
+        return container;
+    };
+    Model.prototype.getDialogHtml = function () {
+        var self = this;
+        var content = $(self.$("#ModalPartial").html());
+        return content.html();
+    };
+    Model.prototype.build = function (options) {
+        var self = this;
+        var myModal = self.$(self.getDialogHtml().replace(/data-copy/gi, "data-bind"));
+        self.getContainer().append(myModal);
+        var domObj = myModal.get()[0];
+        self.ko.applyBindings(options, domObj);
+        if (options.onHidden) {
+            myModal.on("hidden.bs.modal", function (e) { options.onHidden(options, e); });
+        }
+        myModal.modal({
+            show: false
+        });
+        options.dialog = myModal;
+        return myModal;
+    };
+    return Model;
+}());
+exports.Model = Model;
+
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var dialog_1 = __webpack_require__(12);
+var AccionesCliente = /** @class */ (function () {
+    function AccionesCliente(ko, $, cliente, table) {
+        var _this = this;
+        this.onDelete = function () {
+            var self = _this;
+            var dlg = self.dialog.build({
+                contentTemplate: "delete-cliente-dialog-content",
+                footerTemplate: "delete-cliente-dialog-footer",
+                model: self.cliente,
+                title: "Borrar Cliente",
+                size: dialog_1.PopupSize.medium
+            });
+            dlg.show();
+            setTimeout(function () {
+                dlg.modal({
+                    show: false
+                });
+            }, 2000);
+        };
+        this.onEdit = function () {
+            var self = _this;
+            alert("navegar a editar cliente page");
+        };
+        this.cliente = cliente;
+        this.table = table;
+        this.dialog = new dialog_1.Model(ko, $);
+    }
+    return AccionesCliente;
+}());
+exports.AccionesCliente = AccionesCliente;
 
 
 /***/ })

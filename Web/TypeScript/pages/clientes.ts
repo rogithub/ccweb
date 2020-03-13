@@ -7,6 +7,8 @@ import { View as DataCellView, Model as DataCellModel } from '../components/data
 import { JsonReq } from '../services/jsonReq';
 import serverInfo from '../constants/serverInfo';
 import { Cliente } from '../models/cliente';
+import { View as DialogView } from '../components/dialog';
+import { AccionesCliente } from '../models/accionesCliente';
 
 $(() => {
     let api = new JsonReq(serverInfo.host, window);
@@ -23,16 +25,21 @@ $(() => {
         return new DataCellModel(ko, params.template, params.data);
     });
 
-    component.register("data-table", DataTableView, () => {
+    component.register("dialog", DialogView, () => {
+        return {}; //empty model
+    });
 
-        let model = new DataTableModel<Cliente>(ko, api, serverInfo.api.clientes.search, [
+    component.register("data-table", DataTableView, () => {
+        let model: DataTableModel<Cliente>;
+
+        model = new DataTableModel<Cliente>(ko, api, serverInfo.api.clientes.search, [
             new SortableColumn(ko, "Folio", "id"),
             new DefaultColumn("Empresa"),
             new DefaultColumn("Contacto"),
             new DefaultColumn("Teléfono", "telefono"),
             new DefaultColumn("Email", "email"),
             new DefaultColumn("Cliente Desde", "fechaCreado").setGetCellData(r => new Date(r.fechaCreado).toLocaleDateString()),
-            new ActionsColumn("Acciones")
+            new ActionsColumn("Acciones").setGetCellData(r => new AccionesCliente(ko, $, r as Cliente, model))
         ]);
 
         model.load();
