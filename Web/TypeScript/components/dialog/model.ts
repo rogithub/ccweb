@@ -58,9 +58,11 @@ export class Model {
         let domObj = myModal.get()[0];
         self.ko.applyBindings(options, domObj);
 
-        if (options.onHidden) {
-            myModal.on("hidden.bs.modal", (e: JQueryEventObject) => { options.onHidden(options, e); });
-        }
+        myModal.on("hidden.bs.modal", (e: JQueryEventObject) => {
+            if (options.onHidden) {
+                options.onHidden(options, e);
+            }
+        });
 
         myModal.modal({
             show: false

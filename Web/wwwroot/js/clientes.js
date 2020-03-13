@@ -773,9 +773,13 @@ var Model = /** @class */ (function () {
         self.getContainer().append(myModal);
         var domObj = myModal.get()[0];
         self.ko.applyBindings(options, domObj);
-        if (options.onHidden) {
-            myModal.on("hidden.bs.modal", function (e) { options.onHidden(options, e); });
-        }
+        myModal.on("hidden.bs.modal", function (e) {
+            var container = self.getContainer(); // autodestroy
+            alert(container.html());
+            if (options.onHidden) {
+                options.onHidden(options, e);
+            }
+        });
         myModal.modal({
             show: false
         });
@@ -807,12 +811,7 @@ var AccionesCliente = /** @class */ (function () {
                 title: "Borrar Cliente",
                 size: dialog_1.PopupSize.medium
             });
-            dlg.show();
-            setTimeout(function () {
-                dlg.modal({
-                    show: false
-                });
-            }, 2000);
+            dlg.modal("show");
         };
         this.onEdit = function () {
             var self = _this;

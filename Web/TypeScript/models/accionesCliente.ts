@@ -22,7 +22,7 @@ export class AccionesCliente {
             size: PopupSize.medium
         });
 
-        dlg.show();
+        dlg.modal("show");
     }
 
     public onEdit = () => {
