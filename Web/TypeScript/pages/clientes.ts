@@ -1,5 +1,6 @@
 import { Component } from '../services/component';
 import { View as DataTableView, Model as DataTableModel } from '../components/dataTable';
+import { Model as Dialog } from '../components/dialog';
 import { View as PaginationView } from '../components/pagination';
 import { View as SearchFieldView } from '../components/searchField';
 import { DefaultColumn, SortableColumn, ActionsColumn } from '../components/dataCell';
@@ -9,6 +10,7 @@ import serverInfo from '../constants/serverInfo';
 import { Cliente } from '../models/cliente';
 import { View as DialogView } from '../components/dialog';
 import { AccionesCliente } from '../models/accionesCliente';
+import { Redirect } from '../services/redirect';
 
 $(() => {
     let api = new JsonReq(serverInfo.host, window);
@@ -31,6 +33,8 @@ $(() => {
 
     component.register("data-table", DataTableView, () => {
         let model: DataTableModel<Cliente>;
+        let dialog = new Dialog(ko, $);
+        let redirect = new Redirect(window);
 
         model = new DataTableModel<Cliente>(ko, api, serverInfo.api.clientes.search, [
             new SortableColumn(ko, "Folio", "id"),
@@ -39,7 +43,7 @@ $(() => {
             new DefaultColumn("Teléfono", "telefono"),
             new DefaultColumn("Email", "email"),
             new DefaultColumn("Cliente Desde", "fechaCreado").setGetCellData(r => new Date(r.fechaCreado).toLocaleDateString()),
-            new ActionsColumn("Acciones").setGetCellData(r => new AccionesCliente(ko, $, r as Cliente, model))
+            new ActionsColumn("Acciones").setGetCellData(r => new AccionesCliente(dialog, redirect, r as Cliente))
         ]);
 
         model.load();

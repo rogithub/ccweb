@@ -160,7 +160,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var dataTableConstants_1 = __webpack_require__(2);
+var dataTableConstants_1 = __webpack_require__(3);
 var ColumnBase = /** @class */ (function () {
     function ColumnBase(title, rowKey) {
         var _this = this;
@@ -192,6 +192,20 @@ exports.ColumnBase = ColumnBase;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+var view_html_1 = __webpack_require__(22);
+exports.View = view_html_1.default;
+var model_1 = __webpack_require__(23);
+exports.Model = model_1.Model;
+exports.PopupSize = model_1.PopupSize;
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = {
     DATA_CELL_DEFAULT_TEMPLATE: "data-cell-default-data-template",
     DATA_CELL_SORTABLE_HEADER: "data-cell-sortable-header-template",
@@ -200,9 +214,9 @@ exports.default = {
 
 
 /***/ }),
-/* 3 */,
 /* 4 */,
-/* 5 */
+/* 5 */,
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -251,7 +265,7 @@ exports.Model = Model;
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -268,7 +282,7 @@ exports.Model = Model;
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -283,13 +297,13 @@ var SortOrder;
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var sortOrder_1 = __webpack_require__(7);
+var sortOrder_1 = __webpack_require__(8);
 var SortableHeaderCell = /** @class */ (function () {
     function SortableHeaderCell(ko, title) {
         var _this = this;
@@ -317,43 +331,29 @@ exports.SortableHeaderCell = SortableHeaderCell;
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var view_html_1 = __webpack_require__(26);
+var view_html_1 = __webpack_require__(28);
 exports.View = view_html_1.default;
-var model_1 = __webpack_require__(27);
+var model_1 = __webpack_require__(29);
 exports.Model = model_1.Model;
-var defaultColumn_1 = __webpack_require__(28);
+var defaultColumn_1 = __webpack_require__(30);
 exports.DefaultColumn = defaultColumn_1.DefaultColumn;
-var sortableColumn_1 = __webpack_require__(29);
+var sortableColumn_1 = __webpack_require__(31);
 exports.SortableColumn = sortableColumn_1.SortableColumn;
 var columnBase_1 = __webpack_require__(0);
 exports.ColumnBase = columnBase_1.ColumnBase;
-var actionsColumn_1 = __webpack_require__(30);
+var actionsColumn_1 = __webpack_require__(32);
 exports.ActionsColumn = actionsColumn_1.ActionsColumn;
 
 
 /***/ }),
-/* 10 */,
 /* 11 */,
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var view_html_1 = __webpack_require__(31);
-exports.View = view_html_1.default;
-var model_1 = __webpack_require__(32);
-exports.Model = model_1.Model;
-exports.PopupSize = model_1.PopupSize;
-
-
-/***/ }),
+/* 12 */,
 /* 13 */,
 /* 14 */,
 /* 15 */,
@@ -364,16 +364,18 @@ exports.PopupSize = model_1.PopupSize;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var component_1 = __webpack_require__(4);
+var component_1 = __webpack_require__(5);
 var dataTable_1 = __webpack_require__(18);
-var pagination_1 = __webpack_require__(22);
-var searchField_1 = __webpack_require__(24);
-var dataCell_1 = __webpack_require__(9);
-var dataCell_2 = __webpack_require__(9);
-var jsonReq_1 = __webpack_require__(10);
-var serverInfo_1 = __webpack_require__(11);
-var dialog_1 = __webpack_require__(12);
+var dialog_1 = __webpack_require__(2);
+var pagination_1 = __webpack_require__(24);
+var searchField_1 = __webpack_require__(26);
+var dataCell_1 = __webpack_require__(10);
+var dataCell_2 = __webpack_require__(10);
+var jsonReq_1 = __webpack_require__(11);
+var serverInfo_1 = __webpack_require__(12);
+var dialog_2 = __webpack_require__(2);
 var accionesCliente_1 = __webpack_require__(33);
+var redirect_1 = __webpack_require__(34);
 $(function () {
     var api = new jsonReq_1.JsonReq(serverInfo_1.default.host, window);
     var component = new component_1.Component(ko);
@@ -386,11 +388,13 @@ $(function () {
     component.register("data-cell", dataCell_2.View, function (params) {
         return new dataCell_2.Model(ko, params.template, params.data);
     });
-    component.register("dialog", dialog_1.View, function () {
+    component.register("dialog", dialog_2.View, function () {
         return {}; //empty model
     });
     component.register("data-table", dataTable_1.View, function () {
         var model;
+        var dialog = new dialog_1.Model(ko, $);
+        var redirect = new redirect_1.Redirect(window);
         model = new dataTable_1.Model(ko, api, serverInfo_1.default.api.clientes.search, [
             new dataCell_1.SortableColumn(ko, "Folio", "id"),
             new dataCell_1.DefaultColumn("Empresa"),
@@ -398,7 +402,7 @@ $(function () {
             new dataCell_1.DefaultColumn("Teléfono", "telefono"),
             new dataCell_1.DefaultColumn("Email", "email"),
             new dataCell_1.DefaultColumn("Cliente Desde", "fechaCreado").setGetCellData(function (r) { return new Date(r.fechaCreado).toLocaleDateString(); }),
-            new dataCell_1.ActionsColumn("Acciones").setGetCellData(function (r) { return new accionesCliente_1.AccionesCliente(ko, $, r, model); })
+            new dataCell_1.ActionsColumn("Acciones").setGetCellData(function (r) { return new accionesCliente_1.AccionesCliente(dialog, redirect, r); })
         ]);
         model.load();
         return model;
@@ -472,10 +476,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var model_1 = __webpack_require__(5);
-var model_2 = __webpack_require__(6);
-var sortOrder_1 = __webpack_require__(7);
-var sortableHeaderCell_1 = __webpack_require__(8);
+var model_1 = __webpack_require__(6);
+var model_2 = __webpack_require__(7);
+var sortOrder_1 = __webpack_require__(8);
+var sortableHeaderCell_1 = __webpack_require__(9);
 var ColumnModel = /** @class */ (function () {
     function ColumnModel(info) {
         this.info = info;
@@ -554,176 +558,6 @@ exports.default = (function (start, stop, step) {
 
 /***/ }),
 /* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var view_html_1 = __webpack_require__(23);
-exports.View = view_html_1.default;
-var model_1 = __webpack_require__(5);
-exports.Model = model_1.Model;
-
-
-/***/ }),
-/* 23 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"row\" data-bind=\"if: list().length > 0\">\n    <div class=\"col-md-4\">\n\n    </div>\n\n    <div class=\"col-md-4\">\n        <button type=\"button\" class=\"btn btn-default\" data-bind=\"enable: page() !== 1, click: () => page(1)\">\n            <i class=\"fas fa-angle-double-left\"></i>\n        </button>\n        <button type=\"button\" class=\"btn btn-default\" data-bind=\"enable: page() !== 1, click: () => page(page()-1)\">\n            <i class=\"fas fa-angle-left\"></i>\n        </button>\n\n        <input class=\"form-control\" style=\"width:50px; display:inline-block\" maxlength=\"3\" type=\"text\"\n            data-bind=\"value: jumpToPage\" />\n\n        <button type=\"button\" class=\"btn btn-default\"\n            data-bind=\"enable: page() !== list()[list().length-1], click: () => page(page()+1)\">\n            <i class=\"fas fa-angle-right\"></i>\n        </button>\n        <button type=\"button\" class=\"btn btn-default\"\n            data-bind=\"enable: page() !== list()[list().length-1], click: () => page(list().length)\">\n            <i class=\"fas fa-angle-double-right\"></i>\n        </button>\n    </div>\n\n    <div class=\"col-md-1\">\n        <select class=\"form-control\" data-bind=\"options: pageSizes, value: pageSize\"></select>\n    </div>\n\n    <div class=\"col-md-3\">\n        <div class=\"text-right\">\n            Viendo\n            <span data-bind=\"text: `${ (page() * pageSize()) - (pageSize() - 1) } al ${ page() * pageSize() }`\"></span>\n            de\n            <span data-bind=\"text: totalRows()\"></span>\n        </div>\n    </div>\n</div>");
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var view_html_1 = __webpack_require__(25);
-exports.View = view_html_1.default;
-var model_1 = __webpack_require__(6);
-exports.Model = model_1.Model;
-
-
-/***/ }),
-/* 25 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"input-group mb-3\">\n    <input type=\"text\" class=\"form-control\" placeholder=\"Buscar...\" aria-label=\"Search\"\n        aria-describedby=\"search-field-button\" data-bind=\"textInput: searchText\">\n    <div class=\"input-group-append\">\n        <button data-bind=\"click: () => searchText('')\" class=\"btn btn-outline-secondary\" type=\"button\"\n            id=\"search-field-button\">Limpiar</button>\n    </div>\n</div>");
-
-/***/ }),
-/* 26 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<script type=\"text/html\" id=\"data-cell-sortable-header-template\">\n    <a data-bind=\"click: changeOrder\">\n        <label data-bind=\"text: title\" style=\"cursor: pointer;\"></label>\n        <!-- ko if: order() === 0 -->\n        <i class=\"fas fa-sort\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 1 -->\n        <i class=\"fas fa-sort-up\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 2 -->\n        <i class=\"fas fa-sort-down\"></i>\n        <!-- /ko -->\n    </a>\n</script>\n\n<script type=\"text/html\" id=\"data-cell-default-data-template\">\n    <label data-bind=\"text: $data\"></label>\n</script>\n\n<script type=\"text/html\" id=\"data-cell-actions-header-template\">\n    <a class=\"btn btn-outline-danger\" data-bind=\"click: onDelete\" >\n        <i class=\"far fa-trash-alt\"></i>\n    </a>\n\n    <a class=\"btn btn-outline-success\" data-bind=\"click: onEdit\">\n        <i class=\"far fa-edit\"></i>\n    </a>\n\n</script>\n\n\n\n<!-- ko template: { name: template, data: data } -->\n<!-- /ko -->");
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var Model = /** @class */ (function () {
-    function Model(ko, template, data) {
-        this.ko = ko;
-        this.template = this.ko.observable(template);
-        this.data = this.ko.observable(data);
-    }
-    return Model;
-}());
-exports.Model = Model;
-
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var columnBase_1 = __webpack_require__(0);
-var DefaultColumn = /** @class */ (function (_super) {
-    __extends(DefaultColumn, _super);
-    function DefaultColumn(title, rowKey) {
-        return _super.call(this, title, rowKey) || this;
-    }
-    return DefaultColumn;
-}(columnBase_1.ColumnBase));
-exports.DefaultColumn = DefaultColumn;
-
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var dataTableConstants_1 = __webpack_require__(2);
-var sortableHeaderCell_1 = __webpack_require__(8);
-var columnBase_1 = __webpack_require__(0);
-var SortableColumn = /** @class */ (function (_super) {
-    __extends(SortableColumn, _super);
-    function SortableColumn(ko, title, rowKey) {
-        var _this = _super.call(this, title, rowKey) || this;
-        _this.headTemplate = dataTableConstants_1.default.DATA_CELL_SORTABLE_HEADER;
-        _this.setGetHeadData(function (head) { return new sortableHeaderCell_1.SortableHeaderCell(ko, head.title); });
-        return _this;
-    }
-    return SortableColumn;
-}(columnBase_1.ColumnBase));
-exports.SortableColumn = SortableColumn;
-
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var dataTableConstants_1 = __webpack_require__(2);
-var columnBase_1 = __webpack_require__(0);
-var ActionsColumn = /** @class */ (function (_super) {
-    __extends(ActionsColumn, _super);
-    function ActionsColumn(title, rowKey) {
-        var _this = _super.call(this, title, rowKey) || this;
-        _this.celTemplate = dataTableConstants_1.default.DATA_CELL_ACTIONS_HEADER;
-        _this.setGetCellData(function (r) { return r; });
-        return _this;
-    }
-    return ActionsColumn;
-}(columnBase_1.ColumnBase));
-exports.ActionsColumn = ActionsColumn;
-
-
-/***/ }),
-/* 31 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -731,7 +565,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("<script type=\"text/html\" id=\"ModalPartial\">\n    <div class=\"content\">\n\n        <div class=\"modal\" tabindex=\"-1\" role=\"dialog\">\n            <div class=\"modal-dialog\" role=\"document\" data-copy=\"css: { 'modal-sm': size === 0, 'modal-md': size === 1, 'modal-lg': size === 2 }\">\n                <div class=\"modal-content\">\n                    <div class=\"modal-header\">\n                        \n                        <h5 class=\"modal-title\" data-copy=\"text: title\"></h5>\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n                            <span aria-hidden=\"true\">&times;</span>\n                        </button>\n\n                    </div>\n                    <div class=\"modal-body\" data-copy=\"template: { name: contentTemplate }\">\n\n                    </div>\n                    <div class=\"modal-footer\" data-copy=\"template: { name: footerTemplate }\">\n\n                    </div>\n                </div>\n            </div>\n        </div>\n\n        \n    </div>\n</script>");
 
 /***/ }),
-/* 32 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -774,8 +608,6 @@ var Model = /** @class */ (function () {
         var domObj = myModal.get()[0];
         self.ko.applyBindings(options, domObj);
         myModal.on("hidden.bs.modal", function (e) {
-            var container = self.getContainer(); // autodestroy
-            alert(container.html());
             if (options.onHidden) {
                 options.onHidden(options, e);
             }
@@ -792,15 +624,185 @@ exports.Model = Model;
 
 
 /***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var view_html_1 = __webpack_require__(25);
+exports.View = view_html_1.default;
+var model_1 = __webpack_require__(6);
+exports.Model = model_1.Model;
+
+
+/***/ }),
+/* 25 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"row\" data-bind=\"if: list().length > 0\">\n    <div class=\"col-md-4\">\n\n    </div>\n\n    <div class=\"col-md-4\">\n        <button type=\"button\" class=\"btn btn-default\" data-bind=\"enable: page() !== 1, click: () => page(1)\">\n            <i class=\"fas fa-angle-double-left\"></i>\n        </button>\n        <button type=\"button\" class=\"btn btn-default\" data-bind=\"enable: page() !== 1, click: () => page(page()-1)\">\n            <i class=\"fas fa-angle-left\"></i>\n        </button>\n\n        <input class=\"form-control\" style=\"width:50px; display:inline-block\" maxlength=\"3\" type=\"text\"\n            data-bind=\"value: jumpToPage\" />\n\n        <button type=\"button\" class=\"btn btn-default\"\n            data-bind=\"enable: page() !== list()[list().length-1], click: () => page(page()+1)\">\n            <i class=\"fas fa-angle-right\"></i>\n        </button>\n        <button type=\"button\" class=\"btn btn-default\"\n            data-bind=\"enable: page() !== list()[list().length-1], click: () => page(list().length)\">\n            <i class=\"fas fa-angle-double-right\"></i>\n        </button>\n    </div>\n\n    <div class=\"col-md-1\">\n        <select class=\"form-control\" data-bind=\"options: pageSizes, value: pageSize\"></select>\n    </div>\n\n    <div class=\"col-md-3\">\n        <div class=\"text-right\">\n            Viendo\n            <span data-bind=\"text: `${ (page() * pageSize()) - (pageSize() - 1) } al ${ page() * pageSize() }`\"></span>\n            de\n            <span data-bind=\"text: totalRows()\"></span>\n        </div>\n    </div>\n</div>");
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var view_html_1 = __webpack_require__(27);
+exports.View = view_html_1.default;
+var model_1 = __webpack_require__(7);
+exports.Model = model_1.Model;
+
+
+/***/ }),
+/* 27 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"input-group mb-3\">\n    <input type=\"text\" class=\"form-control\" placeholder=\"Buscar...\" aria-label=\"Search\"\n        aria-describedby=\"search-field-button\" data-bind=\"textInput: searchText\">\n    <div class=\"input-group-append\">\n        <button data-bind=\"click: () => searchText('')\" class=\"btn btn-outline-secondary\" type=\"button\"\n            id=\"search-field-button\">Limpiar</button>\n    </div>\n</div>");
+
+/***/ }),
+/* 28 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<script type=\"text/html\" id=\"data-cell-sortable-header-template\">\n    <a data-bind=\"click: changeOrder\">\n        <label data-bind=\"text: title\" style=\"cursor: pointer;\"></label>\n        <!-- ko if: order() === 0 -->\n        <i class=\"fas fa-sort\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 1 -->\n        <i class=\"fas fa-sort-up\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 2 -->\n        <i class=\"fas fa-sort-down\"></i>\n        <!-- /ko -->\n    </a>\n</script>\n\n<script type=\"text/html\" id=\"data-cell-default-data-template\">\n    <label data-bind=\"text: $data\"></label>\n</script>\n\n<script type=\"text/html\" id=\"data-cell-actions-header-template\">\n    <a class=\"btn btn-outline-danger\" data-bind=\"click: onDelete\" >\n        <i class=\"far fa-trash-alt\"></i>\n    </a>\n\n    <a class=\"btn btn-outline-success\" data-bind=\"click: onEdit\">\n        <i class=\"far fa-edit\"></i>\n    </a>\n\n</script>\n\n\n\n<!-- ko template: { name: template, data: data } -->\n<!-- /ko -->");
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Model = /** @class */ (function () {
+    function Model(ko, template, data) {
+        this.ko = ko;
+        this.template = this.ko.observable(template);
+        this.data = this.ko.observable(data);
+    }
+    return Model;
+}());
+exports.Model = Model;
+
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var columnBase_1 = __webpack_require__(0);
+var DefaultColumn = /** @class */ (function (_super) {
+    __extends(DefaultColumn, _super);
+    function DefaultColumn(title, rowKey) {
+        return _super.call(this, title, rowKey) || this;
+    }
+    return DefaultColumn;
+}(columnBase_1.ColumnBase));
+exports.DefaultColumn = DefaultColumn;
+
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var dataTableConstants_1 = __webpack_require__(3);
+var sortableHeaderCell_1 = __webpack_require__(9);
+var columnBase_1 = __webpack_require__(0);
+var SortableColumn = /** @class */ (function (_super) {
+    __extends(SortableColumn, _super);
+    function SortableColumn(ko, title, rowKey) {
+        var _this = _super.call(this, title, rowKey) || this;
+        _this.headTemplate = dataTableConstants_1.default.DATA_CELL_SORTABLE_HEADER;
+        _this.setGetHeadData(function (head) { return new sortableHeaderCell_1.SortableHeaderCell(ko, head.title); });
+        return _this;
+    }
+    return SortableColumn;
+}(columnBase_1.ColumnBase));
+exports.SortableColumn = SortableColumn;
+
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var dataTableConstants_1 = __webpack_require__(3);
+var columnBase_1 = __webpack_require__(0);
+var ActionsColumn = /** @class */ (function (_super) {
+    __extends(ActionsColumn, _super);
+    function ActionsColumn(title, rowKey) {
+        var _this = _super.call(this, title, rowKey) || this;
+        _this.celTemplate = dataTableConstants_1.default.DATA_CELL_ACTIONS_HEADER;
+        _this.setGetCellData(function (r) { return r; });
+        return _this;
+    }
+    return ActionsColumn;
+}(columnBase_1.ColumnBase));
+exports.ActionsColumn = ActionsColumn;
+
+
+/***/ }),
 /* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var dialog_1 = __webpack_require__(12);
+var dialog_1 = __webpack_require__(2);
 var AccionesCliente = /** @class */ (function () {
-    function AccionesCliente(ko, $, cliente, table) {
+    function AccionesCliente(dialog, nav, cliente) {
         var _this = this;
         this.onDelete = function () {
             var self = _this;
@@ -815,15 +817,36 @@ var AccionesCliente = /** @class */ (function () {
         };
         this.onEdit = function () {
             var self = _this;
-            alert("navegar a editar cliente page");
+            self.nav.navigate("/Clientes/Editar/" + self.cliente.guid);
         };
         this.cliente = cliente;
-        this.table = table;
-        this.dialog = new dialog_1.Model(ko, $);
+        this.dialog = dialog;
+        this.nav = nav;
     }
     return AccionesCliente;
 }());
 exports.AccionesCliente = AccionesCliente;
+
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Redirect = /** @class */ (function () {
+    function Redirect(window) {
+        var _this = this;
+        this.navigate = function (path) {
+            var self = _this;
+            self.window.location.href = path;
+        };
+        this.window = window;
+    }
+    return Redirect;
+}());
+exports.Redirect = Redirect;
 
 
 /***/ })

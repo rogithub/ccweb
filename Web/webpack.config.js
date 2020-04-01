@@ -3,7 +3,8 @@ const path = require('path');
 module.exports = {
     entry: {
         clientes: './TypeScript/pages/clientes.ts',
-        nuevoCliente: './TypeScript/pages/nuevoCliente.ts'
+        nuevoCliente: './TypeScript/pages/nuevoCliente.ts',
+        editarCliente: './TypeScript/pages/editarCliente.ts'
     },
     mode: 'production',
     optimization: {
