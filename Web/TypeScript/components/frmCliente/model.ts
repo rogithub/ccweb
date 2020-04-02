@@ -1,6 +1,7 @@
 import { ObsExtension, ObsFrm } from 'valiko';
 import { Cliente } from '../../models/cliente';
 import { Api } from '../../shared/api';
+import * as urls from '../../constants/serverInfo';
 
 export class Model extends ObsFrm {
     public contacto: ObsExtension<string>;
@@ -66,5 +67,12 @@ export class Model extends ObsFrm {
         if (isValid === false) return;
 
         alert(JSON.stringify(self.retrieve()));
+    }
+
+    public async init(id: string): Promise<void> {
+        const self = this;
+        let url = `${urls.default.api.clientes.get}/${id}`;
+        let cte = await self.api.get<Cliente>(url);
+        self.load(cte);
     }
 }
