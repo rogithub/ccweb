@@ -18,7 +18,7 @@ export class JsonReq implements Api {
         return response.json()
     }
 
-    post = async <T>(url: string, jsonData: ObjectLiteral): Promise<T> => {
+    post = async <T>(url: string, body: ObjectLiteral): Promise<T> => {
         const self = this;
         const response = await self.window.fetch(self.toFullUrl(url), {
             method: 'POST',
@@ -26,13 +26,13 @@ export class JsonReq implements Api {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(jsonData)
+            body: JSON.stringify(body)
         });
 
         return await response.json();
     }
 
-    put = async <T>(url: string, jsonData: ObjectLiteral): Promise<T> => {
+    put = async <T>(url: string, body: ObjectLiteral): Promise<T> => {
         const self = this;
         const response = await self.window.fetch(self.toFullUrl(url), {
             method: 'PUT',
@@ -40,13 +40,13 @@ export class JsonReq implements Api {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(jsonData)
+            body: JSON.stringify(body)
         });
 
         return await response.json();
     }
 
-    patch = async <T>(url: string, jsonData: ObjectLiteral): Promise<T> => {
+    patch = async <T>(url: string, body: ObjectLiteral): Promise<T> => {
         const self = this;
         const response = await self.window.fetch(self.toFullUrl(url), {
             method: 'PATCH',
@@ -54,7 +54,7 @@ export class JsonReq implements Api {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(jsonData)
+            body: JSON.stringify(body)
         });
 
         return await response.json();

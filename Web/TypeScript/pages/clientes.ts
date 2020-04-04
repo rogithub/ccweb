@@ -43,7 +43,7 @@ $(() => {
             new DefaultColumn("Teléfono", "telefono"),
             new DefaultColumn("Email", "email"),
             new DefaultColumn("Cliente Desde", "fechaCreado").setGetCellData(r => new Date(r.fechaCreado).toLocaleDateString()),
-            new ActionsColumn("Acciones").setGetCellData(r => new AccionesCliente(dialog, redirect, r as Cliente))
+            new ActionsColumn("Acciones").setGetCellData(r => new AccionesCliente(ko, api, dialog, redirect, r as Cliente))
         ]);
 
         model.load();

@@ -1,8 +1,9 @@
 import { ObsExtension, ObsFrm } from 'valiko';
 import { Cliente } from '../../models/cliente';
 import { Api } from '../../shared/api';
-import * as urls from '../../constants/serverInfo';
+import urls from '../../constants/serverInfo';
 import { GuidService } from '../../services/guid';
+import { Url } from '../../shared/url';
 
 export class Model extends ObsFrm {
     public contacto: ObsExtension<string>;
@@ -15,11 +16,13 @@ export class Model extends ObsFrm {
     public guid: KnockoutObservable<string>;
     public id: KnockoutObservable<number>;
     public activo: KnockoutObservable<boolean>;
-    public api: Api;
+    private api: Api;
+    private url: Url;
     public isNew: KnockoutComputed<boolean>;
 
-    constructor(ko: KnockoutStatic, api: Api) {
+    constructor(ko: KnockoutStatic, api: Api, url: Url) {
         super(ko);
+        this.url = url;
         this.api = api;
         this.contacto = this.add<string>();
         this.empresa = this.add<string>();
@@ -33,7 +36,7 @@ export class Model extends ObsFrm {
         this.id = ko.observable<number>(0);
         const self = this;
         this.isNew = ko.pureComputed(() => {
-            return GuidService.hasValue(self.guid());
+            return self.id() === 0;
         }, self);
     }
 
@@ -72,21 +75,25 @@ export class Model extends ObsFrm {
         let isValid = await self.validate();
         if (isValid === false) return;
 
-        let url = urls.default.api.clientes.base;
+        let url = urls.api.clientes.base;
         let model = self.retrieve();
 
         let method = self.isNew() ?
             self.api.post :
             self.api.put;
 
-
-        alert(JSON.stringify(model));
         await method<void>(url, model);
+        self.indexRedirect();
+    }
+
+    public indexRedirect = () => {
+        const self = this;
+        self.url.navigate(urls.web.clientes.index);
     }
 
     public async init(id: string): Promise<void> {
         const self = this;
-        let url = `${urls.default.api.clientes.get}/${id}`;
+        let url = `${urls.api.clientes.get}/${id}`;
         let cte = await self.api.get<Cliente>(url);
         self.load(cte);
     }

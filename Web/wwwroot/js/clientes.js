@@ -148,13 +148,14 @@
 /******/
 /******/
 /******/ 	// add entry module to deferred list
-/******/ 	deferredModules.push([21,0]);
+/******/ 	deferredModules.push([22,0]);
 /******/ 	// run deferred modules when ready
 /******/ 	return checkDeferredModules();
 /******/ })
 /************************************************************************/
 /******/ ([
-/* 0 */
+/* 0 */,
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -185,7 +186,6 @@ exports.ColumnBase = ColumnBase;
 
 
 /***/ }),
-/* 1 */,
 /* 2 */,
 /* 3 */,
 /* 4 */
@@ -194,9 +194,9 @@ exports.ColumnBase = ColumnBase;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var view_html_1 = __webpack_require__(26);
+var view_html_1 = __webpack_require__(27);
 exports.View = view_html_1.default;
-var model_1 = __webpack_require__(27);
+var model_1 = __webpack_require__(28);
 exports.Model = model_1.Model;
 exports.PopupSize = model_1.PopupSize;
 
@@ -218,13 +218,14 @@ exports.default = {
 /***/ }),
 /* 6 */,
 /* 7 */,
-/* 8 */
+/* 8 */,
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var range_1 = __webpack_require__(25);
+var range_1 = __webpack_require__(26);
 var Model = /** @class */ (function () {
     function Model(ko, page, pageSizes, totalRows) {
         if (page === void 0) { page = 1; }
@@ -267,7 +268,7 @@ exports.Model = Model;
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -284,7 +285,7 @@ exports.Model = Model;
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -299,13 +300,13 @@ var SortOrder;
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var sortOrder_1 = __webpack_require__(10);
+var sortOrder_1 = __webpack_require__(11);
 var SortableHeaderCell = /** @class */ (function () {
     function SortableHeaderCell(ko, title) {
         var _this = this;
@@ -333,28 +334,27 @@ exports.SortableHeaderCell = SortableHeaderCell;
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var view_html_1 = __webpack_require__(32);
+var view_html_1 = __webpack_require__(33);
 exports.View = view_html_1.default;
-var model_1 = __webpack_require__(33);
+var model_1 = __webpack_require__(34);
 exports.Model = model_1.Model;
-var defaultColumn_1 = __webpack_require__(34);
+var defaultColumn_1 = __webpack_require__(35);
 exports.DefaultColumn = defaultColumn_1.DefaultColumn;
-var sortableColumn_1 = __webpack_require__(35);
+var sortableColumn_1 = __webpack_require__(36);
 exports.SortableColumn = sortableColumn_1.SortableColumn;
-var columnBase_1 = __webpack_require__(0);
+var columnBase_1 = __webpack_require__(1);
 exports.ColumnBase = columnBase_1.ColumnBase;
-var actionsColumn_1 = __webpack_require__(36);
+var actionsColumn_1 = __webpack_require__(37);
 exports.ActionsColumn = actionsColumn_1.ActionsColumn;
 
 
 /***/ }),
-/* 13 */,
 /* 14 */,
 /* 15 */,
 /* 16 */,
@@ -362,24 +362,25 @@ exports.ActionsColumn = actionsColumn_1.ActionsColumn;
 /* 18 */,
 /* 19 */,
 /* 20 */,
-/* 21 */
+/* 21 */,
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var component_1 = __webpack_require__(3);
-var dataTable_1 = __webpack_require__(22);
+var dataTable_1 = __webpack_require__(23);
 var dialog_1 = __webpack_require__(4);
-var pagination_1 = __webpack_require__(28);
-var searchField_1 = __webpack_require__(30);
-var dataCell_1 = __webpack_require__(12);
-var dataCell_2 = __webpack_require__(12);
+var pagination_1 = __webpack_require__(29);
+var searchField_1 = __webpack_require__(31);
+var dataCell_1 = __webpack_require__(13);
+var dataCell_2 = __webpack_require__(13);
 var jsonReq_1 = __webpack_require__(6);
-var serverInfo_1 = __webpack_require__(1);
+var serverInfo_1 = __webpack_require__(0);
 var dialog_2 = __webpack_require__(4);
-var accionesCliente_1 = __webpack_require__(37);
-var redirect_1 = __webpack_require__(38);
+var accionesCliente_1 = __webpack_require__(38);
+var redirect_1 = __webpack_require__(7);
 $(function () {
     var api = new jsonReq_1.JsonReq(serverInfo_1.default.host, window);
     var component = new component_1.Component(ko);
@@ -406,7 +407,7 @@ $(function () {
             new dataCell_1.DefaultColumn("Teléfono", "telefono"),
             new dataCell_1.DefaultColumn("Email", "email"),
             new dataCell_1.DefaultColumn("Cliente Desde", "fechaCreado").setGetCellData(function (r) { return new Date(r.fechaCreado).toLocaleDateString(); }),
-            new dataCell_1.ActionsColumn("Acciones").setGetCellData(function (r) { return new accionesCliente_1.AccionesCliente(dialog, redirect, r); })
+            new dataCell_1.ActionsColumn("Acciones").setGetCellData(function (r) { return new accionesCliente_1.AccionesCliente(ko, api, dialog, redirect, r); })
         ]);
         model.load();
         return model;
@@ -416,21 +417,21 @@ $(function () {
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var view_html_1 = __webpack_require__(23);
+var view_html_1 = __webpack_require__(24);
 exports.View = view_html_1.default;
-var model_1 = __webpack_require__(24);
+var model_1 = __webpack_require__(25);
 exports.Model = model_1.Model;
 exports.ColumnModel = model_1.ColumnModel;
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -438,7 +439,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("<table class=\"table\">\n    <thead>\n        <tr>\n            <th data-bind=\"attr: { colspan: cols().length }\">\n                <search-field params=\"model: searchModel\"></search-field>\n            </th>\n        </tr>\n        <tr>\n            <!-- ko foreach: { data: cols, as: 'c' } -->\n            <th>\n                <data-cell params=\"template: c.info.headTemplate, data: c.model\"></data-cell>\n            </th>\n            <!-- /ko -->\n        </tr>\n    </thead>\n    <tbody>\n        <!-- ko foreach: { data: rows, as: 'r' } -->\n        <tr>\n            <!-- ko foreach: $parent.cols() -->\n            <td>\n                <data-cell params=\"template: info.celTemplate, data: info.getCellData(r)\"></data-cell>\n            </td>\n            <!-- /ko -->\n        </tr>\n        <!-- /ko -->\n    </tbody>\n    <tfoot>\n        <tr>\n            <td data-bind=\"attr: { colspan: cols().length }\">\n                <pagination params=\"model: pagination\"></pagination>\n            </td>\n        </tr>\n    </tfoot>\n</table>");
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -480,10 +481,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var model_1 = __webpack_require__(8);
-var model_2 = __webpack_require__(9);
-var sortOrder_1 = __webpack_require__(10);
-var sortableHeaderCell_1 = __webpack_require__(11);
+var model_1 = __webpack_require__(9);
+var model_2 = __webpack_require__(10);
+var sortOrder_1 = __webpack_require__(11);
+var sortableHeaderCell_1 = __webpack_require__(12);
 var ColumnModel = /** @class */ (function () {
     function ColumnModel(info) {
         this.info = info;
@@ -549,7 +550,7 @@ exports.Model = Model;
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -561,7 +562,7 @@ exports.default = (function (start, stop, step) {
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -569,7 +570,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("<script type=\"text/html\" id=\"ModalPartial\">\n    <div class=\"content\">\n\n        <div class=\"modal\" tabindex=\"-1\" role=\"dialog\">\n            <div class=\"modal-dialog\" role=\"document\" data-copy=\"css: { 'modal-sm': size === 0, 'modal-md': size === 1, 'modal-lg': size === 2 }\">\n                <div class=\"modal-content\">\n                    <div class=\"modal-header\">\n                        \n                        <h5 class=\"modal-title\" data-copy=\"text: title\"></h5>\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n                            <span aria-hidden=\"true\">&times;</span>\n                        </button>\n\n                    </div>\n                    <div class=\"modal-body\" data-copy=\"template: { name: contentTemplate }\">\n\n                    </div>\n                    <div class=\"modal-footer\" data-copy=\"template: { name: footerTemplate }\">\n\n                    </div>\n                </div>\n            </div>\n        </div>\n\n        \n    </div>\n</script>");
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -628,20 +629,20 @@ exports.Model = Model;
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var view_html_1 = __webpack_require__(29);
+var view_html_1 = __webpack_require__(30);
 exports.View = view_html_1.default;
-var model_1 = __webpack_require__(8);
+var model_1 = __webpack_require__(9);
 exports.Model = model_1.Model;
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -649,25 +650,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"row\" data-bind=\"if: list().length > 0\">\n    <div class=\"col-md-4\">\n\n    </div>\n\n    <div class=\"col-md-4\">\n        <button type=\"button\" class=\"btn btn-default\" data-bind=\"enable: page() !== 1, click: () => page(1)\">\n            <i class=\"fas fa-angle-double-left\"></i>\n        </button>\n        <button type=\"button\" class=\"btn btn-default\" data-bind=\"enable: page() !== 1, click: () => page(page()-1)\">\n            <i class=\"fas fa-angle-left\"></i>\n        </button>\n\n        <input class=\"form-control\" style=\"width:50px; display:inline-block\" maxlength=\"3\" type=\"text\"\n            data-bind=\"value: jumpToPage\" />\n\n        <button type=\"button\" class=\"btn btn-default\"\n            data-bind=\"enable: page() !== list()[list().length-1], click: () => page(page()+1)\">\n            <i class=\"fas fa-angle-right\"></i>\n        </button>\n        <button type=\"button\" class=\"btn btn-default\"\n            data-bind=\"enable: page() !== list()[list().length-1], click: () => page(list().length)\">\n            <i class=\"fas fa-angle-double-right\"></i>\n        </button>\n    </div>\n\n    <div class=\"col-md-1\">\n        <select class=\"form-control\" data-bind=\"options: pageSizes, value: pageSize\"></select>\n    </div>\n\n    <div class=\"col-md-3\">\n        <div class=\"text-right\">\n            Viendo\n            <span data-bind=\"text: `${ (page() * pageSize()) - (pageSize() - 1) } al ${ page() * pageSize() }`\"></span>\n            de\n            <span data-bind=\"text: totalRows()\"></span>\n        </div>\n    </div>\n</div>");
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var view_html_1 = __webpack_require__(31);
+var view_html_1 = __webpack_require__(32);
 exports.View = view_html_1.default;
-var model_1 = __webpack_require__(9);
+var model_1 = __webpack_require__(10);
 exports.Model = model_1.Model;
 
-
-/***/ }),
-/* 31 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"input-group mb-3\">\n    <input type=\"text\" class=\"form-control\" placeholder=\"Buscar...\" aria-label=\"Search\"\n        aria-describedby=\"search-field-button\" data-bind=\"textInput: searchText\">\n    <div class=\"input-group-append\">\n        <button data-bind=\"click: () => searchText('')\" class=\"btn btn-outline-secondary\" type=\"button\"\n            id=\"search-field-button\">Limpiar</button>\n    </div>\n</div>");
 
 /***/ }),
 /* 32 */
@@ -675,10 +668,18 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<script type=\"text/html\" id=\"data-cell-sortable-header-template\">\n    <a data-bind=\"click: changeOrder\">\n        <label data-bind=\"text: title\" style=\"cursor: pointer;\"></label>\n        <!-- ko if: order() === 0 -->\n        <i class=\"fas fa-sort\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 1 -->\n        <i class=\"fas fa-sort-up\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 2 -->\n        <i class=\"fas fa-sort-down\"></i>\n        <!-- /ko -->\n    </a>\n</script>\n\n<script type=\"text/html\" id=\"data-cell-default-data-template\">\n    <label data-bind=\"text: $data\"></label>\n</script>\n\n<script type=\"text/html\" id=\"data-cell-actions-header-template\">\n    <a class=\"btn btn-outline-danger\" data-bind=\"click: onDelete\" >\n        <i class=\"far fa-trash-alt\"></i>\n    </a>\n\n    <a class=\"btn btn-outline-success\" data-bind=\"click: onEdit\">\n        <i class=\"far fa-edit\"></i>\n    </a>\n\n</script>\n\n\n\n<!-- ko template: { name: template, data: data } -->\n<!-- /ko -->");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"input-group mb-3\">\n    <input type=\"text\" class=\"form-control\" placeholder=\"Buscar...\" aria-label=\"Search\"\n        aria-describedby=\"search-field-button\" data-bind=\"textInput: searchText\">\n    <div class=\"input-group-append\">\n        <button data-bind=\"click: () => searchText('')\" class=\"btn btn-outline-secondary\" type=\"button\"\n            id=\"search-field-button\">Limpiar</button>\n    </div>\n</div>");
 
 /***/ }),
 /* 33 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<script type=\"text/html\" id=\"data-cell-sortable-header-template\">\n    <a data-bind=\"click: changeOrder\">\n        <label data-bind=\"text: title\" style=\"cursor: pointer;\"></label>\n        <!-- ko if: order() === 0 -->\n        <i class=\"fas fa-sort\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 1 -->\n        <i class=\"fas fa-sort-up\"></i>\n        <!-- /ko -->\n        <!-- ko if: order() === 2 -->\n        <i class=\"fas fa-sort-down\"></i>\n        <!-- /ko -->\n    </a>\n</script>\n\n<script type=\"text/html\" id=\"data-cell-default-data-template\">\n    <label data-bind=\"text: $data\"></label>\n</script>\n\n<script type=\"text/html\" id=\"data-cell-actions-header-template\">\n    <a class=\"btn btn-outline-danger\" data-bind=\"click: onDelete\" >\n        <i class=\"far fa-trash-alt\"></i>\n    </a>\n\n    <a class=\"btn btn-outline-success\" data-bind=\"click: onEdit\">\n        <i class=\"far fa-edit\"></i>\n    </a>\n\n</script>\n\n\n\n<!-- ko template: { name: template, data: data } -->\n<!-- /ko -->");
+
+/***/ }),
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -693,37 +694,6 @@ var Model = /** @class */ (function () {
     return Model;
 }());
 exports.Model = Model;
-
-
-/***/ }),
-/* 34 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var columnBase_1 = __webpack_require__(0);
-var DefaultColumn = /** @class */ (function (_super) {
-    __extends(DefaultColumn, _super);
-    function DefaultColumn(title, rowKey) {
-        return _super.call(this, title, rowKey) || this;
-    }
-    return DefaultColumn;
-}(columnBase_1.ColumnBase));
-exports.DefaultColumn = DefaultColumn;
 
 
 /***/ }),
@@ -746,20 +716,15 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var dataTableConstants_1 = __webpack_require__(5);
-var sortableHeaderCell_1 = __webpack_require__(11);
-var columnBase_1 = __webpack_require__(0);
-var SortableColumn = /** @class */ (function (_super) {
-    __extends(SortableColumn, _super);
-    function SortableColumn(ko, title, rowKey) {
-        var _this = _super.call(this, title, rowKey) || this;
-        _this.headTemplate = dataTableConstants_1.default.DATA_CELL_SORTABLE_HEADER;
-        _this.setGetHeadData(function (head) { return new sortableHeaderCell_1.SortableHeaderCell(ko, head.title); });
-        return _this;
+var columnBase_1 = __webpack_require__(1);
+var DefaultColumn = /** @class */ (function (_super) {
+    __extends(DefaultColumn, _super);
+    function DefaultColumn(title, rowKey) {
+        return _super.call(this, title, rowKey) || this;
     }
-    return SortableColumn;
+    return DefaultColumn;
 }(columnBase_1.ColumnBase));
-exports.SortableColumn = SortableColumn;
+exports.DefaultColumn = DefaultColumn;
 
 
 /***/ }),
@@ -783,7 +748,43 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var dataTableConstants_1 = __webpack_require__(5);
-var columnBase_1 = __webpack_require__(0);
+var sortableHeaderCell_1 = __webpack_require__(12);
+var columnBase_1 = __webpack_require__(1);
+var SortableColumn = /** @class */ (function (_super) {
+    __extends(SortableColumn, _super);
+    function SortableColumn(ko, title, rowKey) {
+        var _this = _super.call(this, title, rowKey) || this;
+        _this.headTemplate = dataTableConstants_1.default.DATA_CELL_SORTABLE_HEADER;
+        _this.setGetHeadData(function (head) { return new sortableHeaderCell_1.SortableHeaderCell(ko, head.title); });
+        return _this;
+    }
+    return SortableColumn;
+}(columnBase_1.ColumnBase));
+exports.SortableColumn = SortableColumn;
+
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var dataTableConstants_1 = __webpack_require__(5);
+var columnBase_1 = __webpack_require__(1);
 var ActionsColumn = /** @class */ (function (_super) {
     __extends(ActionsColumn, _super);
     function ActionsColumn(title, rowKey) {
@@ -798,22 +799,73 @@ exports.ActionsColumn = ActionsColumn;
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var dialog_1 = __webpack_require__(4);
+var serverInfo_1 = __webpack_require__(0);
 var AccionesCliente = /** @class */ (function () {
-    function AccionesCliente(dialog, nav, cliente) {
+    function AccionesCliente(ko, api, dialog, url, cliente) {
         var _this = this;
+        this.confirm = function () { return __awaiter(_this, void 0, void 0, function () {
+            var self, url;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        self = this;
+                        url = serverInfo_1.default.api.clientes.base + "/" + self.cliente.guid;
+                        return [4 /*yield*/, self.api.del(url)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        }); };
         this.onDelete = function () {
             var self = _this;
             var dlg = self.dialog.build({
                 contentTemplate: "delete-cliente-dialog-content",
                 footerTemplate: "delete-cliente-dialog-footer",
-                model: self.cliente,
+                model: self,
                 title: "Borrar Cliente",
                 size: dialog_1.PopupSize.medium
             });
@@ -821,36 +873,18 @@ var AccionesCliente = /** @class */ (function () {
         };
         this.onEdit = function () {
             var self = _this;
-            self.nav.navigate("/Clientes/Editar/" + self.cliente.guid);
+            var url = serverInfo_1.default.web.clientes.editar + "/" + self.cliente.guid;
+            self.url.navigate(url);
         };
+        this.ko = ko;
+        this.api = api;
         this.cliente = cliente;
         this.dialog = dialog;
-        this.nav = nav;
+        this.url = url;
     }
     return AccionesCliente;
 }());
 exports.AccionesCliente = AccionesCliente;
-
-
-/***/ }),
-/* 38 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var Redirect = /** @class */ (function () {
-    function Redirect(window) {
-        var _this = this;
-        this.navigate = function (path) {
-            var self = _this;
-            self.window.location.href = path;
-        };
-        this.window = window;
-    }
-    return Redirect;
-}());
-exports.Redirect = Redirect;
 
 
 /***/ })

@@ -5,9 +5,11 @@ import { View as FrmCliente, Model as FormClienteModel } from '../components/frm
 import { Component } from '../services/component';
 import serverInfo from '../constants/serverInfo';
 import { JsonReq } from '../services/jsonReq';
+import { Redirect } from '../services/redirect';
 
 $(() => {
 
+    let url = new Redirect(window);
     let api = new JsonReq(serverInfo.host, window);
 
     let component = new Component(ko);
@@ -22,7 +24,7 @@ $(() => {
         return new InputModel(params.options);
     });
     component.register("frm-cliente", FrmCliente, (params) => {
-        let model = new FormClienteModel(ko, api);
+        let model = new FormClienteModel(ko, api, url);
         model.init(params.id);
         return model;
     });

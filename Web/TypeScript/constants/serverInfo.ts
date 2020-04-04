@@ -4,7 +4,15 @@ export default {
         clientes: {
             base: '/clientes',
             search: '/clientes/search',
-            get: '/clientes/get'
+            get: '/clientes/get',
+        }
+    },
+    web: {
+        clientes: {
+            index: "/Clientes/Index",
+            nuevo: "/Clientes/Nuevo",
+            editar: "/Clientes/Editar"
         }
     }
+
 }
