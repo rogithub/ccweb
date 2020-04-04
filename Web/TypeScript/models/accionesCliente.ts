@@ -22,6 +22,7 @@ export class AccionesCliente {
         const self = this;
         let url = `${urls.api.clientes.base}/${self.cliente.guid}`;
         await self.api.del<void>(url);
+        self.url.navigate(urls.web.clientes.index);
     }
 
     public onDelete = () => {

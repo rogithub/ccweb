@@ -856,6 +856,7 @@ var AccionesCliente = /** @class */ (function () {
                         return [4 /*yield*/, self.api.del(url)];
                     case 1:
                         _a.sent();
+                        self.url.navigate(serverInfo_1.default.web.clientes.index);
                         return [2 /*return*/];
                 }
             });
