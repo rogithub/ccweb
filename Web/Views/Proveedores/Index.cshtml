@@ -1,0 +1,20 @@
+@{
+    ViewData["Title"] = "Proveedores";
+}
+@section Scripts {
+    <script type="text/javascript" src="~/js/shared.js"></script>
+    <script type="text/javascript" src="~/js/proveedores.js"></script>    
+}
+
+<script type="text/html" id="delete-proveedor-dialog-content">
+    <label>Está seguro que desea borrar éste proveedor</label>
+</script>
+
+<script type="text/html" id="delete-proveedor-dialog-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+    <button type="button" class="btn btn-danger" data-dismiss="modal" data-bind="click: model.confirm.bind(model)">Borrar</button>
+</script>
+
+<h2>Proveedores</h2>
+<dialog></dialog>
+<data-table></data-table>
