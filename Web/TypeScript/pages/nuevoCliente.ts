@@ -21,8 +21,10 @@ $(() => {
     component.register("text-input", TextInput, (params) => {
         return new InputModel(params.options);
     });
-    component.register("frm-cliente", FrmCliente, () => {
-        return new FormClienteModel(ko, api);
+    component.register("frm-cliente", FrmCliente, (params) => {
+        let model = new FormClienteModel(ko, api);
+        model.guid(params.id);
+        return model;
     });
 
     ko.applyBindings();

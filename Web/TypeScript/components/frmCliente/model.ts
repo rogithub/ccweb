@@ -2,6 +2,7 @@ import { ObsExtension, ObsFrm } from 'valiko';
 import { Cliente } from '../../models/cliente';
 import { Api } from '../../shared/api';
 import * as urls from '../../constants/serverInfo';
+import { GuidService } from '../../services/guid';
 
 export class Model extends ObsFrm {
     public contacto: ObsExtension<string>;
@@ -15,6 +16,7 @@ export class Model extends ObsFrm {
     public id: KnockoutObservable<number>;
     public activo: KnockoutObservable<boolean>;
     public api: Api;
+    public isNew: KnockoutComputed<boolean>;
 
     constructor(ko: KnockoutStatic, api: Api) {
         super(ko);
@@ -29,6 +31,10 @@ export class Model extends ObsFrm {
         this.fechaCreado = ko.observable<Date>(new Date(Date.now()));
         this.guid = ko.observable<string>('');
         this.id = ko.observable<number>(0);
+        const self = this;
+        this.isNew = ko.pureComputed(() => {
+            return GuidService.hasValue(self.guid());
+        }, self);
     }
 
     public load(m: Cliente): void {
@@ -54,7 +60,7 @@ export class Model extends ObsFrm {
             email: self.email.value(),
             domicilio: self.domicilio.value(),
             activo: self.activo(),
-            facturacionGuid: self.facturacionGuid(),
+            facturacionGuid: GuidService.toNullable(self.facturacionGuid()),
             fechaCreado: self.fechaCreado(),
             guid: self.guid(),
             id: self.id()
@@ -66,7 +72,16 @@ export class Model extends ObsFrm {
         let isValid = await self.validate();
         if (isValid === false) return;
 
-        alert(JSON.stringify(self.retrieve()));
+        let url = urls.default.api.clientes.base;
+        let model = self.retrieve();
+
+        let method = self.isNew() ?
+            self.api.post :
+            self.api.put;
+
+
+        alert(JSON.stringify(model));
+        await method<void>(url, model);
     }
 
     public async init(id: string): Promise<void> {

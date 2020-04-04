@@ -25,6 +25,7 @@ namespace Web.Controllers
 
         public IActionResult Nuevo()
         {
+            ViewBag.id = Guid.NewGuid();
             return View();
         }
 
