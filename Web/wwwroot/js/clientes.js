@@ -148,30 +148,30 @@
 /******/
 /******/
 /******/ 	// add entry module to deferred list
-/******/ 	deferredModules.push([28,0]);
+/******/ 	deferredModules.push([29,0]);
 /******/ 	// run deferred modules when ready
 /******/ 	return checkDeferredModules();
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 28:
+/***/ 29:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var component_1 = __webpack_require__(1);
-var dataTable_1 = __webpack_require__(14);
+var dataTable_1 = __webpack_require__(15);
 var dialog_1 = __webpack_require__(2);
-var pagination_1 = __webpack_require__(19);
-var searchField_1 = __webpack_require__(20);
+var pagination_1 = __webpack_require__(20);
+var searchField_1 = __webpack_require__(21);
 var dataCell_1 = __webpack_require__(5);
 var dataCell_2 = __webpack_require__(5);
 var jsonReq_1 = __webpack_require__(3);
 var serverInfo_1 = __webpack_require__(0);
 var dialog_2 = __webpack_require__(2);
-var accionesCliente_1 = __webpack_require__(41);
+var accionesCliente_1 = __webpack_require__(42);
 var redirect_1 = __webpack_require__(4);
 $(function () {
     var api = new jsonReq_1.JsonReq(serverInfo_1.default.host, window);
@@ -198,7 +198,6 @@ $(function () {
             new dataCell_1.DefaultColumn("Contacto"),
             new dataCell_1.DefaultColumn("Teléfono", "telefono"),
             new dataCell_1.DefaultColumn("Email", "email"),
-            new dataCell_1.DefaultColumn("Cliente Desde", "fechaCreado").setGetCellData(function (r) { return new Date(r.fechaCreado).toLocaleDateString(); }),
             new dataCell_1.ActionsColumn("Acciones").setGetCellData(function (r) { return new accionesCliente_1.AccionesCliente(ko, api, dialog, redirect, r); })
         ]);
         model.load();
@@ -210,7 +209,7 @@ $(function () {
 
 /***/ }),
 
-/***/ 41:
+/***/ 42:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

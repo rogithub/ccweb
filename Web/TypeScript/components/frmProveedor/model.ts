@@ -88,9 +88,9 @@ export class Model extends ObsFrm {
         self.url.navigate(urls.web.proveedores.index);
     }
 
-    public async init(id: string): Promise<void> {
+    public async init(guid: string): Promise<void> {
         const self = this;
-        let url = `${urls.api.proveedores.get}/${id}`;
+        let url = `${urls.api.proveedores.get}/${guid}`;
         let model = await self.api.get<Proveedor>(url);
         self.load(model);
     }

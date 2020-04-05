@@ -2,6 +2,7 @@ import { View as TextArea, InputModel } from '../components/textArea';
 import { View as TextEmail } from '../components/textEmail';
 import { View as TextInput } from '../components/textInput';
 import { View as FrmCliente, Model as FormClienteModel } from '../components/frmCliente';
+import { View as FrmFacturacion, Model as FormFacturacionModel } from '../components/frmFacturacion';
 import { Component } from '../services/component';
 import serverInfo from '../constants/serverInfo';
 import { JsonReq } from '../services/jsonReq';
@@ -26,6 +27,11 @@ $(() => {
     component.register("frm-cliente", FrmCliente, (params) => {
         let model = new FormClienteModel(ko, api, url);
         model.init(params.id);
+        return model;
+    });
+    component.register("frm-facturacion", FrmFacturacion, (params) => {
+        let model = new FormFacturacionModel(ko, api, url);
+        model.init(params.clienteId, params.newGuid);
         return model;
     });
 

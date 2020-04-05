@@ -1,0 +1,116 @@
+<form data-bind="submit: $data.onSave.bind($data)" novalidate>
+
+    <div class="form-row">
+        <div class="col-md-12 mb-3">
+
+            <text-input params="options: { 
+            id: 'txtRfc', 
+            label: 'RFC',
+            maxLength: 20,
+            obs: rfc 
+            }"></text-input>
+
+        </div>
+
+        <div class="col-md-12 mb-3">
+
+            <text-input params="options: { 
+            id: 'txtNombre', 
+            label: 'Nombre de Contacto',
+            maxLength: 100,
+            obs: nombre 
+            }"></text-input>
+
+        </div>
+
+        <div class="col-md-12 mb-3">
+
+            <text-input params="options: { 
+            id: 'txtCalle', 
+            label: 'Calle',
+            maxLength: 300,
+            obs: calle 
+            }"></text-input>
+
+        </div>
+        <div class="col-md-12 mb-3">
+
+            <text-input params="options: { 
+            id: 'txtNoExterior', 
+            label: 'Número Exterior',
+            maxLength: 100,
+            obs: noExterior
+            }"></text-input>
+
+        </div>
+        <div class="col-md-12 mb-3">
+
+            <text-input params="options: { 
+            id: 'txtNoInterior', 
+            label: 'Número Interior',
+            maxLength: 100,
+            obs: noInterior
+            }"></text-input>
+
+        </div>
+
+        <div class="col-md-12 mb-3">
+
+            <text-input params="options: { 
+            id: 'txtColonia', 
+            label: 'Colonia',
+            maxLength: 300,
+            obs: colonia 
+            }"></text-input>
+
+        </div>
+
+        <div class="col-md-12 mb-3">
+
+            <text-input params="options: { 
+            id: 'txtCiudad', 
+            label: 'Ciudad',
+            maxLength: 300,
+            obs: ciudad 
+            }"></text-input>
+
+        </div>
+
+        <div class="col-md-12 mb-3">
+
+            <text-input params="options: { 
+            id: 'txtEstado', 
+            label: 'Estado',
+            maxLength: 300,
+            obs: estado 
+            }"></text-input>
+
+        </div>
+
+        <div class="col-md-12 mb-3">
+
+            <text-input params="options: { 
+            id: 'txtCodigoPostal', 
+            label: 'Código Postal',
+            maxLength: 300,
+            obs: cp 
+            }"></text-input>
+
+        </div>
+
+        <div class="col-md-12 mb-3">
+
+            <text-email params="options: { 
+            id: 'txtEmail', 
+            label: 'Email',
+            maxLength: 100,
+            obs: email
+            }"></text-email>
+
+        </div>
+    </div>
+
+    <div class="text-right">
+        <button class="btn btn-primary" type="submit">Guardar</button>
+    </div>
+</form>

@@ -8,4 +8,33 @@
 
 <h2>Editar Cliente</h2>
 
-<frm-cliente params="id: '@ViewBag.id'"></frm-cliente>
+
+<ul class="nav nav-tabs" id="tabs_clientes" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="editar-tab" data-toggle="tab" href="#editar" role="tab" aria-controls="editar" aria-selected="true">Cliente</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="facturacion-tab" data-toggle="tab" href="#facturacion" role="tab" aria-controls="facturacion" aria-selected="false">Facturación</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="bancos-tab" data-toggle="tab" href="#bancos" role="tab" aria-controls="bancos" aria-selected="false">Bancos</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="cuentas-tab" data-toggle="tab" href="#cuentas" role="tab" aria-controls="cuentas" aria-selected="false">Cuentas</a>
+  </li>
+</ul>
+
+<div class="tab-content" id="tabs_clientes_content">
+  <div class="tab-pane fade show active" id="editar" role="tabpanel" aria-labelledby="editar-tab">
+    <frm-cliente params="id: '@ViewBag.id'"></frm-cliente>
+  </div>
+  <div class="tab-pane fade" id="facturacion" role="tabpanel" aria-labelledby="facturacion-tab">
+      <frm-facturacion params="clienteId: '@ViewBag.id', newGuid: '@Guid.NewGuid()'"></frm-facturacion>
+  </div>
+  <div class="tab-pane fade" id="bancos" role="tabpanel" aria-labelledby="bancos-tab">
+      <h2>Bancos</h2>
+  </div>
+  <div class="tab-pane fade" id="cuentas" role="tabpanel" aria-labelledby="cuentas-tab">
+      <h2>Cuentas</h2>
+  </div>
+</div>
