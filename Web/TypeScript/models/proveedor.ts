@@ -6,5 +6,6 @@ export interface Proveedor {
     telefono: string;
     email: string;
     domicilio: string;
+    comentarios: string;
     activo: boolean;
 }

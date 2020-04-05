@@ -148,31 +148,31 @@
 /******/
 /******/
 /******/ 	// add entry module to deferred list
-/******/ 	deferredModules.push([25,0]);
+/******/ 	deferredModules.push([27,0]);
 /******/ 	// run deferred modules when ready
 /******/ 	return checkDeferredModules();
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 25:
+/***/ 27:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var component_1 = __webpack_require__(2);
-var dataTable_1 = __webpack_require__(10);
-var dialog_1 = __webpack_require__(1);
-var pagination_1 = __webpack_require__(15);
-var searchField_1 = __webpack_require__(16);
-var dataCell_1 = __webpack_require__(3);
-var dataCell_2 = __webpack_require__(3);
-var jsonReq_1 = __webpack_require__(5);
+var component_1 = __webpack_require__(1);
+var dataTable_1 = __webpack_require__(13);
+var dialog_1 = __webpack_require__(2);
+var pagination_1 = __webpack_require__(18);
+var searchField_1 = __webpack_require__(19);
+var dataCell_1 = __webpack_require__(5);
+var dataCell_2 = __webpack_require__(5);
+var jsonReq_1 = __webpack_require__(3);
 var serverInfo_1 = __webpack_require__(0);
-var dialog_2 = __webpack_require__(1);
-var accionesCliente_1 = __webpack_require__(38);
-var redirect_1 = __webpack_require__(6);
+var dialog_2 = __webpack_require__(2);
+var accionesCliente_1 = __webpack_require__(40);
+var redirect_1 = __webpack_require__(4);
 $(function () {
     var api = new jsonReq_1.JsonReq(serverInfo_1.default.host, window);
     var component = new component_1.Component(ko);
@@ -210,7 +210,7 @@ $(function () {
 
 /***/ }),
 
-/***/ 38:
+/***/ 40:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -252,7 +252,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var dialog_1 = __webpack_require__(1);
+var dialog_1 = __webpack_require__(2);
 var serverInfo_1 = __webpack_require__(0);
 var AccionesCliente = /** @class */ (function () {
     function AccionesCliente(ko, api, dialog, url, cliente) {

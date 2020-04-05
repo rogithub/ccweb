@@ -5,7 +5,9 @@ module.exports = {
         clientes: './TypeScript/pages/clientes.ts',
         nuevoCliente: './TypeScript/pages/nuevoCliente.ts',
         editarCliente: './TypeScript/pages/editarCliente.ts',
-        proveedores: './TypeScript/pages/proveedores.ts'
+        proveedores: './TypeScript/pages/proveedores.ts',
+        nuevoProveedor: './TypeScript/pages/nuevoProveedor.ts',
+        editarProveedor: './TypeScript/pages/editarProveedor.ts'
     },
     mode: 'production',
     optimization: {
