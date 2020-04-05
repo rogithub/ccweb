@@ -21,16 +21,25 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">                        
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="navClientes" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Clientes
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <div class="dropdown-menu" aria-labelledby="navClientes">
                                 <a class="dropdown-item" asp-area="" asp-controller="Clientes" asp-action="Index">Todos</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Clientes" asp-action="Nuevo">Nuevo</a>
                             </div>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navProveedores" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Proveedores
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navProveedores">
+                                <a class="dropdown-item" asp-area="" asp-controller="Proveedores" asp-action="Index">Todos</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Proveedores" asp-action="Nuevo">Nuevo</a>
+                            </div>
+                        </li>
                     </ul>
-                </div>
+                </div>                
             </div>
         </nav>
     </header>
