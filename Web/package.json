@@ -24,7 +24,7 @@
         "raw-loader": "^4.0.0",
         "ts-loader": "^6.2.1",
         "typescript": "^3.8.2",
-        "valiko": "0.0.1",
+        "valiko": "0.0.2",
         "webpack": "^4.41.6",
         "webpack-cli": "^3.3.11"
     }

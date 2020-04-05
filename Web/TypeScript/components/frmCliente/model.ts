@@ -4,6 +4,7 @@ import { Api } from '../../shared/api';
 import urls from '../../constants/serverInfo';
 import { GuidService } from '../../services/guid';
 import { Url } from '../../shared/url';
+import { RequiredString } from '../../validators/requiredString';
 
 export class Model extends ObsFrm {
     public contacto: ObsExtension<string>;
@@ -24,9 +25,9 @@ export class Model extends ObsFrm {
         super(ko);
         this.url = url;
         this.api = api;
-        this.contacto = this.add<string>();
-        this.empresa = this.add<string>();
-        this.telefono = this.add<string>();
+        this.contacto = this.add<string>().with(new RequiredString());
+        this.empresa = this.add<string>().with(new RequiredString());
+        this.telefono = this.add<string>().with(new RequiredString());
         this.email = this.add<string>();
         this.domicilio = this.add<string>();
         this.activo = ko.observable<boolean>(true);

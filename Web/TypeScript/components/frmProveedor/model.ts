@@ -3,6 +3,7 @@ import { Proveedor } from '../../models/proveedor';
 import { Api } from '../../shared/api';
 import urls from '../../constants/serverInfo';
 import { Url } from '../../shared/url';
+import { RequiredString } from '../../validators/requiredString';
 
 export class Model extends ObsFrm {
     public contacto: ObsExtension<string>;
@@ -22,15 +23,16 @@ export class Model extends ObsFrm {
         super(ko);
         this.url = url;
         this.api = api;
-        this.contacto = this.add<string>();
-        this.empresa = this.add<string>();
-        this.telefono = this.add<string>();
+        this.contacto = this.add<string>().with(new RequiredString());
+        this.empresa = this.add<string>().with(new RequiredString());
+        this.telefono = this.add<string>().with(new RequiredString());
         this.email = this.add<string>();
         this.domicilio = this.add<string>();
-        this.activo = ko.observable<boolean>(true);
         this.comentarios = this.add<string>();
         this.guid = ko.observable<string>('');
         this.id = ko.observable<number>(0);
+        this.activo = ko.observable<boolean>(true);
+
         const self = this;
         this.isNew = ko.pureComputed(() => {
             return self.id() === 0;

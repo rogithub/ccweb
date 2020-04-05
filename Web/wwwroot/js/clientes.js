@@ -148,30 +148,30 @@
 /******/
 /******/
 /******/ 	// add entry module to deferred list
-/******/ 	deferredModules.push([27,0]);
+/******/ 	deferredModules.push([28,0]);
 /******/ 	// run deferred modules when ready
 /******/ 	return checkDeferredModules();
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 27:
+/***/ 28:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var component_1 = __webpack_require__(1);
-var dataTable_1 = __webpack_require__(13);
+var dataTable_1 = __webpack_require__(14);
 var dialog_1 = __webpack_require__(2);
-var pagination_1 = __webpack_require__(18);
-var searchField_1 = __webpack_require__(19);
+var pagination_1 = __webpack_require__(19);
+var searchField_1 = __webpack_require__(20);
 var dataCell_1 = __webpack_require__(5);
 var dataCell_2 = __webpack_require__(5);
 var jsonReq_1 = __webpack_require__(3);
 var serverInfo_1 = __webpack_require__(0);
 var dialog_2 = __webpack_require__(2);
-var accionesCliente_1 = __webpack_require__(40);
+var accionesCliente_1 = __webpack_require__(41);
 var redirect_1 = __webpack_require__(4);
 $(function () {
     var api = new jsonReq_1.JsonReq(serverInfo_1.default.host, window);
@@ -210,7 +210,7 @@ $(function () {
 
 /***/ }),
 
-/***/ 40:
+/***/ 41:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
