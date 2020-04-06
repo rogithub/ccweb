@@ -1,6 +1,10 @@
 export default {
     host: "https://localhost:5001",
     api: {
+	cuentas: {
+	    base: '/Cuentas',
+	    get: '/Cuentas/get'
+	},
         facturacion: {
             base: '/DatosFacturacion',
             get: '/DatosFacturacion/get',

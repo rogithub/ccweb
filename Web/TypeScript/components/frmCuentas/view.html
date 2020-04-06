@@ -1,0 +1,69 @@
+<form data-bind="submit: $data.onSave.bind($data)" novalidate>
+
+    <div class="form-row">
+        <div class="col-md-12 mb-3">
+
+            <text-input params="options: { 
+            id: 'txtNombre', 
+            label: 'Nombre de Cuenta',
+            maxLength: 100,
+            obs: nombre
+            }"></text-input>
+
+        </div>
+        <div class="col-md-12 mb-3">
+
+            <text-input params="options: { 
+            id: 'txtBanco', 
+            label: 'Banco',
+            maxLength: 100,
+            obs: banco 
+            }"></text-input>
+
+        </div>
+        <div class="col-md-12 mb-3">
+
+            <text-input params="options: { 
+            id: 'txtCuenta', 
+            label: 'No. de Cuenta',
+            maxLength: 11,
+            obs: noCuenta 
+            }"></text-input>
+
+        </div>
+        <div class="col-md-12 mb-3">
+
+            <text-input params="options: { 
+            id: 'txtClabe', 
+            label: 'CLABE',
+            maxLength: 18,
+            obs: clabe
+            }"></text-input>
+
+        </div>
+	<div class="col-md-12 mb-3">
+
+            <text-input params="options: { 
+            id: 'txtBeneficiario', 
+            label: 'Nombre de Beneficiario',
+            maxLength: 100,
+            obs: beneficiario
+            }"></text-input>
+
+        </div>
+        <div class="col-md-12 mb-3">
+
+            <text-email params="options: { 
+            id: 'txtEmail', 
+            label: 'Email de notificación',
+            maxLength: 300,
+            obs: email 
+            }"></text-email>
+
+        </div>
+    </div>
+
+    <div class="text-right">
+        <button class="btn btn-primary" type="submit">Guardar</button>
+    </div>
+</form>
